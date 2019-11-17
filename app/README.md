@@ -1,4 +1,4 @@
-## Instagram Clone
+## Instagram Clone - Front-End
 
 Assignment for Chas Academy.
 
