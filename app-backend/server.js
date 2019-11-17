@@ -5,11 +5,13 @@ const graphqlHttp = require('express-graphql');
 const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config();
+const isAuth = require('./middleware/isAuth');
 
 const graphQlSchema = require('./graphql/schema/index');
 const graphQlResolvers = require('./graphql/resolvers/index');
-app.use(cors());
 
+app.use(cors());
+app.use(isAuth);
 app.use(
   '/graphql',
   graphqlHttp({

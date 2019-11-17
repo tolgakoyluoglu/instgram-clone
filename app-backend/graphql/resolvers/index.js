@@ -14,18 +14,21 @@ module.exports = {
         throw err;
       });
   },
-  createPost: args => {
+  createPost: async (args, req) => {
+    if (!req.isAuth) {
+      throw new Error('Unauthorizied!');
+    }
     const post = new Post({
       title: args.postInput.title,
       url: args.postInput.url,
-      creator: '5dd1a36fd7ffb057bbeba085'
+      creator: req.userId
     });
     let createdPost;
     return post
       .save()
       .then(result => {
         createdPost = result;
-        return User.findById('5dd1a36fd7ffb057bbeba085');
+        return User.findById(req.userId);
       })
       .then(user => {
         if (!user) {
