@@ -1,11 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Card, Logo, Form, Input, Button } from '../styled/LoginForm';
+import { Card, Form, Input, Button } from '../styled/LoginForm';
 
 function Signup() {
   return (
     <Card>
-      <Logo />
       <Form>
         <Input type="email" placeholder="email" />
         <Input type="password" placeholder="password" />
