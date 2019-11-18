@@ -1,11 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 //Components
 import { Card, Form, Input, Button } from '../styled/LoginForm';
 import { useAuth } from '../auth/authContext';
 //Apollo stuff
 import { gql } from 'apollo-boost';
 import { useMutation } from '@apollo/react-hooks';
+import { LoadingContainer, Loader } from '../styled/Loading';
 
 function Login() {
   const [email, setEmail] = React.useState('');
@@ -19,12 +20,20 @@ function Login() {
       }
     }
   `;
-  const [loginUser, { data }] = useMutation(LOGIN_USER, {
+  const [loginUser, { data, loading }] = useMutation(LOGIN_USER, {
     variables: { email: email, password: password }
   });
+  if (loading) {
+    return (
+      <LoadingContainer>
+        <Loader />
+      </LoadingContainer>
+    );
+  }
 
   if (data) {
     setAuthTokens(data.login.token);
+    return <Redirect to="/home" />;
   }
   const handleSubmit = event => {
     event.preventDefault();
