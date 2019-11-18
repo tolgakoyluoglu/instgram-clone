@@ -1,6 +1,0 @@
-{
-  "domain": "dev-upjl3-kx.auth0.com",
-  "clientId": "rLNi8A1Z8BgmZ4r4X6xKfok32Gpp5WsT",
-  "redirect_uri": "http://localhost:3000/callback",
-  "audience": "https://graphql-postgres-fullstack.herokuapp.com/v1/graphql"
-}
