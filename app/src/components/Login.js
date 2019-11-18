@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 //Components
-import { Card, Logo, Form, Input, Button } from '../styled/LoginForm';
-import { useAuth } from '../auth/auth';
+import { Card, Form, Input, Button } from '../styled/LoginForm';
+import { useAuth } from '../auth/authContext';
 //Apollo stuff
 import { gql } from 'apollo-boost';
 import { useMutation } from '@apollo/react-hooks';
@@ -29,12 +29,10 @@ function Login() {
   const handleSubmit = event => {
     event.preventDefault();
     loginUser();
-    console.log(email, password);
   };
 
   return (
     <Card>
-      <Logo />
       <Form type="submit" onSubmit={handleSubmit}>
         <Input
           type="email"

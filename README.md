@@ -1,4 +1,4 @@
 ## Instagram Clone
 
-- React on the client side with Auth0 for authentication.
-- Hasura GraphQL Engine and Postgres for the Backend.
+- React on the front-end.
+- Nodejs on the back-end.

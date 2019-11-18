@@ -2,14 +2,14 @@ import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { ApolloProvider } from '@apollo/react-hooks';
 
-import { AuthContext } from './auth/auth';
+import { AuthContext } from './auth/authContext';
 //Components
 import Header from './components/Header';
 import Profile from './components/Profile';
 import Home from './components/Home';
 import Login from './components/Login';
 import Signup from './components/Signup';
-import PrivateRoute from './components/PrivateRoute';
+import PrivateRoute from './common/PrivateRoute';
 import ApolloClient from 'apollo-boost';
 
 function App() {

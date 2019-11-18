@@ -35,4 +35,4 @@ const Button = styled.button`
   font-size: 0.8rem;
 `;
 
-export { Form, Input, Button, Logo, Card, Error };
+export { Form, Input, Button, Card };
