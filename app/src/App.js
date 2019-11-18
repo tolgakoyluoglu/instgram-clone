@@ -1,73 +1,44 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { useAuth0 } from './auth/Auth0Wrapper';
-
 import { ApolloProvider } from '@apollo/react-hooks';
-import { ApolloClient, HttpLink, InMemoryCache } from 'apollo-boost';
-import { setContext } from 'apollo-link-context';
 
+import { AuthContext } from './auth/auth';
 //Components
 import Header from './components/Header';
 import Profile from './components/Profile';
+import Home from './components/Home';
+import Login from './components/Login';
+import Signup from './components/Signup';
 import PrivateRoute from './components/PrivateRoute';
+import ApolloClient from 'apollo-boost';
 
 function App() {
-  const { loading } = useAuth0();
-  const [accessToken, setAccessToken] = React.useState('');
-  const { getTokenSilently } = useAuth0();
+  const [authTokens, setAuthTokens] = React.useState();
 
-  const getAccessToken = async () => {
-    try {
-      const token = await getTokenSilently();
-      setAccessToken(token);
-    } catch (e) {
-      //console.log(e);
-    }
+  const setTokens = data => {
+    localStorage.setItem('tokens', JSON.stringify(data));
+    setAuthTokens(data);
   };
-  getAccessToken();
-
-  const authLink = setContext((_, { headers }) => {
-    const token = accessToken;
-    if (token) {
-      return {
-        headers: {
-          ...headers,
-          authorization: `Bearer ${token}`
-        }
-      };
-    } else {
-      return {
-        headers: {
-          ...headers
-        }
-      };
-    }
-  });
-
-  const httpLink = new HttpLink({
-    uri: 'https://graphql-postgres-fullstack.herokuapp.com/v1/graphql'
-  });
 
   const client = new ApolloClient({
-    link: authLink.concat(httpLink),
-    cache: new InMemoryCache()
+    uri: 'http://localhost:4000/graphql'
   });
-
-  if (loading) {
-    return <div>Loading..</div>;
-  }
-
   return (
     <ApolloProvider client={client}>
-      <div className="App">
-        <BrowserRouter>
-          <Header />
-          <Switch>
-            <Route path="/" exact />
-            <PrivateRoute path="/profile" component={Profile} />
-          </Switch>
-        </BrowserRouter>
-      </div>
+      <AuthContext.Provider value={{ authTokens, setAuthTokens: setTokens }}>
+        <div className="App">
+          <BrowserRouter>
+            <Header />
+            <Switch>
+              <Route path="/login" component={Login} />
+              <Route path="/signup" component={Signup} />
+              <Route path="/" exact component={Login} />
+              <PrivateRoute path="/profile" component={Profile} />
+              <PrivateRoute path="/home" component={Home} />
+            </Switch>
+          </BrowserRouter>
+        </div>
+      </AuthContext.Provider>
     </ApolloProvider>
   );
 }
