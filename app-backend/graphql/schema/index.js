@@ -5,7 +5,7 @@ module.exports = buildSchema(`
     _id: ID!
     title: String! 
     url: String!  
-    creator: User!
+    creator: [User!]
   }
 
   type User {

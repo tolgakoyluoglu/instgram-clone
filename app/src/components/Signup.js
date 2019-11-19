@@ -7,7 +7,7 @@ import { gql } from 'apollo-boost';
 import { useMutation } from '@apollo/react-hooks';
 import { LoadingContainer, Loader } from '../styled/Loading';
 
-function Login() {
+const SignUp = () => {
   const [email, setEmail] = React.useState('');
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
@@ -72,6 +72,6 @@ function Login() {
       <Link to="/signup">Already have an account?</Link>
     </Card>
   );
-}
+};
 
-export default Login;
+export default SignUp;
