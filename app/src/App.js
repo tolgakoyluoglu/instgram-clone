@@ -6,7 +6,7 @@ import { AuthContext } from './auth/authContext';
 //Components
 import Header from './components/Header';
 import Profile from './components/Profile';
-import Home from './components/Home';
+import Feed from './components/Feed';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import PrivateRoute from './common/PrivateRoute';
@@ -34,7 +34,7 @@ function App() {
               <Route path="/signup" component={Signup} />
               <Route path="/" exact component={Login} />
               <PrivateRoute path="/profile" component={Profile} />
-              <PrivateRoute path="/home" component={Home} />
+              <PrivateRoute path="/feed" component={Feed} />
             </Switch>
           </BrowserRouter>
         </div>
