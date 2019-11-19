@@ -33,7 +33,7 @@ function Login() {
 
   if (data) {
     setAuthTokens(data.login.token);
-    return <Redirect to="/home" />;
+    return <Redirect to="/feed" />;
   }
   const handleSubmit = event => {
     event.preventDefault();
