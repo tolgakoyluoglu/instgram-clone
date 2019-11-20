@@ -2,24 +2,17 @@ import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 //Components
 import { Card, Form, Input, Button } from '../styled/LoginForm';
-import { useAuth } from '../auth/authContext';
+import { useAuth } from '../shared/auth/authContext';
 //Apollo stuff
-import { gql } from 'apollo-boost';
 import { useMutation } from '@apollo/react-hooks';
 import { LoadingContainer, Loader } from '../styled/Loading';
+import { LOGIN_USER } from '../shared/utils/graphql';
 
 const Login = () => {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const { setAuthTokens } = useAuth();
 
-  const LOGIN_USER = gql`
-    mutation userLogin($email: String!, $password: String!) {
-      login(email: $email, password: $password) {
-        token
-      }
-    }
-  `;
   const [loginUser, { data, loading }] = useMutation(LOGIN_USER, {
     variables: { email: email, password: password }
   });

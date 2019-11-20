@@ -3,29 +3,14 @@ import { Link, Redirect } from 'react-router-dom';
 //Components
 import { Card, Form, Input, Button } from '../styled/LoginForm';
 //Apollo stuff
-import { gql } from 'apollo-boost';
 import { useMutation } from '@apollo/react-hooks';
 import { LoadingContainer, Loader } from '../styled/Loading';
+import { CREATE_USER } from '../shared/utils/graphql';
 
 const SignUp = () => {
   const [email, setEmail] = React.useState('');
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
-
-  const CREATE_USER = gql`
-    mutation createUser(
-      $email: String!
-      $username: String!
-      $password: String!
-    ) {
-      createUser(
-        userInput: { email: $email, username: $username, password: $password }
-      ) {
-        username
-        email
-      }
-    }
-  `;
   const [createUser, { data, loading }] = useMutation(CREATE_USER, {
     variables: { email: email, username: username, password: password }
   });
