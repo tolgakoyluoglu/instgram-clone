@@ -1,44 +1,42 @@
 import React from 'react';
-import { gql } from 'apollo-boost';
-import { useQuery } from '@apollo/react-hooks';
+import { useMutation } from '@apollo/react-hooks';
+import Posts from './Posts';
+import { CREATE_POST, GET_POSTS } from '../shared/utils/graphql';
+import { LoadingContainer, Loader } from '../styled/Loading';
 
-const GET_POSTS = gql`
-  {
-    posts {
-      title
-      url
-      _id
-      creator {
-        username
-        email
-        _id
-      }
-    }
-  }
-`;
 const Feed = () => {
-  const { loading, error, data } = useQuery(GET_POSTS);
   const [image, setImage] = React.useState('');
   const [title, setTitle] = React.useState('');
 
-  if (loading) return 'Loading...';
+  const [createPost, { data, error, loading }] = useMutation(CREATE_POST, {
+    variables: { title: title, url: image },
+    update(proxy, result) {
+      const data = proxy.readQuery({
+        query: GET_POSTS
+      });
+      data.posts.push(result.data.createPost);
+      proxy.writeQuery({ query: GET_POSTS, data: { ...data } });
+    }
+  });
+
+  const handleSubmit = event => {
+    event.preventDefault();
+    createPost();
+  };
+
   if (error) return `Error! ${error.message}`;
 
-  console.log(data.posts);
-  const posts = data.posts.map(post => {
+  if (loading)
     return (
-      <div key={post._id}>
-        <p>{post.title}</p>
-        <img src={post.url} />
-        <p>{post.creator[0].username}</p>
-      </div>
+      <LoadingContainer>
+        <Loader />
+      </LoadingContainer>
     );
-  });
 
   return (
     <div>
       <h1>Feed</h1>
-      <form>
+      <form onSubmit={handleSubmit}>
         <input
           value={title}
           type="text"
@@ -48,12 +46,12 @@ const Feed = () => {
         <input
           value={image}
           type="text"
-          placeholder="Url"
+          placeholder="Image"
           onChange={e => setImage(e.target.value)}
         />
-        <button>Add Photo</button>
+        <button type="submit">Add Photo</button>
       </form>
-      <div>{posts}</div>
+      <Posts />
     </div>
   );
 };
