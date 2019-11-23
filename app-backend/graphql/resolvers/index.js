@@ -47,10 +47,11 @@ module.exports = {
   },
   createUser: async args => {
     return await User.findOne({
-      email: args.userInput.email,
-      username: args.userInput.username
+      username: args.userInput.username,
+      email: args.userInput.email
     })
       .then(user => {
+        console.log(args.userInput.username);
         if (user) {
           throw new Error('User already exists.');
         }
@@ -86,5 +87,16 @@ module.exports = {
       { expiresIn: '2h' }
     );
     return { userId: user.id, token: token, tokenExp: 2 };
+  },
+  follow: async (args, req) => {
+    const user = await User.findById(req.userId); // The logged in user who wants to follow someone
+    const followedUser = await User.findById(req.userId); //The user the logged in user wants to follow
+    if (!user) {
+      return new Error('User does not exist');
+    }
+    await user.following.addToSet(args.following);
+    await followedUser.followers.addToSet(args.followers);
+    await user.save();
+    await followedUser.save();
   }
 };
