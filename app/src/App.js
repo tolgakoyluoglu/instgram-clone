@@ -7,12 +7,12 @@ import { createHttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 //Components
 import { AuthContext } from './shared/auth/authContext';
-import Header from './components/Header';
-import Profile from './components/Profile';
-import Feed from './components/Feed';
-import Login from './components/Login';
-import Signup from './components/Signup';
-import Post from './components/Post';
+import Header from './components/views/layout/Header';
+import Profile from './components/views/profile';
+import Feed from './components/views/feed/Feed';
+import Login from './components/views/auth/Login';
+import Signup from './components/views/auth/Signup';
+import Post from './components/views/feed/Post';
 
 function App() {
   const [authTokens, setAuthTokens] = React.useState();
