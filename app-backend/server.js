@@ -1,11 +1,11 @@
 const express = require('express');
 const app = express();
-const port = 4000;
 const graphqlHttp = require('express-graphql');
 const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config();
 const isAuth = require('./middleware/isAuth');
+app.use(express.json());
 
 const graphQlSchema = require('./graphql/schema/index');
 const graphQlResolvers = require('./graphql/resolvers/index');
@@ -33,4 +33,6 @@ mongoose.connect(
   }
 );
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+app.listen(4000, () => {
+  console.log('Server is running at port : ' + 4000);
+});

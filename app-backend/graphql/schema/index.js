@@ -43,6 +43,7 @@ module.exports = buildSchema(`
       posts: [Post!]!
       getFollowers: [Follow!]!
       getFollowing: [Follow!]!
+      userPosts(userId: String!): [Post!]!
   }
 
   type RootMutation {

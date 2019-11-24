@@ -5,10 +5,21 @@ const jwt = require('jsonwebtoken');
 const Follow = require('../../models/Following');
 
 module.exports = {
-  posts: () => {
+  posts: async req => {
     return Post.find()
       .populate('creator')
       .then(posts => {
+        return posts;
+      })
+      .catch(err => {
+        throw err;
+      });
+  },
+  userPosts: args => {
+    console.log(args);
+    return Post.find({ creator: args.userId })
+      .then(posts => {
+        console.log(posts);
         return posts;
       })
       .catch(err => {
@@ -42,7 +53,6 @@ module.exports = {
         return createdPost;
       })
       .catch(err => {
-        console.log(err);
         throw err;
       });
   },
@@ -52,7 +62,6 @@ module.exports = {
       email: args.userInput.email
     })
       .then(user => {
-        console.log(args.userInput.username);
         if (user) {
           throw new Error('User already exists.');
         }
