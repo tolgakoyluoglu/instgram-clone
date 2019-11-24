@@ -5,17 +5,30 @@ import ApolloClient from 'apollo-client';
 import { setContext } from 'apollo-link-context';
 import { createHttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
+
 //Components
 import { AuthContext } from './shared/auth/authContext';
-import Header from './components/views/layout/Header';
-import Profile from './components/views/profile/Profile';
-import Feed from './components/views/feed/Feed';
-import Login from './components/views/auth/Login';
-import Signup from './components/views/auth/Signup';
-import Post from './components/views/feed/Post';
+import Header from './components/Header';
+import Profile from './components/Profile';
+import Feed from './components/Feed';
+import Login from './components/Login';
+import Signup from './components/Signup';
 
+import { createGlobalStyle } from 'styled-components';
+
+const GlobalStyle = createGlobalStyle`
+  html, body {
+    font-family: sans-serif;
+    background-color: #FAFAFC;
+    margin: 0;
+    padding: 0;
+  }
+`;
 function App() {
   const [authTokens, setAuthTokens] = React.useState();
+  const [userId, setUserId] = React.useState();
+  const [tokenExp, setTokenExp] = React.useState();
+
   const httpLink = createHttpLink({
     uri: 'http://localhost:4000/graphql'
   });
@@ -25,6 +38,13 @@ function App() {
     setAuthTokens(data);
   };
 
+  const setUser = data => {
+    setUserId(data);
+  };
+
+  const setExp = data => {
+    setTokenExp(data);
+  };
   const authLink = setContext(() => {
     const token = localStorage.getItem('tokens');
     return {
@@ -41,16 +61,25 @@ function App() {
 
   return (
     <ApolloProvider client={client}>
+      <GlobalStyle />
       <BrowserRouter>
-        {!authTokens && <Redirect path="/" to="/login" />}
-        <AuthContext.Provider value={{ authTokens, setAuthTokens: setTokens }}>
+        <AuthContext.Provider
+          value={{
+            authTokens,
+            setAuthTokens: setTokens,
+            userId,
+            setUserId: setUser,
+            tokenExp,
+            setTokenExp: setExp
+          }}
+        >
           <Header />
           <Switch>
-            <Route path="/login" component={Login} />
-            <Route path="/signup" component={Signup} />
-            <Route path="/profile" component={Profile} />
-            <Route path="/feed" component={Feed} />
-            <Route path="/post/:id" component={Post} />
+            {!authTokens && <Redirect path="/" to="/login" exact />}
+            {!authTokens && <Route path="/login" component={Login} />}
+            {!authTokens && <Route path="/signup" component={Signup} />}
+            {authTokens && <Route path="/profile/:id" component={Profile} />}
+            {authTokens && <Route path="/feed" component={Feed} />}
           </Switch>
         </AuthContext.Provider>
       </BrowserRouter>
