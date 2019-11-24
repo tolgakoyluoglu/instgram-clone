@@ -15,15 +15,19 @@ const Posts = () => {
         <Loader />
       </LoadingContainer>
     );
-
   const posts = data.posts.map(post => {
+    console.log(post);
     return (
       <div key={post._id}>
         <p>{post.title}</p>
         <Link to={{ pathname: '/post/' + post._id }}>
           <img src={post.url} alt={post.title} />
         </Link>
-        {post.username ? <p>{post.creator[0].username}</p> : null}
+        {post.creator ? (
+          <Link to={{ pathname: '/profile/' + post.creator[0].username }}>
+            <p>{post.creator[0].username}</p>{' '}
+          </Link>
+        ) : null}
       </div>
     );
   });

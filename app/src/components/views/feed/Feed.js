@@ -18,7 +18,6 @@ const Feed = () => {
       proxy.writeQuery({ query: GET_POSTS, data: { ...data } });
     }
   });
-
   const handleSubmit = event => {
     event.preventDefault();
     createPost();
@@ -36,6 +35,7 @@ const Feed = () => {
         <Loader />
       </LoadingContainer>
     );
+  console.log('test');
 
   return (
     <div>

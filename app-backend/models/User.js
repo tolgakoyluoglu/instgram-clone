@@ -10,13 +10,7 @@ const UserSchema = new mongoose.Schema({
       ref: 'Post'
     }
   ],
-  register_date: { type: Date, default: Date.now },
-  followers: {
-    type: []
-  },
-  following: {
-    type: []
-  }
+  register_date: { type: Date, default: Date.now }
 });
 
 module.exports = mongoose.model('User', UserSchema);

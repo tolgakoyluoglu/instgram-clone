@@ -14,8 +14,12 @@ module.exports = buildSchema(`
     password: String
     username: String!
     createdPosts: [Post!]
-    followers: [String]!
-    following: [String]!
+  }
+
+  type Follow {
+    _id: ID!
+    userId: String!
+    follow: String!
   }
 
   type Auth {
@@ -37,12 +41,14 @@ module.exports = buildSchema(`
 
   type RootQuery {
       posts: [Post!]!
+      getFollowers: [Follow!]!
   }
+
   type RootMutation {
     createPost(postInput: PostInput): Post
     createUser(userInput: UserInput): User
     login(email: String!, password: String!): Auth!
-    follow(followers: String!, following: String!): User
+    follow(followers: String!, userId: String!): Follow
   }
   schema {
       query: RootQuery

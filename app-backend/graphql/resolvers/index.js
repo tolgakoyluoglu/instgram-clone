@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs');
 const Post = require('../../models/Post');
 const User = require('../../models/User');
 const jwt = require('jsonwebtoken');
+const Follow = require('../../models/Following');
 
 module.exports = {
   posts: () => {
@@ -89,14 +90,32 @@ module.exports = {
     return { userId: user.id, token: token, tokenExp: 2 };
   },
   follow: async (args, req) => {
-    const user = await User.findById(req.userId); // The logged in user who wants to follow someone
-    const followedUser = await User.findById(req.userId); //The user the logged in user wants to follow
-    if (!user) {
-      return new Error('User does not exist');
+    if (!req.isAuth) {
+      throw new Error('Unauthorizied!');
     }
-    await user.following.addToSet(args.following);
-    await followedUser.followers.addToSet(args.followers);
-    await user.save();
-    await followedUser.save();
+    const follow = new Follow({
+      userId: req.userId,
+      follow: args.follow
+    });
+    const exist = await Follow.findOne({
+      userId: follow.userId,
+      follow: follow.follow
+    });
+    if (!exist) {
+      return await follow.save();
+    } else {
+      return new Error('You already follow this user!');
+    }
+  },
+  getFollowers: async (args, req) => {
+    if (!req.isAuth) {
+      throw new Error('Unauthorizied!');
+    }
+    const followers = await Follow.find({ userId: req.userId });
+    if (!followers) {
+      return new Error('User not found');
+    } else {
+      return followers;
+    }
   }
 };

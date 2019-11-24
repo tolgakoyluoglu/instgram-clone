@@ -8,7 +8,7 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 //Components
 import { AuthContext } from './shared/auth/authContext';
 import Header from './components/views/layout/Header';
-import Profile from './components/views/profile';
+import Profile from './components/views/profile/Profile';
 import Feed from './components/views/feed/Feed';
 import Login from './components/views/auth/Login';
 import Signup from './components/views/auth/Signup';

@@ -22,7 +22,7 @@ const SignUp = () => {
     );
   }
   if (data) {
-    return <Redirect to="/" />;
+    return <Redirect to="/login" />;
   }
   const handleSubmit = event => {
     event.preventDefault();
