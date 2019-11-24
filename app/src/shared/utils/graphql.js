@@ -26,6 +26,20 @@ const GET_POSTS = gql`
     }
   }
 `;
+
+const USER_POSTS = gql`
+  query($id: String!) {
+    userPosts(userId: $id) {
+      _id
+      title
+      url
+      creator {
+        _id
+      }
+    }
+  }
+`;
+
 const LOGIN_USER = gql`
   mutation userLogin($email: String!, $password: String!) {
     login(email: $email, password: $password) {
@@ -46,4 +60,4 @@ const CREATE_USER = gql`
   }
 `;
 
-export { CREATE_POST, GET_POSTS, LOGIN_USER, CREATE_USER };
+export { CREATE_POST, GET_POSTS, LOGIN_USER, CREATE_USER, USER_POSTS };

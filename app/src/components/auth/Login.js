@@ -1,17 +1,17 @@
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 //Components
-import { Card, Form, Input, Button } from '../styled/LoginForm';
-import { useAuth } from '../shared/auth/authContext';
+import { Card, Form, Input, Button } from './LoginForm';
+import { useAuth } from '../../shared/auth/authContext';
 //Apollo stuff
 import { useMutation } from '@apollo/react-hooks';
-import { LoadingContainer, Loader } from '../styled/Loading';
-import { LOGIN_USER } from '../shared/utils/graphql';
+import { LoadingContainer, Loader } from '../../styled/Loading';
+import { LOGIN_USER } from '../../shared/utils/graphql';
 
 const Login = () => {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
-  const { setAuthTokens, setUserId, setTokenExp } = useAuth();
+  const { setAuthTokens, setTokenExp } = useAuth();
   const [loginUser, { data, loading, error }] = useMutation(LOGIN_USER, {
     variables: { email: email, password: password }
   });
@@ -25,7 +25,6 @@ const Login = () => {
 
   if (data) {
     setAuthTokens(data.login.token);
-    setUserId(data.login.userId);
     setTokenExp(data.login.tokenExp);
     return <Redirect to="/feed" />;
   }
