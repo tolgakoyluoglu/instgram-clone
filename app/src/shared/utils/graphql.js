@@ -30,6 +30,8 @@ const LOGIN_USER = gql`
   mutation userLogin($email: String!, $password: String!) {
     login(email: $email, password: $password) {
       token
+      tokenExp
+      userId
     }
   }
 `;
