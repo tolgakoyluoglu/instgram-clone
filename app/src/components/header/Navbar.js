@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 const Navbar = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 80%;
+  width: 75%;
   margin: auto;
   font-size: 14px;
 `;
@@ -22,7 +22,7 @@ const StyledLink = styled(NavLink)`
   text-decoration: none;
   color: #171e45;
   font-size: 15px;
-  font-weight: 600;
+  font-weight: 500;
 `;
 
 const PageContainer = styled.div`
