@@ -1,5 +1,5 @@
 import React from 'react';
-import { useAuth } from '../shared/auth/authContext';
+import { useAuth } from '../../shared/auth/authContext';
 import {
   Navbar,
   List,
@@ -7,7 +7,7 @@ import {
   StyledLink,
   PageContainer,
   PageHeader
-} from '../styled/Navbar';
+} from './Navbar';
 const Header = () => {
   const { authTokens, setAuthTokens } = useAuth();
 

@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 //Components
-import { Card, Form, Input, Button } from '../styled/LoginForm';
+import { Card, Form, Input, Button } from './LoginForm';
 //Apollo stuff
 import { useMutation } from '@apollo/react-hooks';
-import { LoadingContainer, Loader } from '../styled/Loading';
-import { CREATE_USER } from '../shared/utils/graphql';
+import { LoadingContainer, Loader } from '../../styled/Loading';
+import { CREATE_USER } from '../../shared/utils/graphql';
 
 const SignUp = () => {
   const [email, setEmail] = React.useState('');

@@ -8,11 +8,11 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 
 //Components
 import { AuthContext } from './shared/auth/authContext';
-import Header from './components/Header';
-import Profile from './components/Profile';
-import Feed from './components/Feed';
-import Login from './components/Login';
-import Signup from './components/Signup';
+import Header from './components/header/Header';
+import Profile from './components/profile/Profile';
+import Feed from './components/feed/Feed';
+import Login from './components/auth/Login';
+import Signup from './components/auth/Signup';
 
 import { createGlobalStyle } from 'styled-components';
 
@@ -39,6 +39,7 @@ function App() {
   };
 
   const setUser = data => {
+    localStorage.setItem('userId', data);
     setUserId(data);
   };
 
@@ -63,6 +64,7 @@ function App() {
     <ApolloProvider client={client}>
       <GlobalStyle />
       <BrowserRouter>
+        {!authTokens && <Redirect path="/" to="/login" exact />}
         <AuthContext.Provider
           value={{
             authTokens,

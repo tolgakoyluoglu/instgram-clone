@@ -1,7 +1,7 @@
 import React from 'react';
 
 import './Modal.css';
-import { Button } from '../../styled/Feed';
+import { Button } from '../../components/feed/StyledFeed';
 
 const Modal = props => (
   <div className="modal">

@@ -1,35 +1,14 @@
 import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
-import { LoadingContainer, Loader } from '../styled/Loading';
+import { LoadingContainer, Loader } from '../../styled/Loading';
 import { Link } from 'react-router-dom';
-import { GET_POSTS } from '../shared/utils/graphql';
-import styled from 'styled-components';
+import { GET_POSTS } from '../../shared/utils/graphql';
+import { Card, Image } from './StyledPosts';
 
-const Card = styled.div`
-  width: 50%;
-  margin: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  border-radius: 3px;
-  border: 1px solid #e6e6e6;
-  background-color: #fff;
-  margin-bottom: 60px;
-`;
-
-const Image = styled.img`
-  min-width: 100%;
-  min-height: 100%;
-  width: 1000px;
-  height: auto;
-  max-width: 100%;
-  max-height: 600px;
-`;
 const Posts = () => {
   const { loading, error, data } = useQuery(GET_POSTS);
 
   if (error) return `Error! ${error.message}`;
-
   if (loading)
     return (
       <LoadingContainer>
@@ -45,7 +24,7 @@ const Posts = () => {
           <Image src={post.url} alt={post.title} />
         </Link>
         {post.creator ? (
-          <Link to={{ pathname: '/profile/' + post.creator[0].username }}>
+          <Link to={{ pathname: '/profile/' + post.creator[0]._id }}>
             <p>{post.creator[0].username}</p>{' '}
           </Link>
         ) : null}
