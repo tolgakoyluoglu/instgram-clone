@@ -95,11 +95,11 @@ module.exports = {
     }
     const follow = new Follow({
       userId: req.userId,
-      follow: args.follow
+      follow: args.followerId
     });
     const exist = await Follow.findOne({
       userId: follow.userId,
-      follow: follow.follow
+      follow: follow.followerId
     });
     if (!exist) {
       return await follow.save();
@@ -116,6 +116,17 @@ module.exports = {
       return new Error('User not found');
     } else {
       return followers;
+    }
+  },
+  getFollowing: async (args, req) => {
+    if (!req.isAuth) {
+      throw new Error('Unauthorizied!');
+    }
+    const following = await Follow.find({ follow: args.followerId });
+    if (!following) {
+      return new Error('You are not following anyone!');
+    } else {
+      return following;
     }
   }
 };

@@ -42,6 +42,7 @@ module.exports = buildSchema(`
   type RootQuery {
       posts: [Post!]!
       getFollowers: [Follow!]!
+      getFollowing: [Follow!]!
   }
 
   type RootMutation {
