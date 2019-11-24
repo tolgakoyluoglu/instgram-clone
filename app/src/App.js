@@ -22,6 +22,7 @@ const GlobalStyle = createGlobalStyle`
     background-color: #FAFAFC;
     margin: 0;
     padding: 0;
+    min-height: calc(90vh - 30px);
   }
 `;
 function App() {
