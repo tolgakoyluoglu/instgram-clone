@@ -48,7 +48,6 @@ const UploadButton = styled.button`
   height: 53px;
   width: 56px;
   padding-left: 10px;
-  margin-left: 12px;
   text-indent: -1000%;
   top: 80%;
   left: 85%;
@@ -56,6 +55,9 @@ const UploadButton = styled.button`
   border: none;
   outline: none;
   cursor: pointer;
+  @media only screen and (min-width: 500px) {
+    margin-left: 12px;
+  }
 `;
 
 export { Form, Input, Button, Card, UploadButton };

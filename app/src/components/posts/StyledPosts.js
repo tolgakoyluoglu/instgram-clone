@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const Card = styled.div`
-  width: 40%;
+  width: 90%;
   margin: auto;
   display: flex;
   flex-direction: column;
@@ -11,6 +11,12 @@ const Card = styled.div`
   background-color: #fff;
   margin-bottom: 60px;
   border-radius: 5px;
+  @media only screen and (min-width: 1000px) {
+    width: 70%;
+  }
+  @media only screen and (min-width: 1200px) {
+    width: 40%;
+  }
 `;
 
 const Image = styled.img`

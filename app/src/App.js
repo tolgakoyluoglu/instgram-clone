@@ -82,7 +82,7 @@ function App() {
           <Switch>
             {!authTokens && <Route path="/login" component={Login} />}
             {!authTokens && <Route path="/signup" component={Signup} />}
-            {authTokens && <Route path="/profile/:id" component={Profile} />}
+            {<Route path="/profile/:id" component={Profile} />}
             {<Route path="/feed" component={Feed} />}
           </Switch>
         </AuthContext.Provider>

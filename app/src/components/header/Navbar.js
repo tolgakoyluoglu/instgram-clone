@@ -4,9 +4,24 @@ import { NavLink } from 'react-router-dom';
 const Navbar = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 75%;
+  width: 90%;
   margin: auto;
   font-size: 14px;
+  h1 {
+    font-size: 18px;
+  }
+  @media only screen and (min-width: 700px) {
+    width: 95%;
+    h1 {
+      font-size: 25px;
+    }
+  }
+  @media only screen and (min-width: 1200px) {
+    width: 50%;
+    h1 {
+      font-size: 30px;
+    }
+  }
 `;
 const List = styled.ul`
   display: flex;
