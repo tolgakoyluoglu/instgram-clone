@@ -36,19 +36,22 @@ const Login = () => {
   return (
     <Card>
       <Form type="submit" onSubmit={handleSubmit}>
+        <h2>Sign in</h2>
         <Input
+          required
           type="email"
           placeholder="Email"
           value={email}
           onChange={event => setEmail(event.target.value)}
         />
         <Input
+          required
           type="password"
           placeholder="Password"
           value={password}
           onChange={e => setPassword(e.target.value)}
         />
-        {error && <p>Invalid Credentials. Please try again.</p>}
+        {error && <p>Invalid username or password. Please try again.</p>}
         <Button type="submit" value="Submit">
           Sign In
         </Button>

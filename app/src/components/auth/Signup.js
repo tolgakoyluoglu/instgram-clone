@@ -32,19 +32,23 @@ const SignUp = () => {
   return (
     <Card>
       <Form type="submit" onSubmit={handleSubmit}>
+        <h2>Register</h2>
         <Input
+          required
           type="email"
           placeholder="Email"
           value={email}
           onChange={event => setEmail(event.target.value)}
         />
         <Input
+          required
           type="text"
           placeholder="Username"
           value={username}
           onChange={event => setUsername(event.target.value)}
         />
         <Input
+          required
           type="password"
           placeholder="Password"
           value={password}

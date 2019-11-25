@@ -5,7 +5,7 @@ const Card = styled.div`
   padding-top: 50px;
   min-height: calc(100vh - 70px);
   box-sizing: border-box;
-  max-width: 80%
+  max-width: 80%;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -26,7 +26,7 @@ const Input = styled.input`
 `;
 
 const Button = styled.button`
-  background: linear-gradient(to bottom, #6371c7, #5563c1);
+  background: linear-gradient(to bottom, #6371c7, #3897f0);
   border-color: #3f4eae;
   border-radius: 3px;
   padding: 1rem;

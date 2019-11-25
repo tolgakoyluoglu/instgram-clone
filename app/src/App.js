@@ -18,10 +18,11 @@ import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
   html, body {
-    font-family: sans-serif;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
     background-color: #FAFAFC;
     margin: 0;
     padding: 0;
+    color: #262626;
     min-height: calc(90vh - 30px);
   }
 `;
@@ -47,6 +48,7 @@ function App() {
   const setExp = data => {
     setTokenExp(data);
   };
+
   const authLink = setContext(() => {
     const token = localStorage.getItem('tokens');
     return {
@@ -60,12 +62,12 @@ function App() {
     link: authLink.concat(httpLink),
     cache: new InMemoryCache()
   });
+  //{!authTokens && <Redirect path="/" to="/login" exact />}
 
   return (
     <ApolloProvider client={client}>
       <GlobalStyle />
       <BrowserRouter>
-        {!authTokens && <Redirect path="/" to="/login" exact />}
         <AuthContext.Provider
           value={{
             authTokens,
@@ -78,11 +80,10 @@ function App() {
         >
           <Header />
           <Switch>
-            {!authTokens && <Redirect path="/" to="/login" exact />}
             {!authTokens && <Route path="/login" component={Login} />}
             {!authTokens && <Route path="/signup" component={Signup} />}
             {authTokens && <Route path="/profile/:id" component={Profile} />}
-            {authTokens && <Route path="/feed" component={Feed} />}
+            {<Route path="/feed" component={Feed} />}
           </Switch>
         </AuthContext.Provider>
       </BrowserRouter>

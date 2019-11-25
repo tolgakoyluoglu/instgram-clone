@@ -20,9 +20,12 @@ const ListItem = styled.li`
 
 const StyledLink = styled(NavLink)`
   text-decoration: none;
-  color: #171e45;
+  color: #262626;
   font-size: 15px;
   font-weight: 500;
+  &:hover {
+    color: #3897f0;
+  }
 `;
 
 const PageContainer = styled.div`
