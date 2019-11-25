@@ -14,7 +14,10 @@ const Card = styled.div`
 const Form = styled.form`
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 80%;
+  @media only screen and (min-width: 500px) {
+    width: 100%;
+  }
 `;
 
 const Input = styled.input`

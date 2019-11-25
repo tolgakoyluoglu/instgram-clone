@@ -42,7 +42,6 @@ const Profile = ({ match }) => {
   const posts = data.userPosts.map(post => {
     return (
       <Card key={post._id}>
-        <h3>{post.title}</h3>
         <Link to={{ pathname: '/post/' + post._id }}>
           <Image src={post.url} alt={post.title} />
         </Link>
