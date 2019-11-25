@@ -25,6 +25,9 @@ const Header = () => {
           {authTokens && (
             <>
               <ListItem>
+                <input type="text" placeholder="Search.." />
+              </ListItem>
+              <ListItem>
                 <StyledLink to="/feed">Feed</StyledLink>
               </ListItem>
               <ListItem>

@@ -3,7 +3,15 @@ import { useQuery } from '@apollo/react-hooks';
 import { LoadingContainer, Loader } from '../../styled/Loading';
 import { Link } from 'react-router-dom';
 import { GET_POSTS } from '../../shared/utils/graphql';
-import { Card, Image } from './StyledPosts';
+import {
+  Card,
+  Image,
+  CardBody,
+  CardHeader,
+  CommentContainer,
+  ImageContainer
+} from './StyledPosts';
+import Avatar from '../profile/avatar.png';
 
 const Posts = () => {
   const { loading, error, data } = useQuery(GET_POSTS);
@@ -19,15 +27,30 @@ const Posts = () => {
   const posts = data.posts.map(post => {
     return (
       <Card key={post._id}>
-        <h3>{post.title}</h3>
+        <CardHeader>
+          <ImageContainer>
+            <img src={Avatar} alt={post.title} />
+            {post.creator ? (
+              <Link to={{ pathname: '/profile/' + post.creator[0]._id }}></Link>
+            ) : null}
+          </ImageContainer>
+          <p>{post.creator[0].username}</p>
+        </CardHeader>
         <Link to={{ pathname: '/post/' + post._id }}>
           <Image src={post.url} alt={post.title} />
         </Link>
-        {post.creator ? (
-          <Link to={{ pathname: '/profile/' + post.creator[0]._id }}>
-            <p>{post.creator[0].username}</p>{' '}
-          </Link>
-        ) : null}
+        <CardBody>
+          {post.creator ? (
+            <Link to={{ pathname: '/profile/' + post.creator[0]._id }}>
+              <p>{post.creator[0].username}</p>
+            </Link>
+          ) : null}
+          <p>{post.title}</p>
+        </CardBody>
+        <CommentContainer>
+          <input type="text" placeholder="Add a comment..." />
+          <button>Post</button>
+        </CommentContainer>
       </Card>
     );
   });

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const Card = styled.div`
-  padding-top: 50px;
+  padding-top: 100px;
   min-height: calc(100vh - 70px);
   box-sizing: border-box;
   max-width: 410px;
@@ -25,8 +25,8 @@ const Input = styled.input`
 `;
 
 const Button = styled.button`
-  background: linear-gradient(to bottom, #6371c7, #5563c1);
-  border-color: #3f4eae;
+  background-color: #3897f0;
+  border: none;
   border-radius: 3px;
   padding: 1rem;
   color: white;
