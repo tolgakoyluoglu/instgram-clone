@@ -129,7 +129,7 @@ module.exports = {
     if (!req.isAuth) {
       throw new Error('Unauthorizied!');
     }
-    const following = await Follow.find({ following: args.followerId });
+    const following = await Follow.find({ userId: args.userId });
     if (!following) {
       return new Error('You are not following anyone!');
     } else {

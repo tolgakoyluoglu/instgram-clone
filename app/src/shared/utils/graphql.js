@@ -54,6 +54,13 @@ const GET_FOLLOWERS = gql`
     }
   }
 `;
+const GET_FOLLOWING = gql`
+  query($id: String!) {
+    getFollowing(userId: $id) {
+      _id
+    }
+  }
+`;
 const LOGIN_USER = gql`
   mutation userLogin($email: String!, $password: String!) {
     login(email: $email, password: $password) {
@@ -81,5 +88,6 @@ export {
   CREATE_USER,
   USER_POSTS,
   GET_FOLLOWERS,
-  FOLLOW_USER
+  FOLLOW_USER,
+  GET_FOLLOWING
 };

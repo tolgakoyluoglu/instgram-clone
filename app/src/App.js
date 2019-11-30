@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import { ApolloProvider } from '@apollo/react-hooks';
 import ApolloClient from 'apollo-client';
 import { setContext } from 'apollo-link-context';
@@ -55,13 +55,13 @@ function App() {
     <ApolloProvider client={client}>
       <GlobalStyle />
       <BrowserRouter>
+        {!authTokens && <Redirect from="/" to="/login" component={Login} />}
         <AuthContext.Provider value={{ authTokens, setAuthTokens: setTokens }}>
           <Header />
           <Switch>
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
             <PrivateRoute path="/profile/:id" component={Profile} />
-            <PrivateRoute path="/profile" />
             <PrivateRoute path="/feed" component={Feed} />
           </Switch>
         </AuthContext.Provider>
