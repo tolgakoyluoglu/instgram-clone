@@ -3,7 +3,8 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 import {
   USER_POSTS,
   FOLLOW_USER,
-  GET_FOLLOWERS
+  GET_FOLLOWERS,
+  GET_FOLLOWING
 } from '../../shared/utils/graphql';
 import { LoadingContainer, Loader } from '../../styled/Loading';
 import { Link } from 'react-router-dom';
@@ -36,13 +37,16 @@ const Profile = ({ match }) => {
     variables: { id }
   });
 
+  const followingQuery = useQuery(GET_FOLLOWING, {
+    variables: { id }
+  });
+
   const handleClick = () => {
     followUser(id);
   };
   if (error && query.error) {
     console.log(error && query.error);
   }
-
   if (loading) {
     return (
       <LoadingContainer>
@@ -71,6 +75,11 @@ const Profile = ({ match }) => {
           <button onClick={handleClick}>
             {query.data ? query.data.getFollowers.length : null}
           </button>
+          <span>
+            {followingQuery.data
+              ? followingQuery.data.getFollowing.length
+              : null}
+          </span>
         </AboutContainer>
       </BioContainer>
       <Container>{posts.reverse()}</Container>
