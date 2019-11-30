@@ -2,7 +2,7 @@ const bcrypt = require('bcryptjs');
 const Post = require('../../models/Post');
 const User = require('../../models/User');
 const jwt = require('jsonwebtoken');
-const Follow = require('../../models/Following');
+const Follow = require('../../models/Follow');
 
 module.exports = {
   posts: async req => {
@@ -16,10 +16,8 @@ module.exports = {
       });
   },
   userPosts: args => {
-    console.log(args);
     return Post.find({ creator: args.userId })
       .then(posts => {
-        console.log(posts);
         return posts;
       })
       .catch(err => {
@@ -104,11 +102,11 @@ module.exports = {
     }
     const follow = new Follow({
       userId: req.userId,
-      follow: args.followerId
+      following: args.following
     });
     const exist = await Follow.findOne({
-      userId: follow.userId,
-      follow: follow.followerId
+      userId: req.userId,
+      following: args.following
     });
     if (!exist) {
       return await follow.save();
@@ -120,7 +118,7 @@ module.exports = {
     if (!req.isAuth) {
       throw new Error('Unauthorizied!');
     }
-    const followers = await Follow.find({ userId: req.userId });
+    const followers = await Follow.find({ following: args.userId });
     if (!followers) {
       return new Error('User not found');
     } else {
@@ -131,7 +129,7 @@ module.exports = {
     if (!req.isAuth) {
       throw new Error('Unauthorizied!');
     }
-    const following = await Follow.find({ follow: args.followerId });
+    const following = await Follow.find({ following: args.followerId });
     if (!following) {
       return new Error('You are not following anyone!');
     } else {

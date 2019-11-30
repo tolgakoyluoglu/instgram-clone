@@ -26,7 +26,6 @@ const GET_POSTS = gql`
     }
   }
 `;
-
 const USER_POSTS = gql`
   query($id: String!) {
     userPosts(userId: $id) {
@@ -39,7 +38,22 @@ const USER_POSTS = gql`
     }
   }
 `;
-
+const FOLLOW_USER = gql`
+  mutation($id: String!) {
+    follow(following: $id, userId: "") {
+      userId
+      following
+    }
+  }
+`;
+const GET_FOLLOWERS = gql`
+  query($id: String!) {
+    getFollowers(userId: $id) {
+      _id
+      following
+    }
+  }
+`;
 const LOGIN_USER = gql`
   mutation userLogin($email: String!, $password: String!) {
     login(email: $email, password: $password) {
@@ -60,4 +74,12 @@ const CREATE_USER = gql`
   }
 `;
 
-export { CREATE_POST, GET_POSTS, LOGIN_USER, CREATE_USER, USER_POSTS };
+export {
+  CREATE_POST,
+  GET_POSTS,
+  LOGIN_USER,
+  CREATE_USER,
+  USER_POSTS,
+  GET_FOLLOWERS,
+  FOLLOW_USER
+};

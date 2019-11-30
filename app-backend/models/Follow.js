@@ -4,7 +4,7 @@ const FollowSchema = new mongoose.Schema({
   userId: {
     type: String
   },
-  follow: {
+  following: {
     type: String
   }
 });
