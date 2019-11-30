@@ -1,7 +1,10 @@
 import React from 'react';
-import { useQuery } from '@apollo/react-hooks';
-import { USER_POSTS } from '../../shared/utils/graphql';
-import { useAuth } from '../../shared/auth/authContext';
+import { useQuery, useMutation } from '@apollo/react-hooks';
+import {
+  USER_POSTS,
+  FOLLOW_USER,
+  GET_FOLLOWERS
+} from '../../shared/utils/graphql';
 import { LoadingContainer, Loader } from '../../styled/Loading';
 import { Link } from 'react-router-dom';
 import {
@@ -15,22 +18,30 @@ import {
   AboutContainer
 } from './StyledProfile';
 import Selfie from './avatar.png';
-// TODO:
-// create follow button and send mutation to update followers
 
 const Profile = ({ match }) => {
   const {
     params: { id }
   } = match;
-  const { setUserId } = useAuth();
-
-  React.useEffect(() => {
-    setUserId(id);
-  });
 
   const { loading, error, data } = useQuery(USER_POSTS, {
     variables: { id: id }
   });
+
+  const [followUser] = useMutation(FOLLOW_USER, {
+    variables: { id }
+  });
+
+  const query = useQuery(GET_FOLLOWERS, {
+    variables: { id }
+  });
+
+  const handleClick = () => {
+    followUser(id);
+  };
+  if (error && query.error) {
+    console.log(error && query.error);
+  }
 
   if (loading) {
     return (
@@ -57,6 +68,9 @@ const Profile = ({ match }) => {
         <AboutContainer>
           <h1>Profile</h1>
           <p>Lorem ipsum text bla bla</p>
+          <button onClick={handleClick}>
+            {query.data ? query.data.getFollowers.length : null}
+          </button>
         </AboutContainer>
       </BioContainer>
       <Container>{posts.reverse()}</Container>

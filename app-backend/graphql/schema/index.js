@@ -19,7 +19,7 @@ module.exports = buildSchema(`
   type Follow {
     _id: ID!
     userId: String!
-    follow: String!
+    following: String!
   }
 
   type Auth {
@@ -41,8 +41,8 @@ module.exports = buildSchema(`
 
   type RootQuery {
       posts: [Post!]!
-      getFollowers: [Follow!]!
       getFollowing: [Follow!]!
+      getFollowers(userId: String!) : [Follow!]!
       userPosts(userId: String!): [Post!]!
   }
 
@@ -50,7 +50,7 @@ module.exports = buildSchema(`
     createPost(postInput: PostInput): Post
     createUser(userInput: UserInput): User
     login(email: String!, password: String!): Auth!
-    follow(followers: String!, userId: String!): Follow
+    follow(following: String!, userId: String!): Follow
   }
   schema {
       query: RootQuery
