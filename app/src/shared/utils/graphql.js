@@ -18,11 +18,23 @@ const GET_POSTS = gql`
       title
       url
       _id
+      likes {
+        _id
+        user
+      }
       creator {
         username
         email
         _id
       }
+    }
+  }
+`;
+const LIKE_POST = gql`
+  mutation($post: String!) {
+    likePost(post: $post, user: "") {
+      _id
+      user
     }
   }
 `;
@@ -89,5 +101,6 @@ export {
   USER_POSTS,
   GET_FOLLOWERS,
   FOLLOW_USER,
-  GET_FOLLOWING
+  GET_FOLLOWING,
+  LIKE_POST
 };

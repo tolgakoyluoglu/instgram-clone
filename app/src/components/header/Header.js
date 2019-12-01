@@ -9,7 +9,7 @@ import {
   PageHeader
 } from './Navbar';
 const Header = () => {
-  const { authTokens, setAuthTokens } = useAuth();
+  const { authTokens, setAuthTokens, userId } = useAuth();
 
   const logout = () => {
     setAuthTokens();
@@ -31,7 +31,9 @@ const Header = () => {
                 <StyledLink to="/feed">Feed</StyledLink>
               </ListItem>
               <ListItem>
-                <StyledLink to="/profile">Profile</StyledLink>
+                <StyledLink to={{ pathname: '/profile/' + userId }}>
+                  Profile
+                </StyledLink>
               </ListItem>
               <ListItem>
                 <StyledLink to="/login" onClick={logout}>

@@ -5,14 +5,12 @@ import ApolloClient from 'apollo-client';
 import { setContext } from 'apollo-link-context';
 import { createHttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
-//Components
 import { AuthContext } from './shared/auth/authContext';
 import Header from './components/header/Header';
 import Profile from './components/profile/Profile';
 import Feed from './components/feed/Feed';
 import Login from './components/auth/Login';
 import Signup from './components/auth/Signup';
-
 import { createGlobalStyle } from 'styled-components';
 import PrivateRoute from './shared/common/PrivateRoute';
 
@@ -28,6 +26,7 @@ const GlobalStyle = createGlobalStyle`
 `;
 function App() {
   const [authTokens, setAuthTokens] = React.useState();
+  const [userId, setUserId] = React.useState();
   const httpLink = createHttpLink({
     uri: 'http://localhost:4000/graphql'
   });
@@ -35,6 +34,11 @@ function App() {
   const setTokens = data => {
     localStorage.setItem('tokens', data);
     setAuthTokens(data);
+  };
+
+  const setUser = data => {
+    localStorage.setItem('userid', data);
+    setUserId(data);
   };
 
   const authLink = setContext(() => {
@@ -56,7 +60,14 @@ function App() {
       <GlobalStyle />
       <BrowserRouter>
         {!authTokens && <Redirect from="/" to="/login" component={Login} />}
-        <AuthContext.Provider value={{ authTokens, setAuthTokens: setTokens }}>
+        <AuthContext.Provider
+          value={{
+            authTokens,
+            setAuthTokens: setTokens,
+            userId,
+            setUserId: setUser
+          }}
+        >
           <Header />
           <Switch>
             <Route path="/login" component={Login} />

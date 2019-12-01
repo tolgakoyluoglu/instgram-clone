@@ -5,7 +5,20 @@ module.exports = buildSchema(`
     _id: ID!
     title: String! 
     url: String!  
+    likes: [Like!]
     creator: [User!]
+  }
+
+  type Comment {
+    _id: ID!
+    user: String!
+    post: [Post!]
+  }
+
+  type Like {
+    _id: ID!
+    user: String
+    post: [Post!]
   }
 
   type User {
@@ -44,6 +57,12 @@ module.exports = buildSchema(`
       getFollowing(userId: String!) : [Follow!]!
       getFollowers(userId: String!) : [Follow!]!
       userPosts(userId: String!): [Post!]!
+      comment(post: String!): [Comment!]!
+      likes: [Like!]!
+  }
+
+  type Subscription {
+    posts: [Post!]!
   }
 
   type RootMutation {
@@ -51,6 +70,8 @@ module.exports = buildSchema(`
     createUser(userInput: UserInput): User
     login(email: String!, password: String!): Auth!
     follow(following: String!, userId: String!): Follow
+    likePost(user: String!, post: String!): Like
+    comment(user: String!): Comment
   }
   schema {
       query: RootQuery

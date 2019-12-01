@@ -11,7 +11,7 @@ import { LOGIN_USER } from '../../shared/utils/graphql';
 const Login = () => {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
-  const { setAuthTokens } = useAuth();
+  const { setAuthTokens, setUserId } = useAuth();
   const [loginUser, { data, loading, error }] = useMutation(LOGIN_USER, {
     variables: { email: email, password: password }
   });
@@ -25,6 +25,7 @@ const Login = () => {
 
   if (data) {
     setAuthTokens(data.login.token);
+    setUserId(data.login.userId);
     return <Redirect to="/feed" />;
   }
   const handleSubmit = event => {
