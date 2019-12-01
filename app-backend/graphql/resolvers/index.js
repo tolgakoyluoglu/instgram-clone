@@ -7,8 +7,12 @@ const Like = require('../../models/Like');
 const Comment = require('../../models/Comment');
 
 module.exports = {
-  posts: async req => {
-    return Post.find()
+  posts: async () => {
+    let following = await Follow.find({
+      userId: '5dd9a3878ec7eb2665d936ca'
+    });
+    following = following.map(f => f.following);
+    const posts = Post.find({ creator: { $in: following } })
       .populate({
         path: 'creator',
         model: 'User'
@@ -16,13 +20,10 @@ module.exports = {
       .populate({
         path: 'likes',
         model: 'Post'
-      })
-      .then(posts => {
-        return posts;
-      })
-      .catch(err => {
-        throw err;
       });
+    return posts.catch(err => {
+      throw err;
+    });
   },
   userPosts: args => {
     return Post.find({ creator: args.userId })
