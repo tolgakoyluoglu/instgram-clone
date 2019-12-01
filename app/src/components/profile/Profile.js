@@ -30,7 +30,13 @@ const Profile = ({ match }) => {
   });
 
   const [followUser] = useMutation(FOLLOW_USER, {
-    variables: { id }
+    variables: { id },
+    refetchQueries: [
+      {
+        query: GET_FOLLOWERS,
+        variables: { id }
+      }
+    ]
   });
 
   const query = useQuery(GET_FOLLOWERS, {

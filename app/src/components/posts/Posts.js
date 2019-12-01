@@ -12,6 +12,7 @@ import {
   ImageContainer
 } from './StyledPosts';
 import Avatar from '../profile/avatar.png';
+import Like from './Like';
 
 const Posts = () => {
   const { loading, error, data } = useQuery(GET_POSTS);
@@ -23,7 +24,6 @@ const Posts = () => {
         <Loader />
       </LoadingContainer>
     );
-
   const posts = data.posts.map(post => {
     return (
       <Card key={post._id}>
@@ -40,6 +40,7 @@ const Posts = () => {
           <Image src={post.url} alt={post.title} />
         </Link>
         <CardBody>
+          {post.likes && <Like likes={post.likes} post={post._id} />}
           {post.creator ? (
             <Link to={{ pathname: '/profile/' + post.creator[0]._id }}>
               <p>{post.creator[0].username}</p>
@@ -54,6 +55,7 @@ const Posts = () => {
       </Card>
     );
   });
+
   return <React.Fragment>{posts.reverse()}</React.Fragment>;
 };
 

@@ -3,11 +3,20 @@ const Post = require('../../models/Post');
 const User = require('../../models/User');
 const jwt = require('jsonwebtoken');
 const Follow = require('../../models/Follow');
+const Like = require('../../models/Like');
+const Comment = require('../../models/Comment');
 
 module.exports = {
   posts: async req => {
     return Post.find()
-      .populate('creator')
+      .populate({
+        path: 'creator',
+        model: 'User'
+      })
+      .populate({
+        path: 'likes',
+        model: 'Post'
+      })
       .then(posts => {
         return posts;
       })
@@ -134,6 +143,35 @@ module.exports = {
       return new Error('You are not following anyone!');
     } else {
       return following;
+    }
+  },
+  likePost: async (args, req) => {
+    if (!req.isAuth) {
+      throw new Error('Unauthorizied!');
+    }
+    const liked = await Like.findOne({
+      user: req.userId,
+      post: args.post
+    });
+    if (!liked) {
+      const likePost = new Like({
+        user: req.userId,
+        post: args.post
+      });
+      return likePost
+        .save()
+        .then(result => {
+          return Post.findById(args.post);
+        })
+        .then(post => {
+          if (!post) {
+            throw new Error('Post not found.');
+          }
+          post.likes.push(post);
+          return post.save();
+        });
+    } else {
+      return new Error('You already like this post');
     }
   }
 };
