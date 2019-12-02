@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import { LoadingContainer, Loader } from '../../styled/Loading';
 import { Link } from 'react-router-dom';
@@ -13,9 +13,13 @@ import {
 } from './StyledPosts';
 import Avatar from '../profile/avatar.png';
 import Like from './Like';
+import { AuthContext } from '../../shared/auth/AuthContext';
 
 const Posts = () => {
-  const { loading, error, data } = useQuery(GET_POSTS);
+  const { userId } = useContext(AuthContext);
+  const { loading, error, data } = useQuery(GET_POSTS, {
+    variables: { userId }
+  });
 
   if (error) return `Error! ${error.message}`;
   if (loading)

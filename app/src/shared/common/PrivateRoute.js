@@ -1,15 +1,13 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { useAuth } from '../../shared/auth/authContext';
 
 function PrivateRoute({ component: Component, ...rest }) {
-  const { authTokens } = useAuth();
-
+  const token = localStorage.getItem('token');
   return (
     <Route
       {...rest}
       render={props =>
-        authTokens ? <Component {...props} /> : <Redirect to="/login" />
+        token ? <Component {...props} /> : <Redirect to="/login" />
       }
     />
   );

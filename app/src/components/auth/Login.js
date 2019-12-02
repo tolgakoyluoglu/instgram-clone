@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 //Components
 import { Card, Form, Input, Button } from './LoginForm';
-import { useAuth } from '../../shared/auth/authContext';
+import { AuthContext } from '../../shared/auth/AuthContext';
 //Apollo stuff
 import { useMutation } from '@apollo/react-hooks';
 import { LoadingContainer, Loader } from '../../styled/Loading';
@@ -11,7 +11,7 @@ import { LOGIN_USER } from '../../shared/utils/graphql';
 const Login = () => {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
-  const { setAuthTokens, setUserId } = useAuth();
+  const { setAuthTokens, setUserId } = useContext(AuthContext);
   const [loginUser, { data, loading, error }] = useMutation(LOGIN_USER, {
     variables: { email: email, password: password }
   });

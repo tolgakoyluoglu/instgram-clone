@@ -53,7 +53,7 @@ module.exports = buildSchema(`
   }
 
   type RootQuery {
-      posts: [Post!]!
+      posts(userId: String): [Post!]!
       getFollowing(userId: String!) : [Follow!]!
       getFollowers(userId: String!) : [Follow!]!
       userPosts(userId: String!): [Post!]!
@@ -72,6 +72,7 @@ module.exports = buildSchema(`
     follow(following: String!, userId: String!): Follow
     likePost(user: String!, post: String!): Like
     comment(user: String!): Comment
+    searchUser(username: String!) : [User!]!
   }
   schema {
       query: RootQuery

@@ -7,9 +7,12 @@ const Like = require('../../models/Like');
 const Comment = require('../../models/Comment');
 
 module.exports = {
-  posts: async () => {
+  posts: async (args, req) => {
+    if (!req.isAuth) {
+      throw new Error('Unauthorizied!');
+    }
     let following = await Follow.find({
-      userId: '5dd9a3878ec7eb2665d936ca'
+      userId: req.userId
     });
     following = following.map(f => f.following);
     const posts = Post.find({ creator: { $in: following } })
@@ -25,7 +28,11 @@ module.exports = {
       throw err;
     });
   },
-  userPosts: args => {
+  userPosts: async (args, req) => {
+    console.log(req);
+    if (!req.isAuth) {
+      throw new Error('Unauthorizied!');
+    }
     return Post.find({ creator: args.userId })
       .then(posts => {
         return posts;
@@ -173,6 +180,19 @@ module.exports = {
         });
     } else {
       return new Error('You already like this post');
+    }
+  },
+  searchUser: async (args, req) => {
+    if (!req.isAuth) {
+      throw new Error('Unauthorizied!');
+    }
+    const searchUser = await User.find({
+      username: args.username
+    });
+    if (!searchUser.length) {
+      throw new Error('User not found.');
+    } else {
+      return searchUser;
     }
   }
 };

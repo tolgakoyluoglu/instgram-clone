@@ -1,18 +1,61 @@
-import React from 'react';
-import { useAuth } from '../../shared/auth/authContext';
+import React, { useContext } from 'react';
+import { AuthContext } from '../../shared/auth/AuthContext';
 import {
   Navbar,
   List,
   ListItem,
   StyledLink,
   PageContainer,
-  PageHeader
+  PageHeader,
+  SearchInput,
+  Form,
+  Paragraph
 } from './Navbar';
-const Header = () => {
-  const { authTokens, setAuthTokens, userId } = useAuth();
+import { useMutation } from '@apollo/react-hooks';
+import { SEARCH_USER } from '../../shared/utils/graphql';
+import { LoadingContainer, Loader } from '../../styled/Loading';
+import { Redirect } from 'react-router-dom';
 
+const Header = () => {
+  const { setAuthTokens, authTokens, userId, setUserId } = useContext(
+    AuthContext
+  );
+  const [username, setValue] = React.useState('');
+  const [searchUser, { data, loading, error }] = useMutation(SEARCH_USER, {
+    variables: { username }
+  });
+
+  if (loading) {
+    return (
+      <LoadingContainer>
+        <Loader />
+      </LoadingContainer>
+    );
+  }
   const logout = () => {
     setAuthTokens();
+    setUserId();
+    localStorage.clear();
+  };
+
+  if (data) {
+    return (
+      <>
+        <Header />
+        <Redirect
+          to={{ pathname: '/profile/' + data.searchUser[0]._id }}
+          component={Header}
+        />
+      </>
+    );
+  }
+  if (error) {
+    console.log('fel');
+  }
+  const handleSubmit = event => {
+    event.preventDefault();
+    searchUser();
+    setValue();
   };
 
   return (
@@ -21,12 +64,19 @@ const Header = () => {
         <StyledLink to={authTokens ? '/feed' : '/login'}>
           <PageHeader>InstaClone</PageHeader>
         </StyledLink>
-        <List>
-          {authTokens && (
-            <>
-              <ListItem>
-                <input type="text" placeholder="Search.." />
-              </ListItem>
+        {authTokens && (
+          <>
+            <Form type="submit" onSubmit={handleSubmit}>
+              <SearchInput
+                value={username}
+                type="text"
+                onChange={event => setValue(event.target.value)}
+                placeholder="Search.."
+              />
+              {error && <Paragraph>User not found</Paragraph>}
+            </Form>
+
+            <List>
               <ListItem>
                 <StyledLink to="/feed">Feed</StyledLink>
               </ListItem>
@@ -40,9 +90,9 @@ const Header = () => {
                   Logout
                 </StyledLink>
               </ListItem>
-            </>
-          )}
-        </List>
+            </List>
+          </>
+        )}
       </Navbar>
     </PageContainer>
   );

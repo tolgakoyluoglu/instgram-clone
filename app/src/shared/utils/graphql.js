@@ -13,8 +13,8 @@ const CREATE_POST = gql`
   }
 `;
 const GET_POSTS = gql`
-  {
-    posts {
+  query($userId: String) {
+    posts(userId: $userId) {
       title
       url
       _id
@@ -92,6 +92,14 @@ const CREATE_USER = gql`
     }
   }
 `;
+const SEARCH_USER = gql`
+  mutation($username: String!) {
+    searchUser(username: $username) {
+      _id
+      username
+    }
+  }
+`;
 
 export {
   CREATE_POST,
@@ -102,5 +110,6 @@ export {
   GET_FOLLOWERS,
   FOLLOW_USER,
   GET_FOLLOWING,
-  LIKE_POST
+  LIKE_POST,
+  SEARCH_USER
 };
