@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { useQuery } from '@apollo/react-hooks';
-import { LoadingContainer, Loader } from '../../styled/Loading';
+import { LoadingContainer, Loader } from '../../shared/styled/Loading';
 import { Link } from 'react-router-dom';
 import { GET_POSTS } from '../../shared/utils/graphql';
 import {
@@ -10,10 +10,10 @@ import {
   CardHeader,
   CommentContainer,
   ImageContainer
-} from './StyledPosts';
-import Avatar from '../profile/avatar.png';
+} from './Styled';
+import Avatar from '../../res/images/avatar.png';
 import Like from './Like';
-import { AuthContext } from '../../shared/auth/AuthContext';
+import { AuthContext } from '../../shared/common/AuthContext';
 
 const Posts = () => {
   const { userId } = useContext(AuthContext);

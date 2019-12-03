@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { AuthContext } from '../../shared/auth/AuthContext';
+import { AuthContext } from '../../shared/common/AuthContext';
 import {
   Navbar,
   List,
@@ -10,10 +10,10 @@ import {
   SearchInput,
   Form,
   Paragraph
-} from './Navbar';
+} from './Styled';
 import { useMutation } from '@apollo/react-hooks';
 import { SEARCH_USER } from '../../shared/utils/graphql';
-import { LoadingContainer, Loader } from '../../styled/Loading';
+import { LoadingContainer, Loader } from '../../shared/styled/Loading';
 import { Redirect } from 'react-router-dom';
 
 const Header = () => {

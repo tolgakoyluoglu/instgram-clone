@@ -56,10 +56,9 @@ const PageHeader = styled.h1`
 `;
 
 const SearchInput = styled.input`
-  margin-bottom: 1rem;
   font-size: 13px;
   display: block;
-  height: 40px;
+  height: 35px;
   background-color: rgb(255, 255, 255);
   color: rgb(130, 130, 143);
   width: 100%;
