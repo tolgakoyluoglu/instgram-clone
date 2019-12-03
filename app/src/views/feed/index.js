@@ -1,11 +1,11 @@
 import React from 'react';
 import { useMutation } from '@apollo/react-hooks';
-import Posts from '../posts/Posts';
+import Posts from '../posts';
 import { CREATE_POST, GET_POSTS } from '../../shared/utils/graphql';
-import { LoadingContainer, Loader } from '../../styled/Loading';
-import { Card, Form, Input, UploadButton } from './StyledFeed';
-import Modal from '../../shared/common/Modal';
-import Backdrop from '../../shared/common/Backdrop';
+import { LoadingContainer, Loader } from '../../shared/styled/Loading';
+import { Card, Form, Input, UploadButton } from './Styled';
+import Modal from '../../shared/common/components/Modal';
+import Backdrop from '../../shared/common/components/Backdrop';
 
 const Feed = () => {
   const [image, setImage] = React.useState('');

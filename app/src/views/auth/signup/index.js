@@ -1,19 +1,18 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 //Components
-import { Card, Form, Input, Button } from './LoginForm';
-import { AuthContext } from '../../shared/auth/AuthContext';
+import { Card, Form, Input, Button } from '../Styled';
 //Apollo stuff
 import { useMutation } from '@apollo/react-hooks';
-import { LoadingContainer, Loader } from '../../styled/Loading';
-import { LOGIN_USER } from '../../shared/utils/graphql';
+import { LoadingContainer, Loader } from '../../../shared/styled/Loading';
+import { CREATE_USER } from '../../../shared/utils/graphql';
 
-const Login = () => {
+const SignUp = () => {
   const [email, setEmail] = React.useState('');
+  const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
-  const { setAuthTokens, setUserId } = useContext(AuthContext);
-  const [loginUser, { data, loading, error }] = useMutation(LOGIN_USER, {
-    variables: { email: email, password: password }
+  const [createUser, { data, loading, error }] = useMutation(CREATE_USER, {
+    variables: { email: email, username: username, password: password }
   });
   if (loading) {
     return (
@@ -22,21 +21,18 @@ const Login = () => {
       </LoadingContainer>
     );
   }
-
   if (data) {
-    setAuthTokens(data.login.token);
-    setUserId(data.login.userId);
-    return <Redirect to="/feed" />;
+    return <Redirect to="/login" />;
   }
   const handleSubmit = event => {
     event.preventDefault();
-    loginUser();
+    createUser();
   };
 
   return (
     <Card>
       <Form type="submit" onSubmit={handleSubmit}>
-        <h2>Sign in</h2>
+        <h2>Register</h2>
         <Input
           required
           type="email"
@@ -46,19 +42,26 @@ const Login = () => {
         />
         <Input
           required
+          type="text"
+          placeholder="Username"
+          value={username}
+          onChange={event => setUsername(event.target.value)}
+        />
+        <Input
+          required
           type="password"
           placeholder="Password"
           value={password}
           onChange={e => setPassword(e.target.value)}
         />
-        {error && <p>Invalid username or password. Please try again.</p>}
+        {error && <p>Username or email already exists.</p>}
         <Button type="submit" value="Submit">
-          Sign In
+          Sign up
         </Button>
       </Form>
-      <Link to="/signup">Don't have an account?</Link>
+      <Link to="/login">Already have an account?</Link>
     </Card>
   );
 };
 
-export default Login;
+export default SignUp;

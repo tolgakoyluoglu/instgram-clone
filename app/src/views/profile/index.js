@@ -6,7 +6,7 @@ import {
   GET_FOLLOWERS,
   GET_FOLLOWING
 } from '../../shared/utils/graphql';
-import { LoadingContainer, Loader } from '../../styled/Loading';
+import { LoadingContainer, Loader } from '../../shared/styled/Loading';
 import { Link } from 'react-router-dom';
 import {
   PageContainer,
@@ -17,8 +17,8 @@ import {
   Avatar,
   ImageContainer,
   AboutContainer
-} from './StyledProfile';
-import Selfie from './avatar.png';
+} from './Styled';
+import Photo from '../../res/images/avatar.png';
 
 const Profile = ({ match }) => {
   const {
@@ -73,7 +73,7 @@ const Profile = ({ match }) => {
     <PageContainer>
       <BioContainer>
         <ImageContainer>
-          <Avatar src={Selfie} />
+          <Avatar src={Photo} />
         </ImageContainer>
         <AboutContainer>
           <h1>Profile</h1>

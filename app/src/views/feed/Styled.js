@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Image from './sprite.png';
+import Image from '../../res/images/upload.png';
 
 const Card = styled.div`
   padding-top: 50px;
