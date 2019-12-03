@@ -12,7 +12,7 @@ import {
   ImageContainer
 } from './Styled';
 import Avatar from '../../res/images/avatar.png';
-import Like from './Like';
+import Like from './components/Like';
 import { AuthContext } from '../../shared/common/AuthContext';
 
 const Posts = () => {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useMutation } from '@apollo/react-hooks';
-import { LIKE_POST, GET_POSTS } from '../../shared/utils/graphql';
+import { LIKE_POST, GET_POSTS } from '../../../shared/utils/graphql';
 
 const Like = post => {
   const [like] = useMutation(LIKE_POST, {

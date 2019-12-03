@@ -57,7 +57,7 @@ const BioContainer = styled.div`
   margin: auto;
   display: flex;
   flex-direction: column;
-  padding-top: 50px;
+  padding-top: 150px;
 `;
 
 const ImageContainer = styled.div`

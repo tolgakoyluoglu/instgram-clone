@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
+import styled, { css } from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const Navbar = styled.div`
   display: flex;
@@ -19,9 +19,6 @@ const Navbar = styled.div`
   }
   @media only screen and (min-width: 1200px) {
     width: 50%;
-    h1 {
-      font-size: 30px;
-    }
   }
 `;
 const List = styled.ul`
@@ -32,23 +29,41 @@ const List = styled.ul`
 const ListItem = styled.li`
   padding: 20px;
   text-decoration: none;
+  ${props => (props.selected ? selectedStyles : undefined)};
 `;
 
-const StyledLink = styled(NavLink)`
+const StyledLink = styled(Link)`
   text-decoration: none;
   color: #262626;
   font-size: 15px;
-  font-weight: 500;
+  position: relative;
   &:hover {
     color: #3897f0;
   }
 `;
 
+const selectedStyles = css`
+  position: relative;
+  color: red;
+  font-weight: 700;
+  &:after {
+    display: block;
+    content: '';
+    position: absolute;
+    bottom: 20%;
+    left: 20px;
+    width: 20px;
+    background-color: #262626;
+    border-radius: 2px;
+    height: 4px;
+  }
+`;
 const PageContainer = styled.div`
   background-color: white;
   width: 100%;
   margin: auto;
-  border-bottom: 2px solid #f1f1f1;
+  border-bottom: 1px solid #cdcdcd;
+  position: fixed;
 `;
 
 const PageHeader = styled.h1`

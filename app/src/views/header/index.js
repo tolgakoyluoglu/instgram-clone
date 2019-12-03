@@ -21,9 +21,14 @@ const Header = () => {
     AuthContext
   );
   const [username, setValue] = React.useState('');
+  const [active, setActive] = React.useState(1);
   const [searchUser, { data, loading, error }] = useMutation(SEARCH_USER, {
     variables: { username }
   });
+
+  const toggleSelected = index => {
+    setActive(index);
+  };
 
   if (loading) {
     return (
@@ -48,9 +53,6 @@ const Header = () => {
         />
       </>
     );
-  }
-  if (error) {
-    console.log('fel');
   }
   const handleSubmit = event => {
     event.preventDefault();
@@ -77,10 +79,16 @@ const Header = () => {
             </Form>
 
             <List>
-              <ListItem>
+              <ListItem
+                onClick={() => toggleSelected(1)}
+                selected={active === 1 ? true : false}
+              >
                 <StyledLink to="/feed">Feed</StyledLink>
               </ListItem>
-              <ListItem>
+              <ListItem
+                onClick={() => toggleSelected(2)}
+                selected={active === 2 ? true : false}
+              >
                 <StyledLink to={{ pathname: '/profile/' + userId }}>
                   Profile
                 </StyledLink>

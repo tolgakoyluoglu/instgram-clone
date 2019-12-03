@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import Image from '../../res/images/upload.png';
 
 const Card = styled.div`
-  padding-top: 50px;
+  padding-top: 150px;
   min-height: calc(100vh - 70px);
   box-sizing: border-box;
   max-width: 80%;
