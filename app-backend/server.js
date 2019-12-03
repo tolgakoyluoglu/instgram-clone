@@ -4,9 +4,9 @@ const graphqlHttp = require('express-graphql');
 const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config();
-const isAuth = require('./middleware/isAuth');
 app.use(express.json());
 
+const isAuth = require('./middleware/isAuth');
 const graphQlSchema = require('./graphql/schema/index');
 const graphQlResolvers = require('./graphql/resolvers/index');
 
