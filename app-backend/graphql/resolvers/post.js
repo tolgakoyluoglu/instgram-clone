@@ -21,9 +21,25 @@ module.exports = {
         path: 'likes',
         model: 'Post'
       });
-    return posts.catch(err => {
-      throw err;
-    });
+    return posts;
+  },
+  getPost: async (args, req) => {
+    if (!req.isAuth) {
+      throw new Error('Unauthorizied!');
+    }
+    const post = await Post.findById(args.id)
+      .populate({
+        path: 'creator',
+        model: 'User'
+      })
+      .populate({
+        path: 'likes',
+        model: 'Post'
+      });
+    if (!post) {
+      throw new Error('Error when fetching post');
+    }
+    return post;
   },
   userPosts: async (args, req) => {
     if (!req.isAuth) {

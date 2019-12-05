@@ -27,35 +27,29 @@ const List = styled.ul`
   text-decoration: none;
 `;
 const ListItem = styled.li`
-  padding: 20px;
+  padding: 12px;
   text-decoration: none;
-  ${props => (props.selected ? selectedStyles : undefined)};
 `;
 
 const StyledLink = styled(Link)`
   text-decoration: none;
   color: #262626;
   font-size: 15px;
+  font-weight: 500;
   position: relative;
-  &:hover {
-    color: #3897f0;
-  }
+  ${props => (props.selected ? selectedStyles : undefined)};
 `;
 
 const selectedStyles = css`
   position: relative;
-  color: red;
-  font-weight: 700;
   &:after {
     display: block;
     content: '';
-    position: absolute;
     bottom: 20%;
-    left: 20px;
-    width: 20px;
+    width: 25px;
     background-color: #262626;
     border-radius: 2px;
-    height: 4px;
+    height: 3px;
   }
 `;
 const PageContainer = styled.div`

@@ -10,6 +10,7 @@ import Header from './views/header';
 import Profile from './views/profile';
 import Feed from './views/feed';
 import Login from './views/auth/login';
+import Post from './views/post';
 import Signup from './views/auth/signup';
 import { createGlobalStyle } from 'styled-components';
 import PrivateRoute from './shared/common/PrivateRoute';
@@ -54,7 +55,9 @@ function App() {
             <Route path="/signup" component={Signup} />
             <PrivateRoute path="/feed" component={Feed} />
             <PrivateRoute path="/profile/:id" component={Profile} />
+            <PrivateRoute path="/post/:id" component={Post} />
           </Switch>
+          zz
         </BrowserRouter>
       </ApolloProvider>
     </AuthProvider>

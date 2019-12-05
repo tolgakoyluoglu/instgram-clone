@@ -26,9 +26,11 @@ const Input = styled.input`
 `;
 
 const Button = styled.button`
-  background: linear-gradient(to bottom, #6371c7, #3897f0);
-  border-color: #3f4eae;
-  border-radius: 3px;
+  background-color: #3897f0;
+  border-color: rgb(182, 182, 191);
+  border: none;
+  border-radius: 6px;
+  border-width: 1px;
   padding: 1rem;
   margin: 5px;
   color: white;
@@ -60,4 +62,11 @@ const UploadButton = styled.button`
   }
 `;
 
-export { Form, Input, Button, Card, UploadButton };
+const FileImage = styled.img`
+  width: 50%;
+  margin: auto;
+  border: 1px solid #cdcdcd;
+  height: max-content;
+`;
+
+export { Form, Input, Button, Card, UploadButton, FileImage };

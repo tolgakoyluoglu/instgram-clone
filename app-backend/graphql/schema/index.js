@@ -54,6 +54,7 @@ module.exports = buildSchema(`
 
   type RootQuery {
       posts(userId: String): [Post!]!
+      getPost(id: String!) : Post!
       getFollowing(userId: String!) : [Follow!]!
       getFollowers(userId: String!) : [Follow!]!
       userPosts(userId: String!): [Post!]!

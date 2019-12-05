@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import { useQuery } from '@apollo/react-hooks';
-import { LoadingContainer, Loader } from '../../shared/styled/Loading';
+import { LoadingContainer, Loader } from '../../../shared/styled/Loading';
 import { Link } from 'react-router-dom';
-import { GET_POSTS } from '../../shared/utils/graphql';
+import { GET_POSTS } from '../../../shared/utils/graphql';
 import {
   Card,
   Image,
@@ -11,9 +11,9 @@ import {
   CommentContainer,
   ImageContainer
 } from './Styled';
-import Avatar from '../../res/images/avatar.png';
+import Avatar from '../../../res/images/avatar.png';
 import Like from './components/Like';
-import { AuthContext } from '../../shared/common/AuthContext';
+import { AuthContext } from '../../../shared/common/AuthContext';
 
 const Posts = () => {
   const { userId } = useContext(AuthContext);
@@ -34,11 +34,10 @@ const Posts = () => {
         <CardHeader>
           <ImageContainer>
             <img src={Avatar} alt={post.title} />
-            {post.creator ? (
-              <Link to={{ pathname: '/profile/' + post.creator[0]._id }}></Link>
-            ) : null}
           </ImageContainer>
-          <p>{post.creator[0].username}</p>
+          <Link to={{ pathname: '/profile/' + post.creator[0]._id }}>
+            <p>{post.creator[0].username}</p>
+          </Link>
         </CardHeader>
         <Link to={{ pathname: '/post/' + post._id }}>
           <Image src={post.url} alt={post.title} />

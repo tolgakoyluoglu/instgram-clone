@@ -1,6 +1,6 @@
 import React from 'react';
 import { useMutation } from '@apollo/react-hooks';
-import Posts from '../posts';
+import Posts from './posts';
 import { CREATE_POST, GET_POSTS } from '../../shared/utils/graphql';
 import { LoadingContainer, Loader } from '../../shared/styled/Loading';
 import { Card, Form, Input, UploadButton } from './Styled';

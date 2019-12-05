@@ -79,17 +79,21 @@ const Header = () => {
             </Form>
 
             <List>
-              <ListItem
-                onClick={() => toggleSelected(1)}
-                selected={active === 1 ? true : false}
-              >
-                <StyledLink to="/feed">Feed</StyledLink>
+              <ListItem>
+                <StyledLink
+                  onClick={() => toggleSelected(1)}
+                  selected={active === 1 ? true : false}
+                  to="/feed"
+                >
+                  Feed
+                </StyledLink>
               </ListItem>
-              <ListItem
-                onClick={() => toggleSelected(2)}
-                selected={active === 2 ? true : false}
-              >
-                <StyledLink to={{ pathname: '/profile/' + userId }}>
+              <ListItem>
+                <StyledLink
+                  to={{ pathname: '/profile/' + userId }}
+                  onClick={() => toggleSelected(2)}
+                  selected={active === 2 ? true : false}
+                >
                   Profile
                 </StyledLink>
               </ListItem>

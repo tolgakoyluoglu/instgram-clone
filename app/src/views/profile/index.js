@@ -7,7 +7,7 @@ import {
   GET_FOLLOWING
 } from '../../shared/utils/graphql';
 import { LoadingContainer, Loader } from '../../shared/styled/Loading';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import {
   PageContainer,
   Container,
@@ -20,10 +20,8 @@ import {
 } from './Styled';
 import Photo from '../../res/images/avatar.png';
 
-const Profile = ({ match }) => {
-  const {
-    params: { id }
-  } = match;
+const Profile = () => {
+  let { id } = useParams();
 
   const { loading, error, data } = useQuery(USER_POSTS, {
     variables: { id: id }

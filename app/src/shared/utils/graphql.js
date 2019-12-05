@@ -38,6 +38,24 @@ const LIKE_POST = gql`
     }
   }
 `;
+const GET_POST = gql`
+  query($id: String!) {
+    getPost(id: $id) {
+      title
+      url
+      _id
+      likes {
+        _id
+        user
+      }
+      creator {
+        username
+        email
+        _id
+      }
+    }
+  }
+`;
 const USER_POSTS = gql`
   query($id: String!) {
     userPosts(userId: $id) {
@@ -111,5 +129,6 @@ export {
   FOLLOW_USER,
   GET_FOLLOWING,
   LIKE_POST,
-  SEARCH_USER
+  SEARCH_USER,
+  GET_POST
 };

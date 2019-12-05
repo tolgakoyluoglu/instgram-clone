@@ -32,18 +32,26 @@ const CardHeader = styled.div`
   display: flex;
   flex-direction: row;
   align-self: start;
+  a {
+    text-decoration: none;
+    margin-left: 5px;
+    color: #000;
+    font-weight: 600;
+  }
 `;
 
 const CardBody = styled.div`
   display: flex;
   align-self: start;
-  margin: 10px;
   font-size: 14px;
+  flex-direction: column;
   p {
-    margin: 3px;
+    text-align: center;
+    line-height: 0;
   }
   a {
     text-decoration: none;
+    margin-left: 5px;
     color: #000;
     font-weight: 600;
   }
