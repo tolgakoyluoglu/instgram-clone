@@ -1,12 +1,12 @@
 import React from 'react';
 import { useMutation } from '@apollo/react-hooks';
-import Posts from './posts';
+import Posts from './Posts';
 import { CREATE_POST, GET_POSTS } from '../../shared/utils/graphql';
 import { LoadingContainer, Loader } from '../../shared/styled/Loading';
 import { Card, Form, Input, UploadButton } from './Styled';
 import Modal from '../../shared/common/components/Modal';
 import Backdrop from '../../shared/common/components/Backdrop';
-import { Link } from 'react-router-dom';
+
 const Feed = () => {
   const [image, setImage] = React.useState('');
   const [title, setTitle] = React.useState('');

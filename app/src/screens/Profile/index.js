@@ -86,6 +86,7 @@ const Profile = () => {
   return (
     <PageContainer>
       <BioContainer>
+        <Link to="/settings">Edit Profile</Link>
         <ImageContainer>
           <Avatar src={Photo} />
         </ImageContainer>

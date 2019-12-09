@@ -5,15 +5,16 @@ import ApolloClient from 'apollo-client';
 import { setContext } from 'apollo-link-context';
 import { createHttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
-import { AuthProvider } from './shared/common/AuthContext';
-import Header from './views/header';
-import Profile from './views/profile';
-import Feed from './views/feed';
-import Login from './views/auth/login';
-import Post from './views/post';
-import Signup from './views/auth/signup';
 import { createGlobalStyle } from 'styled-components';
+import { AuthProvider } from './shared/common/AuthContext';
+import Header from './screens/Header';
+import Profile from './screens/Profile';
+import Feed from './screens/Feed';
+import Login from './screens/Auth/Login';
+import Post from './screens/Post';
+import Signup from './screens/Auth/Signup';
 import PrivateRoute from './shared/common/PrivateRoute';
+import EditProfile from './screens/Profile/EditProfile';
 
 const GlobalStyle = createGlobalStyle`
   html, body {
@@ -55,6 +56,7 @@ function App() {
           <Switch>
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
+            <PrivateRoute path="/settings" component={EditProfile} />
             <PrivateRoute path="/feed" component={Feed} />
             <PrivateRoute path="/profile/:id" component={Profile} />
             <PrivateRoute path="/post/:id" component={Post} />

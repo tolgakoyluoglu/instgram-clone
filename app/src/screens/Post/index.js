@@ -17,7 +17,7 @@ import {
   LikeContainer
 } from './Styled';
 import Avatar from '../../res/images/avatar.png';
-import Like from '../feed/posts/components/Like';
+import Like from '../Feed/Posts/components/Like';
 import { AuthContext } from '../../shared/common/AuthContext';
 
 const Post = () => {
