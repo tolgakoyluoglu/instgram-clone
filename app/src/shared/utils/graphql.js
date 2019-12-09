@@ -13,8 +13,8 @@ const CREATE_POST = gql`
   }
 `;
 const GET_POSTS = gql`
-  query($userId: String) {
-    posts(userId: $userId) {
+  query {
+    posts {
       title
       url
       _id
@@ -68,6 +68,11 @@ const USER_POSTS = gql`
     }
   }
 `;
+const DELETE_POST = gql`
+  mutation deletePost($postId: String!) {
+    deletePost(postId: $postId)
+  }
+`;
 const FOLLOW_USER = gql`
   mutation($id: String!) {
     follow(following: $id, userId: "") {
@@ -80,6 +85,7 @@ const GET_FOLLOWERS = gql`
   query($id: String!) {
     getFollowers(userId: $id) {
       _id
+      userId
       following
     }
   }
@@ -87,6 +93,8 @@ const GET_FOLLOWERS = gql`
 const GET_FOLLOWING = gql`
   query($id: String!) {
     getFollowing(userId: $id) {
+      userId
+      following
       _id
     }
   }
@@ -130,5 +138,6 @@ export {
   GET_FOLLOWING,
   LIKE_POST,
   SEARCH_USER,
-  GET_POST
+  GET_POST,
+  DELETE_POST
 };

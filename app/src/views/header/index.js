@@ -47,10 +47,7 @@ const Header = () => {
     return (
       <>
         <Header />
-        <Redirect
-          to={{ pathname: '/profile/' + data.searchUser[0]._id }}
-          component={Header}
-        />
+        <Redirect to={{ pathname: '/profile/' + data.searchUser[0]._id }} />
       </>
     );
   }

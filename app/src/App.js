@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import { ApolloProvider } from '@apollo/react-hooks';
 import ApolloClient from 'apollo-client';
 import { setContext } from 'apollo-link-context';
@@ -26,6 +26,7 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 function App() {
+  const token = localStorage.getItem('token');
   const httpLink = createHttpLink({
     uri: 'http://localhost:4000/graphql'
   });
@@ -49,6 +50,7 @@ function App() {
       <GlobalStyle />
       <ApolloProvider client={client}>
         <BrowserRouter>
+          <Redirect path="/" to={token ? '/feed' : '/login'} />
           <Header />
           <Switch>
             <Route path="/login" component={Login} />
@@ -57,7 +59,6 @@ function App() {
             <PrivateRoute path="/profile/:id" component={Profile} />
             <PrivateRoute path="/post/:id" component={Post} />
           </Switch>
-          zz
         </BrowserRouter>
       </ApolloProvider>
     </AuthProvider>

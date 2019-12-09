@@ -111,5 +111,15 @@ module.exports = {
     } else {
       return new Error('You already like this post');
     }
+  },
+  deletePost: async (args, req) => {
+    if (!req.isAuth) {
+      throw new Error('Unauthorizied!');
+    }
+    const post = await Post.findByIdAndRemove(args.postId);
+    if (!post) {
+      throw new Error('Post not found');
+    }
+    return 'Post deleted';
   }
 };

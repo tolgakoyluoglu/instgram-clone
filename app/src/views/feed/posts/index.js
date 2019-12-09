@@ -16,10 +16,7 @@ import Like from './components/Like';
 import { AuthContext } from '../../../shared/common/AuthContext';
 
 const Posts = () => {
-  const { userId } = useContext(AuthContext);
-  const { loading, error, data } = useQuery(GET_POSTS, {
-    variables: { userId }
-  });
+  const { loading, error, data } = useQuery(GET_POSTS);
 
   if (error) return `Error! ${error.message}`;
   if (loading)

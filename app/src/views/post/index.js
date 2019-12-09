@@ -1,7 +1,7 @@
-import React from 'react';
-import { useQuery } from '@apollo/react-hooks';
+import React, { useContext } from 'react';
+import { useQuery, useMutation } from '@apollo/react-hooks';
 import { useParams, Link } from 'react-router-dom';
-import { GET_POST } from '../../shared/utils/graphql';
+import { GET_POST, DELETE_POST, GET_POSTS } from '../../shared/utils/graphql';
 import { LoadingContainer, Loader } from '../../shared/styled/Loading';
 import {
   Card,
@@ -18,13 +18,23 @@ import {
 } from './Styled';
 import Avatar from '../../res/images/avatar.png';
 import Like from '../feed/posts/components/Like';
+import { AuthContext } from '../../shared/common/AuthContext';
 
 const Post = () => {
+  const { userId } = useContext(AuthContext);
   let { id } = useParams();
   const { loading, error, data } = useQuery(GET_POST, {
     variables: { id }
   });
-
+  const [deletePost] = useMutation(DELETE_POST, {
+    variables: { postId: id },
+    refetchQueries: [
+      {
+        query: GET_POSTS,
+        variables: { id }
+      }
+    ]
+  });
   if (loading) {
     return (
       <LoadingContainer>
@@ -32,8 +42,11 @@ const Post = () => {
       </LoadingContainer>
     );
   }
+  const handleDelete = () => {
+    deletePost();
+  };
+
   const post = data.getPost;
-  console.log(id);
   return (
     <Container>
       <Card key={post._id}>
@@ -46,6 +59,11 @@ const Post = () => {
                 <Link
                   to={{ pathname: '/profile/' + post.creator[0]._id }}
                 ></Link>
+              ) : null}
+              {post.creator[0]._id === userId ? (
+                <Link to="/feed">
+                  <button onClick={handleDelete}>Delete</button>
+                </Link>
               ) : null}
             </ImageContainer>
             <p>{post.creator[0].username}</p>
