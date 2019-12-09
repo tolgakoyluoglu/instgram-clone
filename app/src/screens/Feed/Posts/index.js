@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import { LoadingContainer, Loader } from '../../../shared/styled/Loading';
 import { Link } from 'react-router-dom';
@@ -10,10 +10,9 @@ import {
   CardHeader,
   CommentContainer,
   ImageContainer
-} from './Styled';
+} from './Styled.js';
 import Avatar from '../../../res/images/avatar.png';
 import Like from './components/Like';
-import { AuthContext } from '../../../shared/common/AuthContext';
 
 const Posts = () => {
   const { loading, error, data } = useQuery(GET_POSTS);
