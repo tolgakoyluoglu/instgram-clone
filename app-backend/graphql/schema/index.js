@@ -74,6 +74,7 @@ module.exports = buildSchema(`
     likePost(user: String!, post: String!): Like
     comment(user: String!): Comment
     searchUser(username: String!) : [User!]!
+    deletePost(postId: String!) : String!
   }
   schema {
       query: RootQuery

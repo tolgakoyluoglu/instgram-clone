@@ -6,7 +6,7 @@ import { LoadingContainer, Loader } from '../../shared/styled/Loading';
 import { Card, Form, Input, UploadButton } from './Styled';
 import Modal from '../../shared/common/components/Modal';
 import Backdrop from '../../shared/common/components/Backdrop';
-
+import { Link } from 'react-router-dom';
 const Feed = () => {
   const [image, setImage] = React.useState('');
   const [title, setTitle] = React.useState('');
@@ -29,13 +29,11 @@ const Feed = () => {
   };
   const [createPost, { error, loading }] = useMutation(CREATE_POST, {
     variables: { title: title, url: image },
-    update(proxy, result) {
-      const data = proxy.readQuery({
+    refetchQueries: [
+      {
         query: GET_POSTS
-      });
-      data.posts.push(result.data.createPost);
-      proxy.writeQuery({ query: GET_POSTS, data: { ...data } });
-    }
+      }
+    ]
   });
   const handleSubmit = event => {
     event.preventDefault();

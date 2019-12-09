@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import {
   USER_POSTS,
   FOLLOW_USER,
   GET_FOLLOWERS,
-  GET_FOLLOWING
+  GET_FOLLOWING,
+  GET_POSTS
 } from '../../shared/utils/graphql';
 import { LoadingContainer, Loader } from '../../shared/styled/Loading';
 import { Link, useParams } from 'react-router-dom';
@@ -19,12 +20,23 @@ import {
   AboutContainer
 } from './Styled';
 import Photo from '../../res/images/avatar.png';
+import { AuthContext } from '../../shared/common/AuthContext';
 
 const Profile = () => {
   let { id } = useParams();
-
+  const [following, setFollowing] = React.useState(false);
+  const { userId } = useContext(AuthContext);
   const { loading, error, data } = useQuery(USER_POSTS, {
-    variables: { id: id }
+    variables: { id }
+  });
+
+  React.useEffect(() => {
+    if (query.data) {
+      const isFollowing = query.data.getFollowers.filter(
+        following => following.userId === userId
+      );
+      setFollowing(true);
+    }
   });
 
   const [followUser] = useMutation(FOLLOW_USER, {
@@ -33,6 +45,9 @@ const Profile = () => {
       {
         query: GET_FOLLOWERS,
         variables: { id }
+      },
+      {
+        query: GET_POSTS
       }
     ]
   });
@@ -58,6 +73,7 @@ const Profile = () => {
       </LoadingContainer>
     );
   }
+
   const posts = data.userPosts.map(post => {
     return (
       <Card key={post._id}>
@@ -76,7 +92,7 @@ const Profile = () => {
         <AboutContainer>
           <h1>Profile</h1>
           <p>Lorem ipsum text bla bla</p>
-          <button onClick={handleClick}>
+          <button onClick={handleClick} disabled={following && true}>
             {query.data ? query.data.getFollowers.length : null}
           </button>
           <span>
