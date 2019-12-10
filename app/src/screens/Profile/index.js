@@ -24,10 +24,11 @@ import { AuthContext } from '../../shared/common/AuthContext';
 
 const Profile = () => {
   let { id } = useParams();
-  const [following, setFollowing] = React.useState(false);
-  const { userId } = useContext(AuthContext);
+  const [following, setFollowing] = React.useState();
+  const { userId, photo } = useContext(AuthContext);
   const { loading, error, data } = useQuery(USER_POSTS, {
-    variables: { id }
+    variables: { id },
+    fetchPolicy: 'no-cache'
   });
 
   React.useEffect(() => {
@@ -35,7 +36,9 @@ const Profile = () => {
       const isFollowing = query.data.getFollowers.filter(
         following => following.userId === userId
       );
-      setFollowing(true);
+      if (isFollowing.length > 0) {
+        setFollowing(true);
+      }
     }
   });
 
@@ -93,7 +96,7 @@ const Profile = () => {
         <AboutContainer>
           <h1>Profile</h1>
           <p>Lorem ipsum text bla bla</p>
-          <button onClick={handleClick} disabled={following && true}>
+          <button onClick={handleClick} disabled={following === true && true}>
             {query.data ? query.data.getFollowers.length : null}
           </button>
           <span>

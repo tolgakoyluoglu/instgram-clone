@@ -15,7 +15,9 @@ import Avatar from '../../../res/images/avatar.png';
 import Like from './components/Like';
 
 const Posts = () => {
-  const { loading, error, data } = useQuery(GET_POSTS);
+  const { loading, error, data } = useQuery(GET_POSTS, {
+    fetchPolicy: 'no-cache'
+  });
 
   if (error) return `Error! ${error.message}`;
   if (loading)

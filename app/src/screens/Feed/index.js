@@ -29,6 +29,7 @@ const Feed = () => {
   };
   const [createPost, { error, loading }] = useMutation(CREATE_POST, {
     variables: { title: title, url: image },
+    fetchPolicy: 'no-cache',
     refetchQueries: [
       {
         query: GET_POSTS

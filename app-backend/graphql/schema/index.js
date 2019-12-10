@@ -27,6 +27,7 @@ module.exports = buildSchema(`
     password: String
     username: String!
     createdPosts: [Post!]
+    photo: String
   }
 
   type Follow {
@@ -39,6 +40,7 @@ module.exports = buildSchema(`
     userId: ID!
     token: String!
     tokenExp: Int!
+    photo: String
   }
 
   input PostInput {
@@ -75,6 +77,7 @@ module.exports = buildSchema(`
     comment(user: String!): Comment
     searchUser(username: String!) : [User!]!
     deletePost(postId: String!) : String!
+    uploadImage(filename: String!): [User!]!
   }
   schema {
       query: RootQuery

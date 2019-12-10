@@ -2,8 +2,9 @@ import React, { useContext } from 'react';
 import { Container } from '../../Post/Styled';
 import styled from 'styled-components';
 import { Input, Form } from '../../Auth/Styled';
-import { Link } from 'react-router-dom';
 import { AuthContext } from '../../../shared/common/AuthContext';
+import gql from 'graphql-tag';
+import { client } from '../../../App';
 
 const CardContent = styled.div`
   padding: 20px;
@@ -35,21 +36,47 @@ const Button = styled.button`
   border-color: rgb(182, 182, 191);
 `;
 
-const EditProfile = () => {
-  const { userId } = useContext(AuthContext);
+const uploadFile = gql`
+  mutation($filename: String!) {
+    uploadImage(filename: $filename) {
+      username
+      photo
+    }
+  }
+`;
 
+const EditProfile = () => {
+  const { userId, photo } = useContext(AuthContext);
+  const [file, setFile] = React.useState();
+
+  const handleSubmit = event => {
+    event.preventDefault();
+    const data = new FormData();
+    data.append('file', file, file.name);
+
+    fetch('http://localhost:4000/upload', {
+      method: 'POST',
+      mode: 'cors',
+      body: data
+    })
+      .then(res => res.json())
+      .then(async filename => {
+        await client.mutate({
+          variables: { filename },
+          mutation: uploadFile
+        });
+      })
+      .catch(error => console.error(error));
+  };
   return (
     <Container>
       <CardContent>
         <h2>Edit Profile</h2>
         <Form>
-          <label>Avatar:</label>
-          <Input type="text" />
-
-          <label>Description:</label>
-          <Input type="text" />
+          <label>Upload profile photo:</label>
+          <Input type="file" onChange={e => setFile(e.target.files[0])} />
           <ButtonContainer>
-            <Button>Save</Button>
+            <Button onClick={handleSubmit}>Save</Button>
             <Button>Delete Account</Button>
             <Button>Go Back</Button>
           </ButtonContainer>

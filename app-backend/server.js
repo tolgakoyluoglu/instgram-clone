@@ -5,11 +5,12 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config();
 app.use(express.json());
-
+const fileUpload = require('express-fileupload');
 const isAuth = require('./middleware/isAuth');
 const graphQlSchema = require('./graphql/schema/index');
 const graphQlResolvers = require('./graphql/resolvers/index');
 
+app.use(fileUpload());
 app.use(cors());
 app.use(isAuth);
 app.use(
@@ -20,6 +21,17 @@ app.use(
     graphiql: true
   })
 );
+
+app.post('/upload', (req, res) => {
+  let uploadedFile = req.files.file;
+  const filename = req.files.file.name;
+  uploadedFile.mv(`${__dirname}/uploads/${filename}`, error => {
+    if (error) {
+      return res.status(500).send(error);
+    }
+    return res.json(filename);
+  });
+});
 
 mongoose.connect(
   process.env.MONGO,
