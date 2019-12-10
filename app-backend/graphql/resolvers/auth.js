@@ -1,6 +1,13 @@
 const bcrypt = require('bcryptjs');
 const User = require('../../models/User');
 const jwt = require('jsonwebtoken');
+const cloudinary = require('cloudinary');
+
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.API_KEY,
+  api_secret: process.env.API_SECRET
+});
 
 module.exports = {
   createUser: async args => {
@@ -43,7 +50,7 @@ module.exports = {
       'jwtsecret',
       { expiresIn: '2h' }
     );
-    return { userId: user.id, token: token, tokenExp: 2 };
+    return { userId: user.id, token: token, tokenExp: 2, photo: user.photo };
   },
   searchUser: async (args, req) => {
     if (!req.isAuth) {
@@ -56,6 +63,26 @@ module.exports = {
       throw new Error('User not found.');
     } else {
       return searchUser;
+    }
+  },
+  uploadImage: async (args, req) => {
+    if (!req.isAuth) {
+      throw new Error('Unauthorizied!');
+    }
+    let filename = args.filename;
+    const path = require('path');
+    const mainDir = path.dirname(require.main.filename);
+    filename = `${mainDir}/uploads/${filename}`;
+
+    try {
+      const user = await User.findById(req.userId);
+      const photo = await cloudinary.v2.uploader.upload(filename);
+      await user.updateOne({
+        photo: photo.secure_url
+      });
+      return [user];
+    } catch (error) {
+      throw new Error(error);
     }
   }
 };

@@ -26,6 +26,7 @@ const GET_POSTS = gql`
         username
         email
         _id
+        photo
       }
     }
   }
@@ -52,6 +53,7 @@ const GET_POST = gql`
         username
         email
         _id
+        photo
       }
     }
   }
@@ -105,6 +107,7 @@ const LOGIN_USER = gql`
       token
       tokenExp
       userId
+      photo
     }
   }
 `;
@@ -123,6 +126,7 @@ const SEARCH_USER = gql`
     searchUser(username: $username) {
       _id
       username
+      photo
     }
   }
 `;

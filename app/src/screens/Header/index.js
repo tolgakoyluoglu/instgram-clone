@@ -30,6 +30,12 @@ const Header = () => {
     setActive(index);
   };
 
+  const token = localStorage.getItem('token');
+  if (!token) {
+    setAuthTokens();
+    localStorage.clear();
+  }
+
   if (loading) {
     return (
       <LoadingContainer>

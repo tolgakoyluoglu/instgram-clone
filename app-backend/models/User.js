@@ -10,6 +10,9 @@ const UserSchema = new mongoose.Schema({
       ref: 'Post'
     }
   ],
+  photo: {
+    type: String
+  },
   register_date: { type: Date, default: Date.now }
 });
 
