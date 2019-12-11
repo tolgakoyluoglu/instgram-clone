@@ -55,17 +55,15 @@ module.exports = buildSchema(`
   }
 
   type RootQuery {
-      posts(userId: String): [Post!]!
+      posts: [Post!]!
       getPost(id: String!) : Post!
       getFollowing(userId: String!) : [Follow!]!
       getFollowers(userId: String!) : [Follow!]!
       userPosts(userId: String!): [Post!]!
       comment(post: String!): [Comment!]!
       likes: [Like!]!
-  }
-
-  type Subscription {
-    posts: [Post!]!
+      getUser: User!
+      searchUserId(userId: String) : User!
   }
 
   type RootMutation {
@@ -77,7 +75,7 @@ module.exports = buildSchema(`
     comment(user: String!): Comment
     searchUser(username: String!) : [User!]!
     deletePost(postId: String!) : String!
-    uploadImage(filename: String!): [User!]!
+    uploadImage(filename: String!): User!
   }
   schema {
       query: RootQuery
