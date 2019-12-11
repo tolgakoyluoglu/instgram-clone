@@ -24,6 +24,9 @@ const Card = styled.div`
   text-align: center;
   border: 1px solid #f3f3f3;
   margin: 5px;
+  border-radius: 8px;
+  box-shadow: 0 7px 30px -10px rgba(150, 170, 180, 0.5);
+
   @media only screen and (min-width: 400px) {
     width: 120px;
     height: 120px;
@@ -66,17 +69,16 @@ const BioContainer = styled.div`
 `;
 
 const ImageContainer = styled.div`
-  background-color: white;
-  margin-top: 50px;
   margin: auto;
-  border: 2px solid #f3f3f3;
-  width: 25%;
-  padding: 15px;
-  border-radius: 50%;
 `;
 
 const Avatar = styled.img`
-  width: 100%;
+  height: 150px;
+  width: 150px;
+  border-radius: 50%;
+  object-fit: contain;
+  border: 1px solid #e6e6e6;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 `;
 
 const AboutContainer = styled.div`

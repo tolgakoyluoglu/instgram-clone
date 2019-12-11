@@ -15,23 +15,32 @@ import Avatar from '../../../res/images/avatar.png';
 import Like from './components/Like';
 
 const Posts = () => {
-  const { loading, error, data } = useQuery(GET_POSTS, {
-    fetchPolicy: 'no-cache'
+  const { loading, data } = useQuery(GET_POSTS, {
+    refetchQueries: [
+      {
+        query: GET_POSTS
+      }
+    ]
   });
 
-  if (error) return `Error! ${error.message}`;
   if (loading)
     return (
       <LoadingContainer>
         <Loader />
       </LoadingContainer>
     );
+
   const posts = data.posts.map(post => {
     return (
       <Card key={post._id}>
         <CardHeader>
           <ImageContainer>
-            <img src={Avatar} alt={post.title} />
+            <img
+              src={
+                post.creator[0].photo !== null ? post.creator[0].photo : Avatar
+              }
+              alt={post.title}
+            />
           </ImageContainer>
           <Link to={{ pathname: '/profile/' + post.creator[0]._id }}>
             <p>{post.creator[0].username}</p>

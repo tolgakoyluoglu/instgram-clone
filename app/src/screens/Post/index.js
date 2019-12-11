@@ -23,7 +23,7 @@ import { AuthContext } from '../../shared/common/AuthContext';
 const Post = () => {
   const { userId } = useContext(AuthContext);
   let { id } = useParams();
-  const { loading, error, data } = useQuery(GET_POST, {
+  const { loading, data } = useQuery(GET_POST, {
     variables: { id }
   });
   const [deletePost] = useMutation(DELETE_POST, {

@@ -56,8 +56,8 @@ const PageContainer = styled.div`
   background-color: white;
   width: 100%;
   margin: auto;
-  border-bottom: 1px solid #cdcdcd;
   position: fixed;
+  box-shadow: 0 7px 30px -10px rgba(150, 170, 180, 0.5);
 `;
 
 const PageHeader = styled.h1`

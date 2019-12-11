@@ -5,7 +5,8 @@ import {
   FOLLOW_USER,
   GET_FOLLOWERS,
   GET_FOLLOWING,
-  GET_POSTS
+  GET_POSTS,
+  SEARCH_USER_ID
 } from '../../shared/utils/graphql';
 import { LoadingContainer, Loader } from '../../shared/styled/Loading';
 import { Link, useParams } from 'react-router-dom';
@@ -25,23 +26,21 @@ import { AuthContext } from '../../shared/common/AuthContext';
 const Profile = () => {
   let { id } = useParams();
   const [following, setFollowing] = React.useState();
-  const { userId, photo } = useContext(AuthContext);
+  const { userId } = useContext(AuthContext);
+
   const { loading, error, data } = useQuery(USER_POSTS, {
     variables: { id },
     fetchPolicy: 'no-cache'
   });
-
-  React.useEffect(() => {
-    if (query.data) {
-      const isFollowing = query.data.getFollowers.filter(
-        following => following.userId === userId
-      );
-      if (isFollowing.length > 0) {
-        setFollowing(true);
-      }
-    }
+  const getUser = useQuery(SEARCH_USER_ID, {
+    variables: { id }
   });
-
+  const getFollower = useQuery(GET_FOLLOWERS, {
+    variables: { id }
+  });
+  const getFollowing = useQuery(GET_FOLLOWING, {
+    variables: { id }
+  });
   const [followUser] = useMutation(FOLLOW_USER, {
     variables: { id },
     refetchQueries: [
@@ -54,20 +53,22 @@ const Profile = () => {
       }
     ]
   });
-
-  const query = useQuery(GET_FOLLOWERS, {
-    variables: { id }
-  });
-
-  const followingQuery = useQuery(GET_FOLLOWING, {
-    variables: { id }
-  });
-
+  React.useEffect(() => {
+    if (getFollower.data) {
+      const isFollowing = getFollower.data.getFollowers.filter(
+        following => following.userId === userId
+      );
+      if (isFollowing.length > 0) {
+        setFollowing(true);
+      }
+    }
+  }, [getFollower.data, userId]);
   const handleClick = () => {
     followUser(id);
   };
-  if (error && query.error) {
-    console.log(error && query.error);
+
+  if (error && getFollower.error) {
+    console.log(error && getFollower.error);
   }
   if (loading) {
     return (
@@ -91,18 +92,18 @@ const Profile = () => {
       <BioContainer>
         <Link to="/settings">Edit Profile</Link>
         <ImageContainer>
-          <Avatar src={Photo} />
+          <Avatar
+            src={getUser.data ? getUser.data.searchUserId.photo : Photo}
+          />
         </ImageContainer>
         <AboutContainer>
           <h1>Profile</h1>
           <p>Lorem ipsum text bla bla</p>
           <button onClick={handleClick} disabled={following === true && true}>
-            {query.data ? query.data.getFollowers.length : null}
+            {getFollower.data ? getFollower.data.getFollowers.length : null}
           </button>
           <span>
-            {followingQuery.data
-              ? followingQuery.data.getFollowing.length
-              : null}
+            {getFollowing.data ? getFollowing.data.getFollowing.length : null}
           </span>
         </AboutContainer>
       </BioContainer>
