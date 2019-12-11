@@ -1,8 +1,7 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Container } from '../../Post/Styled';
 import styled from 'styled-components';
 import { Input, Form } from '../../Auth/Styled';
-import { AuthContext } from '../../../shared/common/AuthContext';
 import gql from 'graphql-tag';
 import { client } from '../../../App';
 
@@ -46,7 +45,6 @@ const uploadFile = gql`
 `;
 
 const EditProfile = () => {
-  const { userId, photo } = useContext(AuthContext);
   const [file, setFile] = React.useState();
 
   const handleSubmit = event => {

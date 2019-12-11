@@ -66,7 +66,18 @@ const USER_POSTS = gql`
       url
       creator {
         _id
+        photo
       }
+    }
+  }
+`;
+const GET_USER = gql`
+  query {
+    getUser {
+      _id
+      username
+      photo
+      email
     }
   }
 `;
@@ -130,18 +141,29 @@ const SEARCH_USER = gql`
     }
   }
 `;
+const SEARCH_USER_ID = gql`
+  query($id: String!) {
+    searchUserId(userId: $id) {
+      _id
+      username
+      photo
+    }
+  }
+`;
 
 export {
-  CREATE_POST,
-  GET_POSTS,
-  LOGIN_USER,
   CREATE_USER,
-  USER_POSTS,
+  LOGIN_USER,
+  GET_POSTS,
   GET_FOLLOWERS,
   FOLLOW_USER,
   GET_FOLLOWING,
   LIKE_POST,
-  SEARCH_USER,
+  CREATE_POST,
   GET_POST,
-  DELETE_POST
+  DELETE_POST,
+  USER_POSTS,
+  SEARCH_USER,
+  GET_USER,
+  SEARCH_USER_ID
 };

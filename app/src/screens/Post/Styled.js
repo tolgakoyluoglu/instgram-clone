@@ -20,7 +20,8 @@ const Card = styled.div`
   background-color: #fff;
   flex-direction: column;
   margin-bottom: 60px;
-  border-radius: 5px;
+  border-radius: 8px;
+  box-shadow: 0 7px 30px -10px rgba(150, 170, 180, 0.5);
   @media only screen and (min-width: 1000px) {
     width: 70%;
     flex-direction: row;
