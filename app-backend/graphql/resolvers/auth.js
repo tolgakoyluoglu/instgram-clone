@@ -36,6 +36,16 @@ module.exports = {
         throw err;
       });
   },
+  getUser: async (args, req) => {
+    if (!req.isAuth) {
+      throw new Error('Unauthorizied!');
+    }
+    const user = await User.findById(req.userId);
+    if (!user) {
+      throw Error('User not found.');
+    }
+    return user;
+  },
   login: async ({ email, password }) => {
     const user = await User.findOne({ email: email });
     if (!user) {
@@ -65,6 +75,17 @@ module.exports = {
       return searchUser;
     }
   },
+  searchUserId: async (args, req) => {
+    if (!req.isAuth) {
+      throw new Error('Unauthorizied!');
+    }
+    console.log(args.userId);
+    const user = User.findById(args.userId);
+    if (!user) {
+      throw new Error('User not found.');
+    }
+    return user;
+  },
   uploadImage: async (args, req) => {
     if (!req.isAuth) {
       throw new Error('Unauthorizied!');
@@ -80,7 +101,7 @@ module.exports = {
       await user.updateOne({
         photo: photo.secure_url
       });
-      return [user];
+      return user;
     } catch (error) {
       throw new Error(error);
     }
