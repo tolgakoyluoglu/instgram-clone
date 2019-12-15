@@ -1,7 +1,13 @@
 import React, { useContext } from 'react';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { useParams, Link } from 'react-router-dom';
-import { GET_POST, DELETE_POST, GET_POSTS } from '../../shared/utils/graphql';
+import {
+  GET_POST,
+  DELETE_POST,
+  GET_POSTS,
+  ADD_COMMENT,
+  GET_COMMENTS
+} from '../../shared/utils/graphql';
 import { LoadingContainer, Loader } from '../../shared/styled/Loading';
 import {
   Card,
@@ -21,10 +27,14 @@ import Like from '../Feed/Posts/components/Like';
 import { AuthContext } from '../../shared/common/AuthContext';
 
 const Post = () => {
+  const [comment, setComment] = React.useState('');
   const { userId } = useContext(AuthContext);
   let { id } = useParams();
   const { loading, data } = useQuery(GET_POST, {
     variables: { id }
+  });
+  const queryComments = useQuery(GET_COMMENTS, {
+    variables: { postId: id }
   });
   const [deletePost] = useMutation(DELETE_POST, {
     variables: { postId: id },
@@ -35,6 +45,18 @@ const Post = () => {
       }
     ]
   });
+  const [addComment] = useMutation(ADD_COMMENT, {
+    variables: { postId: id, comment: comment },
+    refetchQueries: [
+      {
+        query: GET_COMMENTS,
+        variables: { postId: id }
+      }
+    ]
+  });
+  if (queryComments.data) {
+    console.log(queryComments.data);
+  }
   if (loading) {
     return (
       <LoadingContainer>
@@ -46,7 +68,9 @@ const Post = () => {
     deletePost();
   };
 
+  const comments = queryComments.data.getComments;
   const post = data.getPost;
+
   return (
     <Container>
       <Card key={post._id}>
@@ -81,10 +105,35 @@ const Post = () => {
             </LikeContainer>
           </CardBody>
           <CommentContainer>
-            <CommentBody />
+            <CommentBody>
+              {comments &&
+                comments.map(comment => {
+                  return (
+                    <div key={comment._id}>
+                      <p>{comment.user}</p>
+                      <p>{comment.comment}</p>
+                    </div>
+                  );
+                })}
+            </CommentBody>
             <CommentInput>
-              <input type="text" placeholder="Add a comment..." />
-              <button>Post</button>
+              <input
+                value={comment}
+                type="text"
+                onChange={e => {
+                  setComment(e.target.value);
+                }}
+                placeholder="Add a comment..."
+              />
+              <button
+                onClick={e => {
+                  e.preventDefault();
+                  setComment('');
+                  addComment();
+                }}
+              >
+                Post
+              </button>
             </CommentInput>
           </CommentContainer>
         </Content>

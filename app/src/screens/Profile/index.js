@@ -77,7 +77,6 @@ const Profile = () => {
       </LoadingContainer>
     );
   }
-
   const posts = data.userPosts.map(post => {
     return (
       <Card key={post._id}>

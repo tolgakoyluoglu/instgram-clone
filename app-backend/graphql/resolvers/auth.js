@@ -79,7 +79,6 @@ module.exports = {
     if (!req.isAuth) {
       throw new Error('Unauthorizied!');
     }
-    console.log(args.userId);
     const user = User.findById(args.userId);
     if (!user) {
       throw new Error('User not found.');

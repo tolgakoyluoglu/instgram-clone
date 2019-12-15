@@ -20,13 +20,15 @@ const GET_POSTS = gql`
       _id
       likes {
         _id
-        user
       }
       creator {
         username
         email
         _id
         photo
+      }
+      comments {
+        _id
       }
     }
   }
@@ -35,7 +37,6 @@ const LIKE_POST = gql`
   mutation($post: String!) {
     likePost(post: $post, user: "") {
       _id
-      user
     }
   }
 `;
@@ -47,13 +48,15 @@ const GET_POST = gql`
       _id
       likes {
         _id
-        user
       }
       creator {
         username
         email
         _id
         photo
+      }
+      comments {
+        _id
       }
     }
   }
@@ -150,8 +153,36 @@ const SEARCH_USER_ID = gql`
     }
   }
 `;
+const ADD_COMMENT = gql`
+  mutation($comment: String!, $postId: String!) {
+    commentPost(comment: $comment, postId: $postId) {
+      _id
+      comment
+      user
+    }
+  }
+`;
+const GET_COMMENTS = gql`
+  query($postId: String!) {
+    getComments(postId: $postId) {
+      _id
+      comment
+      user
+    }
+  }
+`;
+const GET_LIKES = gql`
+  query {
+    getLikes {
+      _id
+      user
+    }
+  }
+`;
 
 export {
+  GET_LIKES,
+  GET_COMMENTS,
   CREATE_USER,
   LOGIN_USER,
   GET_POSTS,
@@ -165,5 +196,6 @@ export {
   USER_POSTS,
   SEARCH_USER,
   GET_USER,
-  SEARCH_USER_ID
+  SEARCH_USER_ID,
+  ADD_COMMENT
 };

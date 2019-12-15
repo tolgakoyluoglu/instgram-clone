@@ -7,12 +7,15 @@ module.exports = buildSchema(`
     url: String!  
     likes: [Like!]
     creator: [User!]
+    comments: [Comment!]
   }
 
   type Comment {
     _id: ID!
     user: String!
-    post: [Post!]
+    comment: String!
+    post: [Post!]!
+    postId: String!
   }
 
   type Like {
@@ -60,10 +63,10 @@ module.exports = buildSchema(`
       getFollowing(userId: String!) : [Follow!]!
       getFollowers(userId: String!) : [Follow!]!
       userPosts(userId: String!): [Post!]!
-      comment(post: String!): [Comment!]!
-      likes: [Like!]!
+      getLikes: [Like!]!
       getUser: User!
       searchUserId(userId: String) : User!
+      getComments(postId: String!) : [Comment]
   }
 
   type RootMutation {
@@ -71,11 +74,11 @@ module.exports = buildSchema(`
     createUser(userInput: UserInput): User
     login(email: String!, password: String!): Auth!
     follow(following: String!, userId: String!): Follow
-    likePost(user: String!, post: String!): Like
-    comment(user: String!): Comment
+    likePost(user: String!, post: String!): Like!
     searchUser(username: String!) : [User!]!
     deletePost(postId: String!) : String!
     uploadImage(filename: String!): User!
+    commentPost(comment: String!, postId: String!): Comment
   }
   schema {
       query: RootQuery

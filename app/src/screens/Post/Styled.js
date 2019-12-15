@@ -27,7 +27,7 @@ const Card = styled.div`
     flex-direction: row;
   }
   @media only screen and (min-width: 1200px) {
-    width: 50%;
+    width: 60%;
   }
 `;
 
@@ -35,7 +35,7 @@ const Image = styled.img`
   min-height: 100%;
   width: 1000px;
   height: auto;
-  max-width: 70%;
+  max-width: 100%;
   max-height: 600px;
 `;
 
@@ -101,15 +101,25 @@ const CommentInput = styled.div`
   }
 `;
 
-const CommentBody = styled.div``;
-const CommentContainer = styled.div`
+const CommentBody = styled.div`
+  border: 1px solid #ccc;
+  overflow: scroll;
   display: flex;
-  flex-direction: column;
+  width: 430px;
+  display: flex;
+  padding: 20px;
   justify-content: space-between;
-  @media only screen and (min-width: 1000px) {
-    height: 500px;
+  flex-direction: column;
+  height: 400px;
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #cdcdcd;
   }
 `;
+const CommentContainer = styled.div``;
 const LikeContainer = styled.div``;
 export {
   CommentContainer,
