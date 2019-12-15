@@ -2,6 +2,7 @@ const Post = require('../../models/Post');
 const User = require('../../models/User');
 const Follow = require('../../models/Follow');
 const Like = require('../../models/Like');
+const Comment = require('../../models/Comment');
 
 module.exports = {
   posts: async (args, req) => {
@@ -18,7 +19,7 @@ module.exports = {
         model: 'User'
       })
       .populate({
-        path: 'likes',
+        path: 'like',
         model: 'Post'
       });
     return posts;
@@ -121,5 +122,15 @@ module.exports = {
       throw new Error('Post not found');
     }
     return 'Post deleted';
+  },
+  getLikes: async (args, req) => {
+    if (!req.isAuth) {
+      throw new Error('Unauthorizied!');
+    }
+    const likes = await Like.find({ user: req.userId });
+    if (!likes) {
+      return res.json(204, { msg: 'No likes found.' });
+    }
+    return likes;
   }
 };

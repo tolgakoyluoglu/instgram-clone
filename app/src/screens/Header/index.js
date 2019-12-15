@@ -21,21 +21,17 @@ const Header = () => {
     AuthContext
   );
   const [username, setValue] = React.useState('');
-  const [active, setActive] = React.useState(1);
   const [searchUser, { data, loading, error }] = useMutation(SEARCH_USER, {
     variables: { username }
   });
 
-  const toggleSelected = index => {
-    setActive(index);
-  };
-
-  const token = localStorage.getItem('token');
-  if (!token) {
-    setAuthTokens();
-    localStorage.clear();
-  }
-
+  React.useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      setAuthTokens();
+      localStorage.clear();
+    }
+  });
   if (loading) {
     return (
       <LoadingContainer>
@@ -76,27 +72,17 @@ const Header = () => {
                 value={username}
                 type="text"
                 onChange={event => setValue(event.target.value)}
-                placeholder="Search.."
+                placeholder="Search for users.."
               />
               {error && <Paragraph>User not found</Paragraph>}
             </Form>
 
             <List>
               <ListItem>
-                <StyledLink
-                  onClick={() => toggleSelected(1)}
-                  selected={active === 1 ? true : false}
-                  to="/feed"
-                >
-                  Feed
-                </StyledLink>
+                <StyledLink to="/feed">Feed</StyledLink>
               </ListItem>
               <ListItem>
-                <StyledLink
-                  to={{ pathname: '/profile/' + userId }}
-                  onClick={() => toggleSelected(2)}
-                  selected={active === 2 ? true : false}
-                >
+                <StyledLink to={{ pathname: '/profile/' + userId }}>
                   Profile
                 </StyledLink>
               </ListItem>
