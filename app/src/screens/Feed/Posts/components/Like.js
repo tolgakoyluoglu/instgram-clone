@@ -7,7 +7,7 @@ import {
 } from '../../../../shared/utils/graphql';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-regular-svg-icons';
-import {} from '@fortawesome/free-regular-svg-icons';
+import { faHeart as heart } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
 import { AuthContext } from '../../../../shared/common/AuthContext';
 
@@ -51,7 +51,7 @@ const Like = post => {
       {liked && (
         <StyledIcon
           size="2x"
-          icon={faHeart}
+          icon={heart}
           onClick={handleClick}
           isliked="true"
         />

@@ -57,7 +57,7 @@ function App() {
           <Switch>
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
-            <PrivateRoute path="/settings" component={EditProfile} />
+            <Route path="/settings" component={EditProfile} />
             <PrivateRoute path="/feed" component={Feed} />
             <PrivateRoute path="/profile/:id" component={Profile} />
             <PrivateRoute path="/post/:id" component={Post} />

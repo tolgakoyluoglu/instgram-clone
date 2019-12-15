@@ -1,39 +1,9 @@
 import React from 'react';
-import { Container } from '../../Post/Styled';
-import styled from 'styled-components';
-import { Input, Form } from '../../Auth/Styled';
 import gql from 'graphql-tag';
+import { Container } from '../../Post/Styled';
+import { Form } from '../../Auth/Styled';
 import { client } from '../../../App';
-
-const CardContent = styled.div`
-  padding: 20px;
-  width: 50%;
-  margin: auto;
-  border: 1px solid #cdcdcd;
-  background-color: #fff;
-  border-radius: 8px;
-`;
-
-const ButtonContainer = styled.div`
-  display: flex;
-`;
-
-const Button = styled.button`
-  margin: 10px;
-  background-color: #3897f0;
-  border: none;
-  border-radius: 6px;
-  border-width: 1px;
-  padding: 1rem;
-  color: white;
-  font-weight: 700;
-  width: 33%;
-  margin-bottom: 1rem;
-  font-size: 0.8rem;
-  cursor: pointer;
-  outline: none;
-  border-color: rgb(182, 182, 191);
-`;
+import { ButtonContainer, Button, Card, Input, Label } from './Styled';
 
 const uploadFile = gql`
   mutation($filename: String!) {
@@ -46,6 +16,7 @@ const uploadFile = gql`
 
 const EditProfile = () => {
   const [file, setFile] = React.useState();
+  const [image, setImage] = React.useState();
 
   const handleSubmit = event => {
     event.preventDefault();
@@ -66,20 +37,28 @@ const EditProfile = () => {
       })
       .catch(error => console.error(error));
   };
+
+  const handleImg = event => {
+    setFile(event.target.files[0]);
+    setImage(URL.createObjectURL(event.target.files[0]));
+  };
   return (
     <Container>
-      <CardContent>
+      <Card>
         <h2>Edit Profile</h2>
         <Form>
-          <label>Upload profile photo:</label>
-          <Input type="file" onChange={e => setFile(e.target.files[0])} />
+          <Label>
+            Upload profile photo
+            <Input className="input" type="file" onChange={handleImg} />
+          </Label>
+          <img src={image} />
           <ButtonContainer>
             <Button onClick={handleSubmit}>Save</Button>
             <Button>Delete Account</Button>
             <Button>Go Back</Button>
           </ButtonContainer>
         </Form>
-      </CardContent>
+      </Card>
     </Container>
   );
 };

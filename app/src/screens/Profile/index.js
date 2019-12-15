@@ -20,7 +20,6 @@ import {
   ImageContainer,
   AboutContainer
 } from './Styled';
-import Photo from '../../res/images/avatar.png';
 import { AuthContext } from '../../shared/common/AuthContext';
 
 const Profile = () => {
@@ -91,9 +90,7 @@ const Profile = () => {
       <BioContainer>
         <Link to="/settings">Edit Profile</Link>
         <ImageContainer>
-          <Avatar
-            src={getUser.data ? getUser.data.searchUserId.photo : Photo}
-          />
+          <Avatar src={getUser.data && getUser.data.searchUserId.photo} />
         </ImageContainer>
         <AboutContainer>
           <h1>Profile</h1>
