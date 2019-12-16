@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import Image from '../../res/images/upload.png';
 
-const Card = styled.div`
+const Container = styled.div`
   padding-top: 150px;
   min-height: calc(100vh - 70px);
   box-sizing: border-box;
@@ -10,6 +10,51 @@ const Card = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  -webkit-animation: fadein 1s;
+  -moz-animation: fadein 1s;
+  -ms-animation: fadein 1s;
+  -o-animation: fadein 1s;
+  animation: fadein 1s;
+  @keyframes fadein {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @-moz-keyframes fadein {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @-webkit-keyframes fadein {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @-ms-keyframes fadein {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @-o-keyframes fadein {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
 `;
 
 const Form = styled.form`
@@ -83,4 +128,4 @@ const FileImage = styled.img`
   height: max-content;
 `;
 
-export { Form, Input, Button, Card, UploadButton, FileImage };
+export { Form, Input, Button, Container, UploadButton, FileImage };

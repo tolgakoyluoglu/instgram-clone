@@ -9,7 +9,8 @@ import {
   PageHeader,
   SearchInput,
   Form,
-  Paragraph
+  Paragraph,
+  StyledLinkLogo
 } from './Styled';
 import { useMutation } from '@apollo/react-hooks';
 import { SEARCH_USER } from '../../shared/utils/graphql';
@@ -62,9 +63,9 @@ const Header = () => {
   return (
     <PageContainer>
       <Navbar>
-        <StyledLink to={authTokens ? '/feed' : '/login'}>
+        <StyledLinkLogo to={authTokens ? '/feed' : '/login'}>
           <PageHeader>InstaClone</PageHeader>
-        </StyledLink>
+        </StyledLinkLogo>
         {authTokens && (
           <>
             <Form type="submit" onSubmit={handleSubmit}>
@@ -74,9 +75,7 @@ const Header = () => {
                 onChange={event => setValue(event.target.value)}
                 placeholder="Search for users.."
               />
-              {error && <Paragraph>User not found</Paragraph>}
             </Form>
-
             <List>
               <ListItem>
                 <StyledLink to="/feed">Feed</StyledLink>
