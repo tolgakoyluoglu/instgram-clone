@@ -1,7 +1,8 @@
 import React, { useContext } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 //Components
-import { Card, Form, Input, Button } from '../Styled';
+import { Card, Input } from '../Styled';
+import { Button, Form } from '../../../shared/styled/Styled';
 import { AuthContext } from '../../../shared/common/AuthContext';
 //Apollo stuff
 import { useMutation } from '@apollo/react-hooks';
