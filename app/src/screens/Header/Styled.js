@@ -1,5 +1,5 @@
-import styled, { css } from 'styled-components';
-import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import { NavLink, Link } from 'react-router-dom';
 
 const Navbar = styled.div`
   display: flex;
@@ -9,38 +9,63 @@ const Navbar = styled.div`
   margin: auto;
   font-size: 14px;
   h1 {
-    font-size: 18px;
+    font-size: 24px;
+    margin-bottom: 0px;
   }
   @media only screen and (min-width: 700px) {
     width: 95%;
     h1 {
       font-size: 25px;
+      margin-bottom: 15px;
     }
   }
   @media only screen and (min-width: 1200px) {
     width: 50%;
+  }
+  @media only screen and (max-width: 500px) {
+    flex-direction: column;
   }
 `;
 const List = styled.ul`
   display: flex;
   list-style: none;
   text-decoration: none;
+  @media only screen and (max-width: 500px) {
+    margin-right: 40px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
 `;
 const ListItem = styled.li`
   padding: 12px;
   text-decoration: none;
 `;
 
-const StyledLink = styled(Link)`
+const StyledLink = styled(NavLink)`
+  &.active {
+    font-weight: 600;
+    &:after {
+      display: block;
+      content: '';
+      width: 20px;
+      background-color: #262626;
+      border-radius: 2px;
+      height: 4px;
+    }
+  }
   text-decoration: none;
   color: #262626;
   font-size: 15px;
   font-weight: 500;
   position: relative;
+`;
 
-  &:hover {
-    color: #293dce;
-  }
+const StyledLinkLogo = styled(Link)`
+  text-decoration: none;
+  color: #262626;
+  font-size: 15px;
+  font-weight: 500;
+  position: relative;
 `;
 
 const PageContainer = styled.div`
@@ -49,6 +74,9 @@ const PageContainer = styled.div`
   margin: auto;
   position: fixed;
   box-shadow: 0 7px 30px -10px rgba(150, 170, 180, 0.5);
+  @media only screen and (max-width: 500px) {
+    position: relative;
+  }
 `;
 
 const PageHeader = styled.h1`
@@ -68,6 +96,9 @@ const SearchInput = styled.input`
   border-width: 1px;
   border-style: solid;
   border-color: rgb(182, 182, 191);
+  @media only screen and (max-width: 500px) {
+    display: none;
+  }
 
   &:focus {
     color: rgb(26, 26, 38);
@@ -79,7 +110,10 @@ const SearchInput = styled.input`
 `;
 
 const Form = styled.form`
-  margin-left: 100px;
+  margin-left: 70px;
+  @media only screen and (max-width: 500px) {
+    margin-left: 1px;
+  }
 `;
 
 const Paragraph = styled.p`
@@ -98,5 +132,6 @@ export {
   PageHeader,
   SearchInput,
   Form,
-  Paragraph
+  Paragraph,
+  StyledLinkLogo
 };

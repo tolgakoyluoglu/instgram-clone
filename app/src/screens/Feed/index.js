@@ -3,7 +3,7 @@ import { useMutation } from '@apollo/react-hooks';
 import Posts from './Posts';
 import { CREATE_POST, GET_POSTS } from '../../shared/utils/graphql';
 import { LoadingContainer, Loader } from '../../shared/styled/Loading';
-import { Card, Form, Input, UploadButton } from './Styled';
+import { Container, Form, Input, UploadButton } from './Styled';
 import Modal from '../../shared/common/components/Modal';
 import Backdrop from '../../shared/common/components/Backdrop';
 
@@ -55,7 +55,7 @@ const Feed = () => {
     );
 
   return (
-    <Card>
+    <Container>
       {creating && <Backdrop />}
       {creating && (
         <Modal
@@ -85,7 +85,7 @@ const Feed = () => {
       )}
       <UploadButton onClick={createHandler} />
       <Posts />
-    </Card>
+    </Container>
   );
 };
 
