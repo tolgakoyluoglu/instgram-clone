@@ -11,15 +11,6 @@ const Card = styled.div`
   align-items: center;
 `;
 
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  width: 80%;
-  @media only screen and (min-width: 500px) {
-    width: 100%;
-  }
-`;
-
 const Input = styled.input`
   margin-bottom: 1rem;
   font-size: 13px;
@@ -44,20 +35,4 @@ const Input = styled.input`
   }
 `;
 
-const Button = styled.button`
-  background-color: #3897f0;
-  border: none;
-  border-radius: 6px;
-  border-width: 1px;
-  padding: 1rem;
-  color: white;
-  font-weight: 700;
-  width: 100%;
-  margin-bottom: 1rem;
-  font-size: 0.8rem;
-  cursor: pointer;
-  outline: none;
-  border-color: rgb(182, 182, 191);
-`;
-
-export { Form, Input, Button, Card };
+export { Input, Card };

@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 //Components
-import { Card, Form, Input, Button } from '../Styled';
+import { Card, Input } from '../Styled';
+import { Button, Form } from '../../../shared/styled/Styled';
 //Apollo stuff
 import { useMutation } from '@apollo/react-hooks';
 import { LoadingContainer, Loader } from '../../../shared/styled/Loading';

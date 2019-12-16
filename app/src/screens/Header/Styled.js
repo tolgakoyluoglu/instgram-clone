@@ -37,21 +37,12 @@ const StyledLink = styled(Link)`
   font-size: 15px;
   font-weight: 500;
   position: relative;
-  ${props => (props.selected ? selectedStyles : undefined)};
-`;
 
-const selectedStyles = css`
-  position: relative;
-  &:after {
-    display: block;
-    content: '';
-    bottom: 20%;
-    width: 25px;
-    background-color: #262626;
-    border-radius: 2px;
-    height: 3px;
+  &:hover {
+    color: #293dce;
   }
 `;
+
 const PageContainer = styled.div`
   background-color: white;
   width: 100%;

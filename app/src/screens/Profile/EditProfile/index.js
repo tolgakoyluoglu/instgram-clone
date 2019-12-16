@@ -1,9 +1,9 @@
 import React from 'react';
 import gql from 'graphql-tag';
 import { Container } from '../../Post/Styled';
-import { Form } from '../../Auth/Styled';
 import { client } from '../../../App';
-import { ButtonContainer, Button, Card, Input, Label } from './Styled';
+import { ButtonContainer, Card, Input, Label } from './Styled';
+import { Button, Form } from '../../../shared/styled/Styled';
 
 const uploadFile = gql`
   mutation($filename: String!) {
