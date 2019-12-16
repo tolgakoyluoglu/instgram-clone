@@ -117,7 +117,7 @@ module.exports = {
     if (!req.isAuth) {
       throw new Error('Unauthorizied!');
     }
-    const post = await Post.findByIdAndRemove(args.postId);
+    const post = await Post.findByIdAndDelete(args.postId);
     if (!post) {
       throw new Error('Post not found');
     }
@@ -132,5 +132,15 @@ module.exports = {
       return res.json(204, { msg: 'No likes found.' });
     }
     return likes;
+  },
+  deleteLike: async (args, req) => {
+    if (!req.isAuth) {
+      throw new Error('Unauthorizied!');
+    }
+    const like = await Like.findByIdAndDelete(args.id);
+    if (!like) {
+      return res.json(204, { msg: 'Like not found.' });
+    }
+    return res.json(200, { msg: 'Like deleted' });
   }
 };

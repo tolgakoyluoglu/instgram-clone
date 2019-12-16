@@ -36,16 +36,6 @@ module.exports = {
         throw err;
       });
   },
-  getUser: async (args, req) => {
-    if (!req.isAuth) {
-      throw new Error('Unauthorizied!');
-    }
-    const user = await User.findById(req.userId);
-    if (!user) {
-      throw Error('User not found.');
-    }
-    return user;
-  },
   login: async ({ email, password }) => {
     const user = await User.findOne({ email: email });
     if (!user) {
@@ -75,6 +65,16 @@ module.exports = {
       return searchUser;
     }
   },
+  getUser: async (args, req) => {
+    if (!req.isAuth) {
+      throw new Error('Unauthorizied!');
+    }
+    const user = await User.findById(req.userId);
+    if (!user) {
+      throw Error('User not found.');
+    }
+    return user;
+  },
   searchUserId: async (args, req) => {
     if (!req.isAuth) {
       throw new Error('Unauthorizied!');
@@ -84,6 +84,16 @@ module.exports = {
       throw new Error('User not found.');
     }
     return user;
+  },
+  DeleteUser: async (args, req) => {
+    if (!req.isAuth) {
+      throw new Error('Unauthorizied!');
+    }
+    const user = User.findByIdAndDelete(req.userId);
+    if (!user) {
+      return res.json(204, { msg: 'User not found.' });
+    }
+    return res.json(200, { msg: 'User deleted.' });
   },
   uploadImage: async (args, req) => {
     if (!req.isAuth) {
@@ -104,5 +114,18 @@ module.exports = {
     } catch (error) {
       throw new Error(error);
     }
+  },
+  addBio: async (args, req) => {
+    if (!req.isAuth) {
+      throw new Error('Unauthorizied!');
+    }
+    const user = await User.findById(req.userId);
+    if (!user) {
+      return res.json(204, { msg: 'User not found.' });
+    }
+    await user.updateOne({
+      bio: args.bio
+    });
+    return user;
   }
 };

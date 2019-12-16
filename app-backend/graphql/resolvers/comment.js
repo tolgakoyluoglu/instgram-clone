@@ -26,5 +26,15 @@ module.exports = {
       return res.json(204, { msg: 'No comments found.' });
     }
     return comments;
+  },
+  DeleteComment: async (args, req) => {
+    if (!req.isAuth) {
+      throw new Error('Unauthorizied!');
+    }
+    const comment = await Comment.findByIdAndDelete(args.id);
+    if (!comment) {
+      return res.json(204, { msg: 'Post not found.' });
+    }
+    return res.json(200, { msg: 'Comment deleted' });
   }
 };
