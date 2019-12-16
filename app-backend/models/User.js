@@ -13,6 +13,9 @@ const UserSchema = new mongoose.Schema({
   photo: {
     type: String
   },
+  bio: {
+    type: String
+  },
   register_date: { type: Date, default: Date.now }
 });
 
