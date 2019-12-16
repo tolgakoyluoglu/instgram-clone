@@ -179,8 +179,35 @@ const GET_LIKES = gql`
     }
   }
 `;
+const DELETE_USER = gql`
+  mutation {
+    deleteUser
+  }
+`;
+const DELETE_COMMENT = gql`
+  mutation($id: String!) {
+    deleteComment(id: $id)
+  }
+`;
+const DELETE_LIKE = gql`
+  mutation($id: String!) {
+    deleteLike(id: $id)
+  }
+`;
+const ADD_BIO = gql`
+  mutation($bio: String!) {
+    addBio(bio: $bio) {
+      _id
+      bio
+    }
+  }
+`;
 
 export {
+  ADD_BIO,
+  DELETE_LIKE,
+  DELETE_COMMENT,
+  DELETE_USER,
   GET_LIKES,
   GET_COMMENTS,
   CREATE_USER,
