@@ -79,6 +79,10 @@ module.exports = buildSchema(`
     deletePost(postId: String!) : String!
     uploadImage(filename: String!): User!
     commentPost(comment: String!, postId: String!): Comment
+    deleteComment(id: String!) : String!
+    deleteLike(id: String!) : String!
+    deleteUser : String!
+    addBio(bio: String!) : User!
   }
   schema {
       query: RootQuery
