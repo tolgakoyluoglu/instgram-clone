@@ -9,7 +9,6 @@ import {
   PageHeader,
   SearchInput,
   Form,
-  Paragraph,
   StyledLinkLogo
 } from './Styled';
 import { useMutation } from '@apollo/react-hooks';
@@ -22,7 +21,7 @@ const Header = () => {
     AuthContext
   );
   const [username, setValue] = React.useState('');
-  const [searchUser, { data, loading, error }] = useMutation(SEARCH_USER, {
+  const [searchUser, { data, loading }] = useMutation(SEARCH_USER, {
     variables: { username }
   });
 

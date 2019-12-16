@@ -19,7 +19,7 @@ module.exports = {
   },
   getComments: async (args, req) => {
     if (!req.isAuth) {
-      throw new Error('Unauthorizied!');
+      return res.json(401, { msg: 'Unauthorized' });
     }
     const comments = await Comment.find({ postId: args.postId });
     if (!comments) {
@@ -29,7 +29,7 @@ module.exports = {
   },
   DeleteComment: async (args, req) => {
     if (!req.isAuth) {
-      throw new Error('Unauthorizied!');
+      return res.json(401, { msg: 'Unauthorized' });
     }
     const comment = await Comment.findByIdAndDelete(args.id);
     if (!comment) {

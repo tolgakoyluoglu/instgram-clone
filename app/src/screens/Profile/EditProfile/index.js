@@ -51,7 +51,7 @@ const EditProfile = () => {
             Upload profile photo
             <Input className="input" type="file" onChange={handleImg} />
           </Label>
-          <img src={image} />
+          <img alt={file && file.filename} src={image} />
           <ButtonContainer>
             <Button onClick={handleSubmit}>Save</Button>
             <Button>Delete Account</Button>

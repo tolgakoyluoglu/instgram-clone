@@ -1,8 +1,8 @@
 import { gql } from 'apollo-boost';
 
 const CREATE_POST = gql`
-  mutation createPost($title: String!, $url: String!) {
-    createPost(postInput: { title: $title, url: $url }) {
+  mutation($title: String!, $filename: String!) {
+    createPost(postInput: { title: $title, filename: $filename }) {
       title
       url
       _id
