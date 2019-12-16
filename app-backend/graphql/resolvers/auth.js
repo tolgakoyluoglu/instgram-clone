@@ -17,7 +17,7 @@ module.exports = {
     })
       .then(user => {
         if (user) {
-          throw new Error('User already exists.');
+          return res.json(404, { msg: 'User already exist' });
         }
         return bcrypt.hash(args.userInput.password, 12);
       })
@@ -54,20 +54,20 @@ module.exports = {
   },
   searchUser: async (args, req) => {
     if (!req.isAuth) {
-      throw new Error('Unauthorizied!');
+      return res.json(401, { msg: 'Unauthorized' });
     }
     const searchUser = await User.find({
       username: args.username
     });
     if (!searchUser.length) {
-      throw new Error('User not found.');
+      return res.json(404, { msg: 'Not found' });
     } else {
       return searchUser;
     }
   },
   getUser: async (args, req) => {
     if (!req.isAuth) {
-      throw new Error('Unauthorizied!');
+      return res.json(401, { msg: 'Unauthorized' });
     }
     const user = await User.findById(req.userId);
     if (!user) {
@@ -77,17 +77,17 @@ module.exports = {
   },
   searchUserId: async (args, req) => {
     if (!req.isAuth) {
-      throw new Error('Unauthorizied!');
+      return res.json(401, { msg: 'Unauthorized' });
     }
     const user = User.findById(args.userId);
     if (!user) {
-      throw new Error('User not found.');
+      return res.json(404, { msg: 'Not found' });
     }
     return user;
   },
   DeleteUser: async (args, req) => {
     if (!req.isAuth) {
-      throw new Error('Unauthorizied!');
+      return res.json(401, { msg: 'Unauthorized' });
     }
     const user = User.findByIdAndDelete(req.userId);
     if (!user) {
@@ -97,7 +97,7 @@ module.exports = {
   },
   uploadImage: async (args, req) => {
     if (!req.isAuth) {
-      throw new Error('Unauthorizied!');
+      return res.json(401, { msg: 'Unauthorized' });
     }
     let filename = args.filename;
     const path = require('path');
@@ -117,7 +117,7 @@ module.exports = {
   },
   addBio: async (args, req) => {
     if (!req.isAuth) {
-      throw new Error('Unauthorizied!');
+      return res.json(401, { msg: 'Unauthorized' });
     }
     const user = await User.findById(req.userId);
     if (!user) {

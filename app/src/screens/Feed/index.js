@@ -1,58 +1,54 @@
 import React from 'react';
-import { useMutation } from '@apollo/react-hooks';
 import Posts from './Posts';
-import { CREATE_POST, GET_POSTS } from '../../shared/utils/graphql';
-import { LoadingContainer, Loader } from '../../shared/styled/Loading';
 import { Container, Form, Input, UploadButton } from './Styled';
 import Modal from '../../shared/common/components/Modal';
 import Backdrop from '../../shared/common/components/Backdrop';
+import { client } from '../../App';
+import { GET_POSTS, CREATE_POST } from '../../shared/utils/graphql';
 
 const Feed = () => {
   const [image, setImage] = React.useState('');
   const [title, setTitle] = React.useState('');
+  const [file, setFile] = React.useState();
   const [creating, setCreating] = React.useState(false);
 
   const createHandler = () => {
     setCreating(true);
   };
-
-  const confirmHandler = event => {
-    setCreating(false);
-    event.preventDefault();
-    createPost();
-    setTitle('');
-    setImage('');
-  };
-
   const cancelHandler = () => {
     setCreating(false);
   };
-  const [createPost, { error, loading }] = useMutation(CREATE_POST, {
-    variables: { title: title, url: image },
-    fetchPolicy: 'no-cache',
-    refetchQueries: [
-      {
-        query: GET_POSTS
-      }
-    ]
-  });
   const handleSubmit = event => {
     event.preventDefault();
-    createPost();
+    setCreating(false);
+    const data = new FormData();
+    data.append('file', file, file.name);
+
+    fetch('http://localhost:4000/upload', {
+      method: 'POST',
+      mode: 'cors',
+      body: data
+    })
+      .then(res => res.json())
+      .then(async filename => {
+        await client.mutate({
+          variables: { filename, title },
+          mutation: CREATE_POST,
+          refetchQueries: [
+            {
+              query: GET_POSTS
+            }
+          ]
+        });
+      })
+      .catch(error => console.error(error));
     setTitle('');
     setImage('');
   };
-
-  if (error) {
-    console.log(error.message);
-  }
-
-  if (loading)
-    return (
-      <LoadingContainer>
-        <Loader />
-      </LoadingContainer>
-    );
+  const handleImg = event => {
+    setFile(event.target.files[0]);
+    setImage(URL.createObjectURL(event.target.files[0]));
+  };
 
   return (
     <Container>
@@ -63,7 +59,7 @@ const Feed = () => {
           canCancel
           canConfirm
           onCancel={cancelHandler}
-          onConfirm={confirmHandler}
+          onConfirm={handleSubmit}
         >
           <Form onSubmit={handleSubmit}>
             <Input
@@ -73,13 +69,11 @@ const Feed = () => {
               required
               onChange={e => setTitle(e.target.value)}
             />
-            <Input
-              value={image}
-              type="text"
-              placeholder="Image"
-              required
-              onChange={e => setImage(e.target.value)}
-            />
+            <label>
+              Upload profile photo
+              <Input className="input" type="file" onChange={handleImg} />
+            </label>
+            <img alt={title} src={image} />
           </Form>
         </Modal>
       )}

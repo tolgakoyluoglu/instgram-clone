@@ -2,12 +2,18 @@ const Post = require('../../models/Post');
 const User = require('../../models/User');
 const Follow = require('../../models/Follow');
 const Like = require('../../models/Like');
-const Comment = require('../../models/Comment');
+const cloudinary = require('cloudinary');
+
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.API_KEY,
+  api_secret: process.env.API_SECRET
+});
 
 module.exports = {
   posts: async (args, req) => {
     if (!req.isAuth) {
-      throw new Error('Unauthorizied!');
+      return res.json(401, { msg: 'Unauthorized' });
     }
     let following = await Follow.find({
       userId: req.userId
@@ -26,7 +32,7 @@ module.exports = {
   },
   getPost: async (args, req) => {
     if (!req.isAuth) {
-      throw new Error('Unauthorizied!');
+      return res.json(401, { msg: 'Unauthorized' });
     }
     const post = await Post.findById(args.id)
       .populate({
@@ -38,13 +44,13 @@ module.exports = {
         model: 'Post'
       });
     if (!post) {
-      throw new Error('Error when fetching post');
+      return res.json(404, { msg: 'Not found' });
     }
     return post;
   },
   userPosts: async (args, req) => {
     if (!req.isAuth) {
-      throw new Error('Unauthorizied!');
+      return res.json(401, { msg: 'Unauthorized' });
     }
     return Post.find({ creator: args.userId })
       .then(posts => {
@@ -56,37 +62,46 @@ module.exports = {
   },
   createPost: async (args, req) => {
     if (!req.isAuth) {
-      throw new Error('Unauthorizied!');
+      return res.json(401, { msg: 'Unauthorized' });
     }
-    const post = new Post({
-      title: args.postInput.title,
-      url: args.postInput.url,
-      creator: req.userId
-    });
-    let createdPost;
-    return post
-      .save()
-      .then(result => {
-        createdPost = result;
-        return User.findById(req.userId);
-      })
-      .then(user => {
-        if (!user) {
-          throw new Error('User not found.');
-        }
-        user.createdPosts.push(post);
-        return user.save();
-      })
-      .then(result => {
-        return createdPost;
-      })
-      .catch(err => {
-        throw err;
+    let filename = args.postInput.filename;
+    const path = require('path');
+    const mainDir = path.dirname(require.main.filename);
+    filename = `${mainDir}/uploads/${filename}`;
+    try {
+      const photo = await cloudinary.v2.uploader.upload(filename);
+      const post = new Post({
+        title: args.postInput.title,
+        url: photo.secure_url,
+        creator: req.userId
       });
+      let createdPost;
+      return post
+        .save()
+        .then(result => {
+          createdPost = result;
+          return User.findById(req.userId);
+        })
+        .then(user => {
+          if (!user) {
+            return res.json(404, { msg: 'Not found' });
+          }
+          user.createdPosts.push(post);
+          return user.save();
+        })
+        .then(result => {
+          return createdPost;
+        })
+        .catch(err => {
+          throw err;
+        });
+    } catch (error) {
+      throw new Error(error);
+    }
   },
   likePost: async (args, req) => {
     if (!req.isAuth) {
-      throw new Error('Unauthorizied!');
+      return res.json(401, { msg: 'Unauthorized' });
     }
     const liked = await Like.findOne({
       user: req.userId,
@@ -104,18 +119,18 @@ module.exports = {
         })
         .then(post => {
           if (!post) {
-            throw new Error('Post not found.');
+            return res.json(404, { msg: 'Not found' });
           }
           post.likes.push(post);
           return post.save();
         });
     } else {
-      return new Error('You already like this post');
+      return res.json(204, { msg: 'You already like this post' });
     }
   },
   deletePost: async (args, req) => {
     if (!req.isAuth) {
-      throw new Error('Unauthorizied!');
+      return res.json(401, { msg: 'Unauthorized' });
     }
     const post = await Post.findByIdAndDelete(args.postId);
     if (!post) {
@@ -125,7 +140,7 @@ module.exports = {
   },
   getLikes: async (args, req) => {
     if (!req.isAuth) {
-      throw new Error('Unauthorizied!');
+      return res.json(401, { msg: 'Unauthorized' });
     }
     const likes = await Like.find({ user: req.userId });
     if (!likes) {
@@ -135,11 +150,11 @@ module.exports = {
   },
   deleteLike: async (args, req) => {
     if (!req.isAuth) {
-      throw new Error('Unauthorizied!');
+      return res.json(401, { msg: 'Unauthorized' });
     }
     const like = await Like.findByIdAndDelete(args.id);
     if (!like) {
-      return res.json(204, { msg: 'Like not found.' });
+      return res.json(204, { msg: 'Like not found' });
     }
     return res.json(200, { msg: 'Like deleted' });
   }

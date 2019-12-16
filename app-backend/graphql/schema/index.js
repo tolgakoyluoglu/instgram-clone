@@ -47,8 +47,8 @@ module.exports = buildSchema(`
   }
 
   input PostInput {
-    title: String!
-    url: String!  
+    title: String! 
+    filename: String!
   }
 
   input UserInput {
