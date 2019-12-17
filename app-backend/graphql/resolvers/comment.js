@@ -4,10 +4,10 @@ const Comment = require('../../models/Comment');
 module.exports = {
   commentPost: async (args, req) => {
     if (!req.isAuth) {
-      return res.json(401, { msg: 'Unauthorized.' });
+      throw new Error('Unauthorized');
     }
     if (!args.comment) {
-      return res.json(204, { msg: 'Comment can not be null.' });
+      throw new Error('Comment cant be empty');
     }
     const comment = new Comment({
       user: req.userId,
@@ -19,22 +19,22 @@ module.exports = {
   },
   getComments: async (args, req) => {
     if (!req.isAuth) {
-      return res.json(401, { msg: 'Unauthorized' });
+      throw new Error('Unauthorized');
     }
     const comments = await Comment.find({ postId: args.postId });
     if (!comments) {
-      return res.json(204, { msg: 'No comments found.' });
+      throw new Error('No comments found');
     }
     return comments;
   },
   DeleteComment: async (args, req) => {
     if (!req.isAuth) {
-      return res.json(401, { msg: 'Unauthorized' });
+      throw new Error('Unauthorized');
     }
     const comment = await Comment.findByIdAndDelete(args.id);
     if (!comment) {
-      return res.json(204, { msg: 'Post not found.' });
+      throw new Error('Comment not found');
     }
-    return res.json(200, { msg: 'Comment deleted' });
+    return 'Comment deleted';
   }
 };

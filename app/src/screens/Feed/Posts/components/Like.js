@@ -3,7 +3,8 @@ import { useMutation, useQuery } from '@apollo/react-hooks';
 import {
   LIKE_POST,
   GET_POSTS,
-  GET_LIKES
+  GET_LIKES,
+  DELETE_LIKE
 } from '../../../../shared/utils/graphql';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-regular-svg-icons';
@@ -30,29 +31,43 @@ const Like = post => {
       }
     ]
   });
+  const [unLike] = useMutation(DELETE_LIKE, {
+    variables: post,
+    refetchQueries: [
+      {
+        query: GET_POSTS
+      }
+    ]
+  });
   const getLikes = useQuery(GET_LIKES);
   if (getLikes.data) {
+    console.log(getLikes.data);
   }
   React.useEffect(() => {
     if (getLikes.data) {
       getLikes.data.getLikes.filter(like => {
         if (like.user === userId && post.likes[0]) {
           setliked(true);
+        } else {
+          setliked(false);
         }
       });
     }
   });
-  const handleClick = () => {
+  const submitLike = () => {
     like();
+  };
+  const removeLike = () => {
+    unLike();
   };
   return (
     <Container>
-      {!liked && <StyledIcon size="2x" icon={faHeart} onClick={handleClick} />}
+      {!liked && <StyledIcon size="2x" icon={faHeart} onClick={submitLike} />}
       {liked && (
         <StyledIcon
           size="2x"
           icon={heart}
-          onClick={handleClick}
+          onClick={removeLike}
           isliked="true"
         />
       )}

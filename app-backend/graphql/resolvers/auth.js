@@ -17,7 +17,7 @@ module.exports = {
     })
       .then(user => {
         if (user) {
-          return res.json(404, { msg: 'User already exist' });
+          throw new Error('Unauthorized');
         }
         return bcrypt.hash(args.userInput.password, 12);
       })
@@ -54,20 +54,20 @@ module.exports = {
   },
   searchUser: async (args, req) => {
     if (!req.isAuth) {
-      return res.json(401, { msg: 'Unauthorized' });
+      throw new Error('Unauthorized');
     }
     const searchUser = await User.find({
       username: args.username
     });
     if (!searchUser.length) {
-      return res.json(404, { msg: 'Not found' });
+      throw new Error('User not found');
     } else {
       return searchUser;
     }
   },
   getUser: async (args, req) => {
     if (!req.isAuth) {
-      return res.json(401, { msg: 'Unauthorized' });
+      throw new Error('Unauthorized');
     }
     const user = await User.findById(req.userId);
     if (!user) {
@@ -77,27 +77,27 @@ module.exports = {
   },
   searchUserId: async (args, req) => {
     if (!req.isAuth) {
-      return res.json(401, { msg: 'Unauthorized' });
+      throw new Error('Unauthorized');
     }
     const user = User.findById(args.userId);
     if (!user) {
-      return res.json(404, { msg: 'Not found' });
+      throw new Error('Not found');
     }
     return user;
   },
   DeleteUser: async (args, req) => {
     if (!req.isAuth) {
-      return res.json(401, { msg: 'Unauthorized' });
+      throw new Error('Unauthorized');
     }
     const user = User.findByIdAndDelete(req.userId);
     if (!user) {
-      return res.json(204, { msg: 'User not found.' });
+      throw new Error('User not found');
     }
-    return res.json(200, { msg: 'User deleted.' });
+    return 'User deleted';
   },
   uploadImage: async (args, req) => {
     if (!req.isAuth) {
-      return res.json(401, { msg: 'Unauthorized' });
+      throw new Error('Unauthorized');
     }
     let filename = args.filename;
     const path = require('path');
@@ -117,11 +117,11 @@ module.exports = {
   },
   addBio: async (args, req) => {
     if (!req.isAuth) {
-      return res.json(401, { msg: 'Unauthorized' });
+      throw new Error('Unauthorized');
     }
     const user = await User.findById(req.userId);
     if (!user) {
-      return res.json(204, { msg: 'User not found.' });
+      throw new Error('User not found');
     }
     await user.updateOne({
       bio: args.bio
