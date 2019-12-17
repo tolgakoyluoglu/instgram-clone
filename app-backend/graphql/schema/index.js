@@ -80,7 +80,7 @@ module.exports = buildSchema(`
     uploadImage(filename: String!): User!
     commentPost(comment: String!, postId: String!): Comment
     deleteComment(id: String!) : String!
-    deleteLike(id: String!) : String!
+    deleteLike(post: String!) : String!
     deleteUser : String!
     addBio(bio: String!) : User!
   }

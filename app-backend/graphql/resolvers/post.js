@@ -13,7 +13,7 @@ cloudinary.config({
 module.exports = {
   posts: async (args, req) => {
     if (!req.isAuth) {
-      return res.json(401, { msg: 'Unauthorized' });
+      throw new Error('Unauthorized');
     }
     let following = await Follow.find({
       userId: req.userId
@@ -32,7 +32,7 @@ module.exports = {
   },
   getPost: async (args, req) => {
     if (!req.isAuth) {
-      return res.json(401, { msg: 'Unauthorized' });
+      throw new Error('Unauthorized');
     }
     const post = await Post.findById(args.id)
       .populate({
@@ -44,13 +44,13 @@ module.exports = {
         model: 'Post'
       });
     if (!post) {
-      return res.json(404, { msg: 'Not found' });
+      throw new Error('Not found');
     }
     return post;
   },
   userPosts: async (args, req) => {
     if (!req.isAuth) {
-      return res.json(401, { msg: 'Unauthorized' });
+      throw new Error('Unauthorized');
     }
     return Post.find({ creator: args.userId })
       .then(posts => {
@@ -62,7 +62,7 @@ module.exports = {
   },
   createPost: async (args, req) => {
     if (!req.isAuth) {
-      return res.json(401, { msg: 'Unauthorized' });
+      throw new Error('Unauthorized');
     }
     let filename = args.postInput.filename;
     const path = require('path');
@@ -84,7 +84,7 @@ module.exports = {
         })
         .then(user => {
           if (!user) {
-            return res.json(404, { msg: 'Not found' });
+            throw new Error('Not found');
           }
           user.createdPosts.push(post);
           return user.save();
@@ -101,7 +101,7 @@ module.exports = {
   },
   likePost: async (args, req) => {
     if (!req.isAuth) {
-      return res.json(401, { msg: 'Unauthorized' });
+      throw new Error('Unauthorized');
     }
     const liked = await Like.findOne({
       user: req.userId,
@@ -119,18 +119,18 @@ module.exports = {
         })
         .then(post => {
           if (!post) {
-            return res.json(404, { msg: 'Not found' });
+            throw new Error('Not found');
           }
           post.likes.push(post);
           return post.save();
         });
     } else {
-      return res.json(204, { msg: 'You already like this post' });
+      throw new Error('Not found');
     }
   },
   deletePost: async (args, req) => {
     if (!req.isAuth) {
-      return res.json(401, { msg: 'Unauthorized' });
+      throw new Error('Unauthorized');
     }
     const post = await Post.findByIdAndDelete(args.postId);
     if (!post) {
@@ -140,22 +140,31 @@ module.exports = {
   },
   getLikes: async (args, req) => {
     if (!req.isAuth) {
-      return res.json(401, { msg: 'Unauthorized' });
+      throw new Error('Unauthorized');
     }
     const likes = await Like.find({ user: req.userId });
     if (!likes) {
-      return res.json(204, { msg: 'No likes found.' });
+      throw new Error('No likes found');
     }
     return likes;
   },
-  deleteLike: async (args, req) => {
+  deleteLike: async (args, req, res) => {
     if (!req.isAuth) {
-      return res.json(401, { msg: 'Unauthorized' });
+      throw new Error('Unauthorized');
     }
-    const like = await Like.findByIdAndDelete(args.id);
-    if (!like) {
-      return res.json(204, { msg: 'Like not found' });
+    const liked = await Like.findOneAndDelete({
+      user: req.userId,
+      post: args.post
+    });
+    if (!liked) {
+      throw new Error('Like not found');
     }
-    return res.json(200, { msg: 'Like deleted' });
+    const post = await Post.findById(args.post);
+    if (!post) {
+      throw new Error('Post not found');
+    }
+    post.likes.pull(liked.post);
+    post.save();
+    return 'Like deleted';
   }
 };

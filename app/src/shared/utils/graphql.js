@@ -190,8 +190,8 @@ const DELETE_COMMENT = gql`
   }
 `;
 const DELETE_LIKE = gql`
-  mutation($id: String!) {
-    deleteLike(id: $id)
+  mutation($post: String!) {
+    deleteLike(post: $post)
   }
 `;
 const ADD_BIO = gql`
