@@ -54,7 +54,6 @@ const EditProfile = () => {
           <img alt={file && file.filename} src={image} />
           <ButtonContainer>
             <Button onClick={handleSubmit}>Save</Button>
-            <Button>Delete Account</Button>
             <Button>Go Back</Button>
           </ButtonContainer>
         </Form>
