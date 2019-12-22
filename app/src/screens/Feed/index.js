@@ -24,7 +24,7 @@ const Feed = () => {
     const data = new FormData();
     data.append('file', file, file.name);
 
-    fetch('http://localhost:4000/upload', {
+    fetch(`${process.env.REACT_APP_API}/upload`, {
       method: 'POST',
       mode: 'cors',
       body: data

@@ -47,7 +47,7 @@ module.exports = {
     }
     const token = jwt.sign(
       { userId: user.id, email: user.email, username: user.username },
-      'jwtsecret',
+      process.env.JWT_SECRET,
       { expiresIn: '2h' }
     );
     return { userId: user.id, token: token, tokenExp: 2, photo: user.photo };
@@ -79,17 +79,17 @@ module.exports = {
     if (!req.isAuth) {
       throw new Error('Unauthorized');
     }
-    const user = User.findById(args.userId);
+    const user = await User.findById(args.userId);
     if (!user) {
       throw new Error('Not found');
     }
     return user;
   },
-  DeleteUser: async (args, req) => {
+  deleteUser: async (args, req) => {
     if (!req.isAuth) {
       throw new Error('Unauthorized');
     }
-    const user = User.findByIdAndDelete(req.userId);
+    const user = await User.findByIdAndDelete(req.userId);
     if (!user) {
       throw new Error('User not found');
     }
