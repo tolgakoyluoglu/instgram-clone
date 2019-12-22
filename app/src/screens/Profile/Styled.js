@@ -1,13 +1,15 @@
 import styled from 'styled-components';
 
-const PageContainer = styled.div``;
+const PageContainer = styled.div`
+  padding-top: 150px;
+`;
 
 const Container = styled.div`
+  padding-top: 50px;
   width: 100%;
   margin: auto;
   display: flex;
   flex-wrap: wrap;
-  padding-top: 50px;
   justify-content: center;
   @media only screen and (min-width: 1000px) {
     width: 100%;
@@ -105,7 +107,6 @@ const BioContainer = styled.div`
   margin: auto;
   display: flex;
   flex-direction: column;
-  padding-top: 150px;
 
   a {
     margin-bottom: 20px;

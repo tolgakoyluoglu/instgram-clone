@@ -40,11 +40,9 @@ const Like = post => {
     ]
   });
   const getLikes = useQuery(GET_LIKES);
-  if (getLikes.data) {
-    console.log(getLikes.data);
-  }
   React.useEffect(() => {
     if (getLikes.data) {
+      // eslint-disable-next-line
       getLikes.data.getLikes.filter(like => {
         if (like.user === userId && post.likes[0]) {
           setliked(true);

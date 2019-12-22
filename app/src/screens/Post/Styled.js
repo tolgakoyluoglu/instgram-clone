@@ -149,7 +149,6 @@ const CommentInput = styled.div`
 const CommentBody = styled.div`
   overflow: scroll;
   display: flex;
-  width: 430px;
   display: flex;
   padding: 20px;
   justify-content: space-between;

@@ -54,9 +54,6 @@ const Post = () => {
       }
     ]
   });
-  if (queryComments.data) {
-    console.log(queryComments.data);
-  }
   if (loading) {
     return (
       <LoadingContainer>
