@@ -33,6 +33,12 @@ app.post('/upload', (req, res) => {
   });
 });
 
+app.get('/', (req, res) => {
+  res.send(
+    'InstaClone API. Go to /graphql to try out the GraphiQL playground!'
+  );
+});
+
 mongoose.connect(
   process.env.MONGO,
   { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true },
@@ -45,6 +51,6 @@ mongoose.connect(
   }
 );
 
-app.listen(4000, () => {
+app.listen(process.env.PORT || 4000, () => {
   console.log('Server is running at port : ' + 4000);
 });

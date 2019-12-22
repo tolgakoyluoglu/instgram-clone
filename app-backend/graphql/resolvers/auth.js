@@ -85,16 +85,6 @@ module.exports = {
     }
     return user;
   },
-  deleteUser: async (args, req) => {
-    if (!req.isAuth) {
-      throw new Error('Unauthorized');
-    }
-    const user = await User.findByIdAndDelete(req.userId);
-    if (!user) {
-      throw new Error('User not found');
-    }
-    return 'User deleted';
-  },
   uploadImage: async (args, req) => {
     if (!req.isAuth) {
       throw new Error('Unauthorized');
