@@ -27,7 +27,7 @@ const Profile = () => {
   const [following, setFollowing] = React.useState();
   const { userId } = useContext(AuthContext);
 
-  const { loading, error, data } = useQuery(USER_POSTS, {
+  const { loading, data } = useQuery(USER_POSTS, {
     variables: { id },
     fetchPolicy: 'no-cache'
   });
@@ -65,10 +65,6 @@ const Profile = () => {
   const handleClick = () => {
     followUser(id);
   };
-
-  if (error && getFollower.error) {
-    console.log(error && getFollower.error);
-  }
   if (loading) {
     return (
       <LoadingContainer>

@@ -3,14 +3,7 @@ import { useQuery } from '@apollo/react-hooks';
 import { LoadingContainer, Loader } from '../../../shared/styled/Loading';
 import { Link } from 'react-router-dom';
 import { GET_POSTS } from '../../../shared/utils/graphql';
-import {
-  Card,
-  Image,
-  CardBody,
-  CardHeader,
-  CommentContainer,
-  ImageContainer
-} from './Styled.js';
+import { Card, Image, CardBody, CardHeader, ImageContainer } from './Styled.js';
 import Avatar from '../../../res/images/avatar.png';
 import Like from './components/Like';
 
@@ -58,10 +51,6 @@ const Posts = () => {
           ) : null}
           <p>{post.title}</p>
         </CardBody>
-        <CommentContainer>
-          <input type="text" placeholder="Add a comment..." />
-          <button>Post</button>
-        </CommentContainer>
       </Card>
     );
   });

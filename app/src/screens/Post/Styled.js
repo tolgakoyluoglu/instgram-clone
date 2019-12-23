@@ -1,7 +1,11 @@
 import styled from 'styled-components';
 
 const Container = styled.div`
-  padding-top: 150px;
+  padding-top: 50px;
+
+  @media only screen and (min-width: 1000px) {
+    padding-top: 150px;
+  }
 `;
 
 const Content = styled.div`
@@ -23,11 +27,11 @@ const Card = styled.div`
   border-radius: 8px;
   box-shadow: 0 7px 30px -10px rgba(150, 170, 180, 0.5);
   @media only screen and (min-width: 1000px) {
-    width: 70%;
+    width: 90%;
     flex-direction: row;
   }
   @media only screen and (min-width: 1200px) {
-    width: 60%;
+    width: 50%;
   }
   -webkit-animation: fadein 1s;
   -moz-animation: fadein 1s;
@@ -107,7 +111,14 @@ const CardBody = styled.div`
     color: #000;
   }
 `;
-
+const Comments = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+const Text = styled.p`
+  margin-right: 10px;
+  font-weight: 600;
+`;
 const ImageContainer = styled.div`
   height: 32px;
   width: 32px;
@@ -117,7 +128,6 @@ const ImageContainer = styled.div`
     height: 100%;
   }
 `;
-
 const CommentInput = styled.div`
   border-top: 1px solid #e6e6e6;
   width: 100%;
@@ -145,7 +155,6 @@ const CommentInput = styled.div`
     }
   }
 `;
-
 const CommentBody = styled.div`
   overflow: scroll;
   display: flex;
@@ -153,7 +162,7 @@ const CommentBody = styled.div`
   padding: 20px;
   justify-content: space-between;
   flex-direction: column;
-  height: 400px;
+  height: 200px;
   &::-webkit-scrollbar {
     width: 6px;
     height: 6px;
@@ -161,19 +170,21 @@ const CommentBody = styled.div`
   &::-webkit-scrollbar-thumb {
     background-color: #cdcdcd;
   }
+  @media only screen and (min-width: 1000px) {
+    height: 400px;
+  }
 `;
-const CommentContainer = styled.div``;
-const LikeContainer = styled.div``;
+
 export {
-  CommentContainer,
   CommentBody,
   Container,
   Image,
   Card,
+  Comments,
   CardBody,
-  LikeContainer,
   CardHeader,
   ImageContainer,
   CommentInput,
-  Content
+  Content,
+  Text
 };

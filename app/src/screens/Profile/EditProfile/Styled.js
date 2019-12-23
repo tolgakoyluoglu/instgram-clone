@@ -53,11 +53,9 @@ const Card = styled.div`
     }
   }
 `;
-
 const ButtonContainer = styled.div`
   display: flex;
 `;
-
 const Label = styled.label`
   border: 1px solid #ccc;
   display: inline-block;

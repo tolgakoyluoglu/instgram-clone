@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const Card = styled.div`
-  padding-top: 150px;
+  padding-top: 50px;
   min-height: calc(100vh - 70px);
   box-sizing: border-box;
   max-width: 410px;
@@ -9,6 +9,9 @@ const Card = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  @media only screen and (min-width: 1000px) {
+    padding-top: 150px;
+  }
 `;
 
 const Input = styled.input`

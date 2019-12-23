@@ -16,11 +16,11 @@ import {
   CardHeader,
   CommentInput,
   ImageContainer,
+  Comments,
   Container,
   Content,
   CommentBody,
-  CommentContainer,
-  LikeContainer
+  Text
 } from './Styled';
 import Avatar from '../../res/images/avatar.png';
 import Like from '../Feed/Posts/components/Like';
@@ -65,7 +65,7 @@ const Post = () => {
     deletePost();
   };
 
-  const comments = queryComments.data.getComments;
+  const comments = queryComments.data;
   const post = data.getPost;
 
   return (
@@ -97,19 +97,19 @@ const Post = () => {
                 </p>
               </Link>
             ) : null}
-            <LikeContainer>
+            <div>
               {post.likes && <Like likes={post.likes} post={post._id} />}
-            </LikeContainer>
+            </div>
           </CardBody>
-          <CommentContainer>
+          <div>
             <CommentBody>
               {comments &&
-                comments.map(comment => {
+                comments.getComments.map(comment => {
                   return (
-                    <div key={comment._id}>
-                      <p>{comment.user}</p>
+                    <Comments key={comment._id}>
+                      <Text>{comment.username}</Text>
                       <p>{comment.comment}</p>
-                    </div>
+                    </Comments>
                   );
                 })}
             </CommentBody>
@@ -132,7 +132,7 @@ const Post = () => {
                 Post
               </button>
             </CommentInput>
-          </CommentContainer>
+          </div>
         </Content>
       </Card>
     </Container>

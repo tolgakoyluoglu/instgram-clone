@@ -4,7 +4,6 @@ const Button = styled.button`
   display: inline-flex;
   background-color: #3897f0;
   border-radius: 6px;
-  position: relative;
   align-items: center;
   justify-content: center;
   border-color: rgb(182, 182, 191);
