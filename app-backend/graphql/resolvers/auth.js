@@ -50,7 +50,13 @@ module.exports = {
       process.env.JWT_SECRET,
       { expiresIn: '2h' }
     );
-    return { userId: user.id, token: token, tokenExp: 2, photo: user.photo };
+    return {
+      userId: user.id,
+      token: token,
+      tokenExp: 2,
+      photo: user.photo,
+      username: user.username
+    };
   },
   searchUser: async (args, req) => {
     if (!req.isAuth) {

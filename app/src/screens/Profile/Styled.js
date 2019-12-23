@@ -1,7 +1,10 @@
 import styled from 'styled-components';
 
 const PageContainer = styled.div`
-  padding-top: 150px;
+  padding-top: 50px;
+  @media only screen and (min-width: 1000px) {
+    padding-top: 150px;
+  }
 `;
 
 const Container = styled.div`
@@ -103,7 +106,7 @@ const Image = styled.img`
 `;
 
 const BioContainer = styled.div`
-  width: 40%;
+  width: 90%;
   margin: auto;
   display: flex;
   flex-direction: column;
@@ -111,6 +114,9 @@ const BioContainer = styled.div`
   a {
     margin-bottom: 20px;
     text-align: center;
+  }
+  @media only screen and (min-width: 1000px) {
+    width: 40%;
   }
 `;
 

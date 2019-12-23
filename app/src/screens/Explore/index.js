@@ -5,7 +5,9 @@ import { LoadingContainer, Loader } from '../../shared/styled/Loading';
 import { Container, UsersContainer, Image, Card, StyledLink } from './Styled';
 
 const Explore = () => {
-  const { loading, data } = useQuery(GET_ALL_POSTS);
+  const { loading, data } = useQuery(GET_ALL_POSTS, {
+    fetchPolicy: 'no-cache'
+  });
 
   if (loading) {
     return (

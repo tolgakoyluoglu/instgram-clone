@@ -1,8 +1,7 @@
 import styled from 'styled-components';
-import Image from '../../res/images/upload.png';
 
 const Container = styled.div`
-  padding-top: 150px;
+  padding-top: 50px;
   min-height: calc(100vh - 70px);
   box-sizing: border-box;
   max-width: 80%;
@@ -10,6 +9,9 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  @media only screen and (min-width: 1000px) {
+    padding-top: 150px;
+  }
   -webkit-animation: fadein 1s;
   -moz-animation: fadein 1s;
   -ms-animation: fadein 1s;
@@ -56,20 +58,32 @@ const Container = styled.div`
     }
   }
 `;
-
 const Form = styled.form`
   display: flex;
   flex-direction: column;
   width: 100%;
 `;
-
 const Input = styled.input`
   padding: 1rem;
   border: 1px solid #999;
   margin-bottom: 1rem;
   font-size: 0.8rem;
 `;
-
+const Label = styled.label`
+  border: 1px solid #ccc;
+  display: inline-block;
+  padding: 6px 12px;
+  text-align: center;
+  cursor: pointer;
+`;
+const ImageInput = styled.input`
+  display: none;
+`;
+const Image = styled.img`
+  height: 350px;
+  width: 100%;
+  object-fit: contain;
+`;
 const Button = styled.button`
   display: inline-flex;
   background-color: #3897f0;
@@ -98,29 +112,9 @@ const Button = styled.button`
     outline: none;
   }
 `;
-const UploadButton = styled.button`
-  position: fixed;
-  background: none;
-  display: block;
-  background-position: -64px -34px;
-  background-image: url(${Image});
-  background-size: 280px 250px;
-  background-repeat: no-repeat;
-  height: 53px;
-  width: 56px;
-  padding-left: 10px;
-  text-indent: -1000%;
-  top: 80%;
-  left: 85%;
-  text-decoration: none;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  @media only screen and (min-width: 500px) {
-    margin-left: 12px;
-  }
+const ButtonContainer = styled.div`
+  padding-bottom: 50px;
 `;
-
 const FileImage = styled.img`
   width: 50%;
   margin: auto;
@@ -128,4 +122,14 @@ const FileImage = styled.img`
   height: max-content;
 `;
 
-export { Form, Input, Button, Container, UploadButton, FileImage };
+export {
+  Form,
+  Input,
+  Button,
+  Container,
+  ButtonContainer,
+  FileImage,
+  Image,
+  ImageInput,
+  Label
+};

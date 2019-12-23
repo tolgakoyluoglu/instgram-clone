@@ -12,10 +12,10 @@ module.exports = buildSchema(`
 
   type Comment {
     _id: ID!
-    user: String!
     comment: String!
     post: [Post!]!
     postId: String!
+    username: String
   }
 
   type Like {
@@ -44,6 +44,7 @@ module.exports = buildSchema(`
     token: String!
     tokenExp: Int!
     photo: String
+    username: String
   }
 
   input PostInput {

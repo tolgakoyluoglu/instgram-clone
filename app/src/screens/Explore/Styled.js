@@ -2,12 +2,21 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 const Container = styled.div`
-  padding-top: 120px;
+  padding-top: 30px;
   min-height: calc(100vh - 70px);
   margin: auto;
   box-sizing: border-box;
-  max-width: 50%;
+  max-width: 90%;
   text-align: center;
+  padding-bottom: 50px;
+  @media only screen and (min-width: 1000px) {
+    padding-top: 120px;
+    max-width: 90%;
+  }
+  @media only screen and (min-width: 1200px) {
+    padding-top: 120px;
+    max-width: 50%;
+  }
   -webkit-animation: fadein 1s;
   -moz-animation: fadein 1s;
   -ms-animation: fadein 1s;
@@ -67,12 +76,14 @@ const Image = styled.img`
 const Card = styled.div`
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
-  width: 20%;
+  width: 80%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   margin: 10px;
-
+  @media only screen and (min-width: 1000px) {
+    width: 20%;
+  }
   &:hover {
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
   }

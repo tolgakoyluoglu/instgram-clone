@@ -121,6 +121,7 @@ const LOGIN_USER = gql`
       token
       tokenExp
       userId
+      username
       photo
     }
   }
@@ -167,7 +168,7 @@ const ADD_COMMENT = gql`
     commentPost(comment: $comment, postId: $postId) {
       _id
       comment
-      user
+      username
     }
   }
 `;
@@ -176,7 +177,7 @@ const GET_COMMENTS = gql`
     getComments(postId: $postId) {
       _id
       comment
-      user
+      username
     }
   }
 `;

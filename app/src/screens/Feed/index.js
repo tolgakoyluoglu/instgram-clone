@@ -1,10 +1,19 @@
 import React from 'react';
 import Posts from './Posts';
-import { Container, Form, Input, UploadButton } from './Styled';
+import {
+  Container,
+  Form,
+  Input,
+  ButtonContainer,
+  Image,
+  Label,
+  ImageInput
+} from './Styled';
 import Modal from '../../shared/common/components/Modal';
 import Backdrop from '../../shared/common/components/Backdrop';
 import { client } from '../../App';
 import { GET_POSTS, CREATE_POST } from '../../shared/utils/graphql';
+import { Button } from '../../shared/styled/Styled';
 
 const Feed = () => {
   const [image, setImage] = React.useState('');
@@ -52,10 +61,13 @@ const Feed = () => {
 
   return (
     <Container>
+      <ButtonContainer>
+        <Button onClick={createHandler}>Upload a photo</Button>
+      </ButtonContainer>
       {creating && <Backdrop />}
       {creating && (
         <Modal
-          title="Add a Photo"
+          title="Upload Photo"
           canCancel
           canConfirm
           onCancel={cancelHandler}
@@ -69,15 +81,14 @@ const Feed = () => {
               required
               onChange={e => setTitle(e.target.value)}
             />
-            <label>
-              Upload profile photo
-              <Input className="input" type="file" onChange={handleImg} />
-            </label>
-            <img alt={title} src={image} />
+            <Label>
+              Select image
+              <ImageInput className="input" type="file" onChange={handleImg} />
+            </Label>
+            <Image alt={title} src={image} />
           </Form>
         </Modal>
       )}
-      <UploadButton onClick={createHandler} />
       <Posts />
     </Container>
   );

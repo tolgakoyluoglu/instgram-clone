@@ -9,7 +9,7 @@ module.exports = {
       throw new Error('Comment cant be empty');
     }
     const comment = new Comment({
-      user: req.userId,
+      username: req.username,
       comment: args.comment,
       postId: args.postId
     });
