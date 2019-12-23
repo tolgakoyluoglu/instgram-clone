@@ -15,6 +15,7 @@ import Post from './screens/Post';
 import Signup from './screens/Auth/Signup';
 import PrivateRoute from './shared/common/PrivateRoute';
 import EditProfile from './screens/Profile/EditProfile';
+import Explore from './screens/Explore';
 
 const GlobalStyle = createGlobalStyle`
   html, body {
@@ -59,6 +60,7 @@ function App() {
             <Route path="/signup" component={Signup} />
             <Route path="/settings" component={EditProfile} />
             <PrivateRoute path="/feed" component={Feed} />
+            <PrivateRoute path="/explore" component={Explore} />
             <PrivateRoute path="/profile/:id" component={Profile} />
             <PrivateRoute path="/post/:id" component={Post} />
           </Switch>

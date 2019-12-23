@@ -30,6 +30,16 @@ module.exports = {
       });
     return posts;
   },
+  getAllPosts: async (args, req) => {
+    if (!req.isAuth) {
+      throw new Error('Unauthorized');
+    }
+    const posts = await Post.find();
+    if (!posts) {
+      throw new Error('No users found');
+    }
+    return posts;
+  },
   getPost: async (args, req) => {
     if (!req.isAuth) {
       throw new Error('Unauthorized');

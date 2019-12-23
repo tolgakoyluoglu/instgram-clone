@@ -153,6 +153,15 @@ const SEARCH_USER_ID = gql`
     }
   }
 `;
+const GET_ALL_POSTS = gql`
+  query {
+    getAllPosts {
+      title
+      url
+      _id
+    }
+  }
+`;
 const ADD_COMMENT = gql`
   mutation($comment: String!, $postId: String!) {
     commentPost(comment: $comment, postId: $postId) {
@@ -224,5 +233,6 @@ export {
   SEARCH_USER,
   GET_USER,
   SEARCH_USER_ID,
-  ADD_COMMENT
+  ADD_COMMENT,
+  GET_ALL_POSTS
 };

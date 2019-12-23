@@ -110,7 +110,7 @@ const SearchInput = styled.input`
 `;
 
 const Form = styled.form`
-  margin-left: 100px;
+  margin-left: 160px;
   @media only screen and (max-width: 500px) {
     margin-left: 1px;
   }

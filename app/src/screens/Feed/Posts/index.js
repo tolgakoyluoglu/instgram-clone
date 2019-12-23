@@ -66,7 +66,18 @@ const Posts = () => {
     );
   });
 
-  return <React.Fragment>{posts.reverse()}</React.Fragment>;
+  return (
+    <React.Fragment>
+      {posts.length > 0 ? (
+        posts.reverse()
+      ) : (
+        <React.Fragment>
+          No posts found. Visit the explore section to find other users you may
+          want to follow.
+        </React.Fragment>
+      )}
+    </React.Fragment>
+  );
 };
 
 export default Posts;

@@ -67,6 +67,7 @@ module.exports = buildSchema(`
       getUser: User!
       searchUserId(userId: String) : User!
       getComments(postId: String!) : [Comment]
+      getAllPosts: [Post!]!
   }
 
   type RootMutation {

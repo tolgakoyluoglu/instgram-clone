@@ -80,6 +80,9 @@ const Header = () => {
                 <StyledLink to="/feed">Feed</StyledLink>
               </ListItem>
               <ListItem>
+                <StyledLink to="/explore">Explore</StyledLink>
+              </ListItem>
+              <ListItem>
                 <StyledLink to={{ pathname: '/profile/' + userId }}>
                   Profile
                 </StyledLink>
