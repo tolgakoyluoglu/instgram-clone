@@ -35,5 +35,38 @@ const Form = styled.form`
     width: 100%;
   }
 `;
-
-export { Button, Form };
+const FormModal = styled.form`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+`;
+const FormInput = styled.input`
+  padding: 1rem;
+  border: 1px solid #999;
+  margin-bottom: 1rem;
+  font-size: 0.8rem;
+`;
+const FormLabel = styled.label`
+  border: 1px solid #ccc;
+  display: inline-block;
+  padding: 6px 12px;
+  text-align: center;
+  cursor: pointer;
+`;
+const FormImageInput = styled.input`
+  display: none;
+`;
+const FormImage = styled.img`
+  height: 350px;
+  width: 100%;
+  object-fit: contain;
+`;
+export {
+  Button,
+  Form,
+  FormImage,
+  FormImageInput,
+  FormInput,
+  FormLabel,
+  FormModal
+};

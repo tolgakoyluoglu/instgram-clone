@@ -58,32 +58,6 @@ const Container = styled.div`
     }
   }
 `;
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-`;
-const Input = styled.input`
-  padding: 1rem;
-  border: 1px solid #999;
-  margin-bottom: 1rem;
-  font-size: 0.8rem;
-`;
-const Label = styled.label`
-  border: 1px solid #ccc;
-  display: inline-block;
-  padding: 6px 12px;
-  text-align: center;
-  cursor: pointer;
-`;
-const ImageInput = styled.input`
-  display: none;
-`;
-const Image = styled.img`
-  height: 350px;
-  width: 100%;
-  object-fit: contain;
-`;
 const Button = styled.button`
   display: inline-flex;
   background-color: #3897f0;
@@ -122,14 +96,4 @@ const FileImage = styled.img`
   height: max-content;
 `;
 
-export {
-  Form,
-  Input,
-  Button,
-  Container,
-  ButtonContainer,
-  FileImage,
-  Image,
-  ImageInput,
-  Label
-};
+export { Button, Container, ButtonContainer, FileImage };

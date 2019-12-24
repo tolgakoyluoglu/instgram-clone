@@ -111,10 +111,6 @@ const BioContainer = styled.div`
   display: flex;
   flex-direction: column;
 
-  a {
-    margin-bottom: 20px;
-    text-align: center;
-  }
   @media only screen and (min-width: 1000px) {
     width: 40%;
   }
@@ -123,7 +119,18 @@ const BioContainer = styled.div`
 const ImageContainer = styled.div`
   margin: auto;
 `;
-
+const UploadButton = styled.div`
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: arial, sans-serif;
+  color: #069;
+  text-decoration: underline;
+  cursor: pointer;
+  margin: auto;
+  text-align: center;
+  margin-bottom: 20px;
+`;
 const Avatar = styled.img`
   height: 150px;
   width: 150px;
@@ -132,19 +139,51 @@ const Avatar = styled.img`
   border: 1px solid #e6e6e6;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 `;
-
 const AboutContainer = styled.div`
   margin: auto;
   text-align: center;
 `;
+const FollowButton = styled.button`
+  display: inline-flex;
+  background-color: ${props =>
+    props.followingColor === 'true' ? '#3897f0' : 'f3f3f3'};
+  border-radius: 6px;
+  align-items: center;
+  justify-content: center;
+  border-color: rgb(182, 182, 191);
+  appearance: none;
+  box-sizing: border-box;
+  border: 0;
+  transition: all 0.4s ease 0s;
+  font-weight: 700;
+  margin: 10px;
+  color: #fff;
+  text-decoration: none;
+  padding: 6px;
+  font-size: 14px;
+  cursor: 'pointer';
 
+  &:hover {
+    background-color: ${props =>
+      props.followingColor === 'true' ? '#447fe5' : 'f3f3f3'};
+    transition: all 0.4s ease 0s;
+  }
+  &:focus {
+    box-shadow: 0 0 0 4px #293dce;
+    outline: none;
+  }
+`;
+const FollowContainer = styled.div``;
 export {
   PageContainer,
   Container,
   Card,
+  FollowContainer,
   Image,
+  FollowButton,
   BioContainer,
   ImageContainer,
   Avatar,
-  AboutContainer
+  AboutContainer,
+  UploadButton
 };

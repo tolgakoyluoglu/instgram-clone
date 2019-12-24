@@ -1,5 +1,19 @@
 import React, { useContext } from 'react';
 import { useQuery, useMutation } from '@apollo/react-hooks';
+import gql from 'graphql-tag';
+import { Link, useParams } from 'react-router-dom';
+import Modal from '../../shared/common/components/Modal';
+import Backdrop from '../../shared/common/components/Backdrop';
+import { AuthContext } from '../../shared/common/AuthContext';
+import { LoadingContainer, Loader } from '../../shared/styled/Loading';
+import { client } from '../../App';
+import {
+  FormImage,
+  FormImageInput,
+  FormInput,
+  FormLabel,
+  FormModal
+} from '../../shared/styled/Styled';
 import {
   USER_POSTS,
   FOLLOW_USER,
@@ -8,25 +22,67 @@ import {
   GET_POSTS,
   SEARCH_USER_ID
 } from '../../shared/utils/graphql';
-import { LoadingContainer, Loader } from '../../shared/styled/Loading';
-import { Link, useParams } from 'react-router-dom';
 import {
   PageContainer,
   Container,
   Card,
-  Image,
   BioContainer,
   Avatar,
+  Image,
+  UploadButton,
   ImageContainer,
-  AboutContainer
+  AboutContainer,
+  FollowButton,
+  FollowContainer
 } from './Styled';
-import { AuthContext } from '../../shared/common/AuthContext';
+
+const uploadFile = gql`
+  mutation($filename: String!) {
+    uploadImage(filename: $filename) {
+      username
+      photo
+    }
+  }
+`;
 
 const Profile = () => {
   let { id } = useParams();
   const [following, setFollowing] = React.useState();
   const { userId } = useContext(AuthContext);
+  const [isOpen, setOpen] = React.useState(false);
 
+  const openModal = () => {
+    setOpen(true);
+  };
+  const closeModal = () => {
+    setOpen(false);
+  };
+  const [file, setFile] = React.useState();
+  const [image, setImage] = React.useState();
+
+  const handleSubmit = event => {
+    event.preventDefault();
+    const data = new FormData();
+    data.append('file', file, file.name);
+
+    fetch(`${process.env.REACT_APP_API}/upload`, {
+      method: 'POST',
+      mode: 'cors',
+      body: data
+    })
+      .then(res => res.json())
+      .then(async filename => {
+        await client.mutate({
+          variables: { filename },
+          mutation: uploadFile
+        });
+      })
+      .catch(error => console.error(error));
+  };
+  const handleImg = event => {
+    setFile(event.target.files[0]);
+    setImage(URL.createObjectURL(event.target.files[0]));
+  };
   const { loading, data } = useQuery(USER_POSTS, {
     variables: { id },
     fetchPolicy: 'no-cache'
@@ -84,19 +140,46 @@ const Profile = () => {
   return (
     <PageContainer>
       <BioContainer>
-        <Link to="/settings">Edit Profile</Link>
+        <UploadButton onClick={openModal}>Edit Profile</UploadButton>
+        {isOpen && <Backdrop />}
+        {isOpen && (
+          <Modal
+            title="Upload Photo"
+            canCancel
+            canConfirm
+            onCancel={closeModal}
+            onConfirm={handleSubmit}
+          >
+            <FormModal>
+              <FormInput type="text" placeholder="Bio" />
+              <FormLabel>
+                Upload profile photo:
+                <FormImageInput type="file" onChange={handleImg} />
+              </FormLabel>
+              <FormImage alt={file && file.filename} src={image} />
+            </FormModal>
+          </Modal>
+        )}
         <ImageContainer>
           <Avatar src={getUser.data && getUser.data.searchUserId.photo} />
         </ImageContainer>
         <AboutContainer>
           <h1>Profile</h1>
           <p>Lorem ipsum text bla bla</p>
-          <button onClick={handleClick} disabled={following === true && true}>
-            {getFollower.data ? getFollower.data.getFollowers.length : null}
-          </button>
-          <span>
-            {getFollowing.data ? getFollowing.data.getFollowing.length : null}
-          </span>
+          <FollowContainer>
+            Followers:
+            <FollowButton
+              onClick={handleClick}
+              disabled={following === true && true}
+              followingColor={following === true && 'true'}
+            >
+              {getFollower.data ? getFollower.data.getFollowers.length : null}
+            </FollowButton>
+            Following:
+            <FollowButton disabled>
+              {getFollowing.data ? getFollowing.data.getFollowing.length : null}
+            </FollowButton>
+          </FollowContainer>
         </AboutContainer>
       </BioContainer>
       <Container>{posts.reverse()}</Container>

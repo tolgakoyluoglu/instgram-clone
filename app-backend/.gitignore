@@ -48,5 +48,5 @@ _build/
 
 # Auto generated stuff
 .DS_Store
-
+/uploads
 .vscode/

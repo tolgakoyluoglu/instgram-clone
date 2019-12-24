@@ -1,35 +1,34 @@
 import React from 'react';
 import Posts from './Posts';
-import {
-  Container,
-  Form,
-  Input,
-  ButtonContainer,
-  Image,
-  Label,
-  ImageInput
-} from './Styled';
+import { Container, ButtonContainer } from './Styled';
 import Modal from '../../shared/common/components/Modal';
 import Backdrop from '../../shared/common/components/Backdrop';
 import { client } from '../../App';
 import { GET_POSTS, CREATE_POST } from '../../shared/utils/graphql';
-import { Button } from '../../shared/styled/Styled';
+import {
+  Button,
+  FormImage,
+  FormImageInput,
+  FormInput,
+  FormLabel,
+  FormModal
+} from '../../shared/styled/Styled';
 
 const Feed = () => {
   const [image, setImage] = React.useState('');
   const [title, setTitle] = React.useState('');
   const [file, setFile] = React.useState();
-  const [creating, setCreating] = React.useState(false);
+  const [isOpen, setOpen] = React.useState(false);
 
-  const createHandler = () => {
-    setCreating(true);
+  const openModal = () => {
+    setOpen(true);
   };
   const cancelHandler = () => {
-    setCreating(false);
+    setOpen(false);
   };
   const handleSubmit = event => {
     event.preventDefault();
-    setCreating(false);
+    setOpen(false);
     const data = new FormData();
     data.append('file', file, file.name);
 
@@ -62,10 +61,10 @@ const Feed = () => {
   return (
     <Container>
       <ButtonContainer>
-        <Button onClick={createHandler}>Upload a photo</Button>
+        <Button onClick={openModal}>Upload a photo</Button>
       </ButtonContainer>
-      {creating && <Backdrop />}
-      {creating && (
+      {isOpen && <Backdrop />}
+      {isOpen && (
         <Modal
           title="Upload Photo"
           canCancel
@@ -73,20 +72,24 @@ const Feed = () => {
           onCancel={cancelHandler}
           onConfirm={handleSubmit}
         >
-          <Form onSubmit={handleSubmit}>
-            <Input
+          <FormModal onSubmit={handleSubmit}>
+            <FormInput
               value={title}
               type="text"
               placeholder="Title"
               required
               onChange={e => setTitle(e.target.value)}
             />
-            <Label>
+            <FormLabel>
               Select image
-              <ImageInput className="input" type="file" onChange={handleImg} />
-            </Label>
-            <Image alt={title} src={image} />
-          </Form>
+              <FormImageInput
+                className="input"
+                type="file"
+                onChange={handleImg}
+              />
+            </FormLabel>
+            <FormImage alt={title} src={image} />
+          </FormModal>
         </Modal>
       )}
       <Posts />
