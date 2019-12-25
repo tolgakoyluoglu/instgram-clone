@@ -5,8 +5,7 @@ import {
   GET_POST,
   DELETE_POST,
   GET_POSTS,
-  ADD_COMMENT,
-  GET_COMMENTS
+  ADD_COMMENT
 } from '../../shared/utils/graphql';
 import { LoadingContainer, Loader } from '../../shared/styled/Loading';
 import {
@@ -35,9 +34,6 @@ const Post = () => {
   const { loading, data } = useQuery(GET_POST, {
     variables: { id }
   });
-  const queryComments = useQuery(GET_COMMENTS, {
-    variables: { postId: id }
-  });
   const [deletePost] = useMutation(DELETE_POST, {
     variables: { postId: id },
     refetchQueries: [
@@ -51,8 +47,8 @@ const Post = () => {
     variables: { postId: id, comment: comment },
     refetchQueries: [
       {
-        query: GET_COMMENTS,
-        variables: { postId: id }
+        query: GET_POST,
+        variables: { id }
       }
     ]
   });
@@ -67,7 +63,7 @@ const Post = () => {
     deletePost();
   };
 
-  const comments = queryComments.data;
+  const comments = data.getComments;
   const post = data.getPost;
 
   return (
@@ -98,9 +94,10 @@ const Post = () => {
           <CardBody>
             {post.creator ? (
               <Link to={{ pathname: '/profile/' + post.creator[0]._id }}>
-                <p>
-                  {post.creator[0].username} {post.title}
-                </p>
+                <Comments>
+                  <Text>{post.creator[0].username}</Text>
+                  <p>{post.title}</p>
+                </Comments>
               </Link>
             ) : null}
             <div>
@@ -110,7 +107,7 @@ const Post = () => {
           <div>
             <CommentBody>
               {comments &&
-                comments.getComments.map(comment => {
+                comments.map(comment => {
                   return (
                     <Comments key={comment._id}>
                       <Text>{comment.username}</Text>

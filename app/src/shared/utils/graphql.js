@@ -31,6 +31,10 @@ const GET_POSTS = gql`
         _id
       }
     }
+    getLikes {
+      _id
+      user
+    }
   }
 `;
 const LIKE_POST = gql`
@@ -58,6 +62,15 @@ const GET_POST = gql`
       comments {
         _id
       }
+    }
+    getComments(postId: $id) {
+      _id
+      comment
+      username
+    }
+    getLikes {
+      _id
+      user
     }
   }
 `;
@@ -173,15 +186,6 @@ const ADD_COMMENT = gql`
     }
   }
 `;
-const GET_COMMENTS = gql`
-  query($postId: String!) {
-    getComments(postId: $postId) {
-      _id
-      comment
-      username
-    }
-  }
-`;
 const GET_LIKES = gql`
   query {
     getLikes {
@@ -220,7 +224,6 @@ export {
   DELETE_COMMENT,
   DELETE_USER,
   GET_LIKES,
-  GET_COMMENTS,
   CREATE_USER,
   LOGIN_USER,
   GET_POSTS,

@@ -20,11 +20,11 @@ const Container = styled.div`
 const StyledIcon = styled(FontAwesomeIcon)`
   color: ${props => (props.isliked === 'true' ? 'red' : '#cdcdcd')};
 `;
-const Like = post => {
+const Like = ({ post, likes }) => {
   const { userId } = React.useContext(AuthContext);
   const [liked, setliked] = React.useState(false);
   const [like] = useMutation(LIKE_POST, {
-    variables: post,
+    variables: { post },
     refetchQueries: [
       {
         query: GET_POSTS
@@ -32,7 +32,7 @@ const Like = post => {
     ]
   });
   const [unLike] = useMutation(DELETE_LIKE, {
-    variables: post,
+    variables: { post },
     refetchQueries: [
       {
         query: GET_POSTS
@@ -44,18 +44,20 @@ const Like = post => {
     if (getLikes.data) {
       // eslint-disable-next-line
       getLikes.data.getLikes.filter(like => {
-        if (like.user === userId && post.likes[0]) {
+        if (like.user === userId && likes[0]) {
           setliked(true);
         } else {
           setliked(false);
         }
       });
     }
-  });
+  }, [getLikes.data, likes, userId]);
   const submitLike = () => {
+    setliked(true);
     like();
   };
   const removeLike = () => {
+    setliked(false);
     unLike();
   };
   return (
@@ -69,7 +71,7 @@ const Like = post => {
           isliked="true"
         />
       )}
-      <p>{post.likes.length}</p>
+      <p>{likes.length}</p>
     </Container>
   );
 };

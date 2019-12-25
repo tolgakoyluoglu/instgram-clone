@@ -109,14 +109,11 @@ const DeleteContainer = styled.div`
 const CardBody = styled.div`
   display: flex;
   align-self: start;
-  margin: 10px;
+  margin-right: 10px;
+  margin-top: 10px;
   justify-content: space-between;
-  font-size: 14px;
-  p {
-    margin: 3px;
-    font-weight: 500;
-  }
   a {
+    margin-left: 8px;
     text-decoration: none;
     color: #000;
   }
@@ -169,8 +166,7 @@ const CommentBody = styled.div`
   overflow: scroll;
   display: flex;
   display: flex;
-  padding: 20px;
-  justify-content: space-between;
+  margin-left: 10px;
   flex-direction: column;
   height: 200px;
   &::-webkit-scrollbar {
