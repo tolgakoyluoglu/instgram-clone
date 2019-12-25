@@ -151,6 +151,7 @@ const SEARCH_USER_ID = gql`
       _id
       username
       photo
+      bio
     }
   }
 `;

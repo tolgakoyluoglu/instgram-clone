@@ -20,7 +20,9 @@ import {
   Container,
   Content,
   CommentBody,
-  Text
+  Text,
+  Wrapper,
+  DeleteContainer
 } from './Styled';
 import Avatar from '../../res/images/avatar.png';
 import Like from '../Feed/Posts/components/Like';
@@ -71,7 +73,9 @@ const Post = () => {
   return (
     <Container>
       <Card key={post._id}>
-        <Image src={post.url} alt={post.title} />
+        <Wrapper>
+          <Image src={post.url} alt={post.title} />
+        </Wrapper>
         <Content>
           <CardHeader>
             <ImageContainer>
@@ -81,13 +85,15 @@ const Post = () => {
                   to={{ pathname: '/profile/' + post.creator[0]._id }}
                 ></Link>
               ) : null}
+            </ImageContainer>
+            <DeleteContainer>
+              <p>{post.creator[0].username}</p>
               {post.creator[0]._id === userId ? (
                 <Link to="/feed">
-                  <button onClick={handleDelete}>Delete</button>
+                  <p onClick={handleDelete}>X</p>
                 </Link>
               ) : null}
-            </ImageContainer>
-            <p>{post.creator[0].username}</p>
+            </DeleteContainer>
           </CardHeader>
           <CardBody>
             {post.creator ? (

@@ -81,13 +81,14 @@ const Card = styled.div`
 `;
 
 const Image = styled.img`
+  min-width: 100%;
   min-height: 100%;
-  width: 1000px;
+  object-fit: contain;
   height: auto;
   max-width: 100%;
   max-height: 600px;
 `;
-
+const Wrapper = styled.div``;
 const CardHeader = styled.div`
   display: flex;
   padding: 10px;
@@ -95,7 +96,16 @@ const CardHeader = styled.div`
   align-self: start;
   border-bottom: 1px solid #e6e6e6;
 `;
+const DeleteContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-right: 10px;
 
+  a {
+    text-decoration: none;
+  }
+`;
 const CardBody = styled.div`
   display: flex;
   align-self: start;
@@ -186,5 +196,7 @@ export {
   ImageContainer,
   CommentInput,
   Content,
-  Text
+  Text,
+  Wrapper,
+  DeleteContainer
 };

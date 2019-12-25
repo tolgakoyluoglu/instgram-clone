@@ -113,33 +113,4 @@ const ImageContainer = styled.div`
   }
 `;
 
-const CommentContainer = styled.div`
-  border-top: 1px solid #e6e6e6;
-  width: 100%;
-  height: 50px;
-  display: flex;
-  justify-content: space-between;
-  button {
-    background: none;
-    border: none;
-    padding: 0;
-    color: #3897f0;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    margin-right: 10px;
-  }
-  input {
-    border: none;
-    height: 40%;
-    padding: 15px;
-    width: 100%;
-
-    &:focus {
-      outline: none !important;
-      border: none;
-    }
-  }
-`;
-
-export { Image, Card, CardBody, CardHeader, ImageContainer, CommentContainer };
+export { Image, Card, CardBody, CardHeader, ImageContainer };

@@ -30,7 +30,8 @@ module.exports = buildSchema(`
     password: String
     username: String!
     createdPosts: [Post!]
-    photo: String
+    photo: String,
+    bio: String,
   }
 
   type Follow {

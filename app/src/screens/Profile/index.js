@@ -20,7 +20,8 @@ import {
   GET_FOLLOWERS,
   GET_FOLLOWING,
   GET_POSTS,
-  SEARCH_USER_ID
+  SEARCH_USER_ID,
+  ADD_BIO
 } from '../../shared/utils/graphql';
 import {
   PageContainer,
@@ -50,6 +51,7 @@ const Profile = () => {
   const [following, setFollowing] = React.useState();
   const { userId } = useContext(AuthContext);
   const [isOpen, setOpen] = React.useState(false);
+  const [bio, setBio] = React.useState('');
 
   const openModal = () => {
     setOpen(true);
@@ -62,6 +64,11 @@ const Profile = () => {
 
   const handleSubmit = event => {
     event.preventDefault();
+    updateBio();
+    setOpen(false);
+    if (!file) {
+      return;
+    }
     const data = new FormData();
     data.append('file', file, file.name);
 
@@ -78,6 +85,7 @@ const Profile = () => {
         });
       })
       .catch(error => console.error(error));
+    closeModal();
   };
   const handleImg = event => {
     setFile(event.target.files[0]);
@@ -89,6 +97,15 @@ const Profile = () => {
   });
   const getUser = useQuery(SEARCH_USER_ID, {
     variables: { id }
+  });
+  const [updateBio] = useMutation(ADD_BIO, {
+    variables: { bio },
+    refetchQueries: [
+      {
+        query: SEARCH_USER_ID,
+        variables: { id }
+      }
+    ]
   });
   const getFollower = useQuery(GET_FOLLOWERS, {
     variables: { id }
@@ -151,7 +168,13 @@ const Profile = () => {
             onConfirm={handleSubmit}
           >
             <FormModal>
-              <FormInput type="text" placeholder="Bio" />
+              <FormInput
+                type="text"
+                placeholder="Bio"
+                onChange={e => {
+                  setBio(e.target.value);
+                }}
+              />
               <FormLabel>
                 Upload profile photo:
                 <FormImageInput type="file" onChange={handleImg} />
@@ -164,8 +187,8 @@ const Profile = () => {
           <Avatar src={getUser.data && getUser.data.searchUserId.photo} />
         </ImageContainer>
         <AboutContainer>
-          <h1>Profile</h1>
-          <p>Lorem ipsum text bla bla</p>
+          <h1>{getUser.data && getUser.data.searchUserId.username}</h1>
+          <p>{getUser.data && getUser.data.searchUserId.bio}</p>
           <FollowContainer>
             Followers:
             <FollowButton
